@@ -1,0 +1,10 @@
+# R.A.C Carpentry & Joinery: static site, no build step
+[build]
+  base = "rac-carpentry"
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
