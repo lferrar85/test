@@ -9,6 +9,9 @@ import html, json, os, re, datetime
 
 SITE = "https://www.kestrelbuild.co.uk"
 EMAIL = "hello@kestrelbuild.co.uk"
+PHONE_DISPLAY = "07415 880236"
+PHONE_TEL = "+447415880236"
+GBP_URL = "https://share.google/JdmSzfxY8z68D8cAo"
 TODAY = datetime.date.today().isoformat()
 OG = f"{SITE}/assets/og.jpg"
 OG_ALT = "Kestrel Build: local SEO, Google reviews and web design for Leicestershire businesses"
@@ -196,7 +199,7 @@ def footer_html():
 {ar}
       </div>
       <div><h2>Kestrel Build</h2>
-        <address>Service-area business based in Leicestershire, England.<br>Serving Leicestershire, Nottinghamshire and the East Midlands, and working UK-wide.<br><a href="mailto:{EMAIL}">{EMAIL}</a></address>
+        <address>Service-area business based in Leicestershire, England.<br>Serving Leicestershire, Nottinghamshire and the East Midlands, and working UK-wide.<br><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></address>
       </div>
     </div>
     <p class="foot__legal">© <span id="yr">2026</span> Kestrel Build. Made by hand in Leicestershire.</p>
