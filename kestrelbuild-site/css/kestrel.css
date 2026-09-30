@@ -1,0 +1,761 @@
+/* =====================================================================
+   KESTREL BUILD — web design & SEO
+   Structure after bear.plus: near-black and off-white sections in turn,
+   a giant faint wordmark, black low-poly sculpture, one warm accent.
+   ===================================================================== */
+
+:root{
+  /* ground */
+  --void:#0C0C0D;
+  --ground:#121213;
+  --raise:#1A1A1C;
+  --raise-2:#222225;
+  --line:rgba(237,236,232,.10);
+  --line-2:rgba(237,236,232,.18);
+
+  /* ink */
+  --chalk:#EDECE8;
+  --dim:rgba(237,236,232,.64);
+  --faint:rgba(237,236,232,.40);
+
+  /* accents */
+  --rufous:#C15D33;
+  --rufous-soft:#E08154;
+  --barley:#D9A05B;
+
+  /* type */
+  --f-d:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
+  --f-b:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-m:ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --pad:clamp(1.25rem,5vw,4rem);
+  --gap:clamp(2rem,5vw,5rem);
+  --sec:clamp(5rem,10vw,9rem);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.65,.05,.36,1);
+}
+
+/* Light sections swap the tokens, so every component (buttons, links, form
+   fields, figures) works on either ground without a second set of rules. */
+.light{
+  --void:#F2F2EF;
+  --ground:#F2F2EF;
+  --raise:#FFFFFF;
+  --raise-2:#FAFAF8;
+  --line:rgba(18,18,19,.10);
+  --line-2:rgba(18,18,19,.20);
+  --chalk:#121213;
+  --dim:rgba(18,18,19,.66);
+  --faint:rgba(18,18,19,.46);
+  --barley:#A4631F;           /* darkened so it passes contrast on off-white */
+  --rufous-soft:#B9532A;
+  background:var(--ground);
+  color:var(--chalk);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html:focus-within{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--chalk);
+  font-family:var(--f-b);
+  font-size:clamp(1rem,.95rem + .25vw,1.0625rem);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;               /* the flight layer stretches to this */
+}
+body.is-locked{overflow:hidden}
+main{overflow-x:clip}
+
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+h1,h2,h3{margin:0;font-family:var(--f-d);font-weight:800;line-height:.92;letter-spacing:-.035em}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+
+.wrap{width:100%;max-width:1280px;margin-inline:auto;padding-inline:var(--pad)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+:focus-visible{outline:2px solid var(--barley);outline-offset:3px;border-radius:2px}
+
+.skip{
+  position:fixed;top:-100px;left:var(--pad);z-index:100;
+  background:var(--chalk);color:var(--ground);padding:.7rem 1.1rem;border-radius:6px;
+  font-weight:600;transition:top .2s;
+}
+.skip:focus{top:1rem}
+
+/* ---------------------------------------------------------------- shared */
+.eyebrow{
+  font-family:var(--f-m);font-size:.72rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--barley);
+}
+
+.sec-h{
+  font-size:clamp(2.4rem,6.4vw,5rem);
+  margin-bottom:clamp(2.5rem,5vw,4rem);
+}
+.sec-h__k{
+  display:block;margin-bottom:1.25rem;
+  font-family:var(--f-m);font-size:.72rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--barley);
+}
+.sec-h__k::before{
+  content:"";display:inline-block;width:26px;height:1px;
+  background:var(--barley);vertical-align:middle;margin-right:.75rem;opacity:.7;
+}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--chalk);color:var(--ground);
+  padding:1rem 1.6rem;border:0;border-radius:100px;
+  font-family:var(--f-b);font-size:.95rem;font-weight:600;letter-spacing:-.01em;
+  text-decoration:none;cursor:pointer;
+  transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);
+}
+.btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease)}
+.btn:hover{background:var(--rufous);color:#fff}
+.btn:hover svg{transform:translateX(4px)}
+.btn--sm{padding:.62rem 1.1rem;font-size:.85rem}
+.btn--full{width:100%;justify-content:center;grid-column:1/-1}
+
+.lnk{
+  display:inline-flex;align-items:center;gap:.4rem;color:var(--chalk);text-decoration:none;font-weight:500;
+  padding-bottom:2px;background-image:linear-gradient(currentColor,currentColor);
+  background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;
+  transition:background-size .45s var(--ease),color .3s;
+}
+.lnk:hover{background-size:0 1px;color:var(--barley)}
+.lnk svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease)}
+.lnk:hover svg{transform:translate(2px,-2px)}
+
+/* reveals */
+.rv{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv:nth-child(2){transition-delay:.06s}
+.rv:nth-child(3){transition-delay:.12s}
+.rv:nth-child(4){transition-delay:.18s}
+
+.line{display:block;overflow:hidden;padding-bottom:.06em}
+.line>span{display:block;transform:translateY(105%);
+  transition:transform 1.15s var(--ease)}
+.in .line>span{transform:none}
+.dot{font-style:normal;color:var(--rufous-soft)}
+
+/* ================================================================ preloader */
+.pre{
+  position:fixed;inset:0;z-index:90;background:var(--void);
+  display:grid;place-items:center;
+  transition:opacity .7s var(--ease),visibility .7s;
+}
+.pre.done{opacity:0;visibility:hidden}
+.pre[hidden]{display:none}
+.pre__inner{width:min(300px,70vw);text-align:center}
+.pre__bird{width:78px;height:78px;margin:0 auto 1.75rem;display:block;overflow:visible}
+.pre__stroke{fill:none;stroke:var(--chalk);stroke-width:1.4;
+  stroke-linejoin:round;opacity:.85}
+.pre__bar{height:1px;background:var(--line-2);overflow:hidden}
+.pre__bar i{display:block;height:100%;width:0;background:var(--chalk);transition:width .25s linear}
+.pre__meta{
+  display:flex;justify-content:space-between;margin-top:.85rem;
+  font-family:var(--f-m);font-size:.68rem;letter-spacing:.2em;color:var(--faint);
+}
+
+/* =============================================================== flight layer
+   No blend modes here. This layer is as tall as the page and the bird on it
+   moves every frame; a blend mode made the GPU re-blend the whole screen each
+   frame. The grey line reads on both grounds, and the bird is swapped to ink
+   by JS (.bird--ink) while it is over a light section. */
+/* overflow:hidden: near the right edge the bird's wingtips would otherwise
+   poke past the screen and let a phone scroll sideways */
+.flight{position:absolute;top:0;bottom:0;left:0;width:100%;pointer-events:none;z-index:3;overflow:hidden}
+.flight__svg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible}
+.flight__line{
+  stroke:#8E8E8E;stroke-width:1.2;stroke-linecap:round;
+  opacity:.55;stroke-dasharray:1 1;
+}
+.motion .flight{opacity:0}
+.bird{
+  position:absolute;top:0;left:0;width:76px;height:76px;
+  margin:-38px 0 0 -38px;will-change:transform;
+}
+/* Each part is its own <svg>, moved with a CSS transform on that element.
+   Transforming shapes *inside* one SVG makes the browser redo layout on every
+   frame the wings beat; transforming whole elements is done on the GPU. */
+.bird__body{position:absolute;inset:0;will-change:transform}
+.bird__part{position:absolute;inset:0;width:100%;height:100%;overflow:visible;will-change:transform}
+.bird__part path{fill:#EDECE8;transition:fill .35s var(--ease)}
+.bird--ink .bird__part path{fill:#121213}
+#wingL{transform-origin:45% 33%}
+#wingR{transform-origin:55% 33%}
+#tail{transform-origin:50% 66%}
+
+/* ====================================================================== nav */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;gap:2.5rem;
+  padding:1.2rem var(--pad);
+  transition:background .45s var(--ease),border-color .45s,padding .45s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.nav.stuck{
+  /* solid, and deliberately no backdrop-filter: a blur re-renders everything
+     behind the bar on every scrolled frame, and at this opacity it can't be seen */
+  background:#0C0C0D;
+  border-bottom-color:var(--line);padding-block:.8rem;
+}
+.nav__brand{
+  display:flex;align-items:center;gap:.6rem;text-decoration:none;
+  font-family:var(--f-d);font-weight:800;font-size:1.18rem;letter-spacing:-.04em;
+}
+.nav__brand svg{width:26px;height:26px;fill:var(--chalk);flex:none;
+  transition:fill .4s var(--ease),transform .5s var(--ease)}
+.nav__brand:hover svg{fill:var(--barley);transform:translateY(-2px)}
+.nav__links{display:flex;gap:2rem;margin-right:auto}
+.nav__links a{
+  text-decoration:none;font-size:.9rem;color:var(--dim);
+  transition:color .3s;position:relative;
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;bottom:-5px;width:100%;height:1px;
+  background:var(--chalk);transform:scaleX(0);transform-origin:100% 50%;
+  transition:transform .45s var(--ease);
+}
+.nav__links a:hover{color:var(--chalk)}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.nav__end{display:flex;align-items:center;gap:1rem;margin-left:auto}
+.nav__links + .nav__end{margin-left:0}
+.nav__toggle{
+  display:none;width:44px;height:44px;background:none;border:1px solid var(--line-2);
+  border-radius:50%;cursor:pointer;padding:0;place-items:center;align-content:center;
+  justify-items:center;gap:5px;
+}
+.nav__toggle i{display:block;width:16px;height:1.5px;background:var(--chalk);
+  transition:transform .4s var(--ease),opacity .3s}
+.nav__toggle[aria-expanded="true"] i:first-child{transform:translateY(3.25px) rotate(45deg)}
+.nav__toggle[aria-expanded="true"] i:last-child{transform:translateY(-3.25px) rotate(-45deg)}
+
+.menu{
+  position:fixed;inset:0;z-index:39;background:var(--void);
+  display:flex;flex-direction:column;justify-content:center;gap:.4rem;
+  padding:0 var(--pad);
+}
+.menu[hidden]{display:none}
+.menu a{
+  display:flex;align-items:baseline;gap:1rem;text-decoration:none;
+  font-family:var(--f-d);font-weight:800;letter-spacing:-.04em;
+  font-size:clamp(2rem,10vw,3rem);line-height:1.25;
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),color .3s;
+}
+.menu.open a{opacity:1;transform:none}
+.menu.open a:nth-child(1){transition-delay:.05s}
+.menu.open a:nth-child(2){transition-delay:.1s}
+.menu.open a:nth-child(3){transition-delay:.15s}
+.menu.open a:nth-child(4){transition-delay:.2s}
+.menu.open a:nth-child(5){transition-delay:.25s}
+.menu a em{font-family:var(--f-m);font-size:.7rem;font-style:normal;
+  letter-spacing:.2em;color:var(--barley)}
+.menu a:hover{color:var(--barley)}
+
+
+/* ==================================================================== hero
+   Normal flow, one screen tall: no pin, no scroll-jack. The copy states the
+   offer, the kestrel on the right watches the pointer, and the six real
+   clients sit underneath as the proof. isolation keeps the film's lighten
+   blend inside the hero, composited against the hero's own painted ground. */
+.hero{
+  position:relative;isolation:isolate;background:var(--ground);overflow:hidden;
+  min-height:100vh;min-height:100svh;display:grid;align-items:center;
+  padding:calc(5.5rem + 2vh) 0 clamp(4rem,9vh,6rem);
+}
+.hero__inner{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:center;
+}
+.hero__copy{position:relative;z-index:1;will-change:transform,opacity}
+.hero__eyebrow{margin-bottom:clamp(1.25rem,2.5vh,2rem)}
+.hero__h{
+  font-size:clamp(3.4rem,8.4vw,7.8rem);line-height:.88;letter-spacing:-.05em;
+  margin-bottom:clamp(1.5rem,3vh,2.25rem);
+}
+.hero__sub{
+  color:var(--dim);max-width:42ch;
+  font-size:clamp(1.05rem,1.45vw,1.22rem);line-height:1.55;
+  margin-bottom:clamp(1.75rem,3.5vh,2.5rem);
+}
+.hero__cta{display:flex;align-items:center;gap:1rem 1.75rem;flex-wrap:wrap}
+/* the proof: six real client names, no invented logos */
+.hero__proof{
+  display:flex;flex-wrap:wrap;gap:.45rem 1.6rem;
+  margin-top:clamp(2.5rem,5.5vh,3.75rem);padding-top:1.25rem;border-top:1px solid var(--line);
+  font-family:var(--f-m);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+}
+.hero__proof li{position:relative}
+.hero__proof li+li::before{content:"";position:absolute;left:-1rem;top:.5em;width:3px;height:3px;border-radius:50%;background:var(--faint);opacity:.6}
+
+/* Mirrored so it faces the copy. The film's background is pure black, so
+   lighten lets the ground show straight through it: a bird with no box, and
+   no alpha video needed (Safari can't play alpha WebM). Set on the wrapper,
+   which is the element that composites against the hero. */
+.hero__bird{
+  justify-self:end;position:relative;display:grid;mix-blend-mode:lighten;
+  transform:scaleX(-1) translateY(var(--ty,0));transform-origin:50% 50%;will-change:transform;
+}
+/* The film and the head canvas share one cell, so they can never stack. */
+.hero__bird>.hero__img{grid-area:1/1}
+.hero__img{
+  /* height-led so the width follows the film's own ratio; the vw cap keeps it
+     inside its column, the svh cap keeps the head under the nav */
+  height:min(76vh,820px,38vw);height:min(76svh,820px,38vw);width:auto;max-width:none;
+  aspect-ratio:840/968;display:block;
+}
+.hero__img[hidden]{display:none}
+/* the head, in the mirrored frame: 62% across the film = 38% across the screen */
+.hero__anchor{position:absolute;left:62%;top:12%;width:1px;height:1px}
+
+.hero__scroll{
+  position:absolute;right:var(--pad);bottom:clamp(1.5rem,4vh,2.5rem);
+  display:flex;align-items:center;gap:.7rem;
+  font-family:var(--f-m);font-size:.66rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint);
+}
+.hero__scroll i{display:block;width:54px;height:1px;background:var(--line-2);
+  position:relative;overflow:hidden}
+.hero__scroll i::after{
+  content:"";position:absolute;inset:0;background:var(--chalk);
+  animation:sweep 2.6s var(--ease-io) infinite;
+}
+@keyframes sweep{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+
+/* =================================================================== intro */
+.intro{padding-block:var(--sec)}
+/* text first, kestrel on the right looking back across at it */
+.intro__wrap{
+  display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
+  gap:var(--gap);align-items:center;
+}
+.intro__art{order:2}
+.intro__art img{height:min(82vh,780px);width:auto;margin-inline:auto;will-change:transform}
+.intro__h{font-size:clamp(2.8rem,7vw,6.2rem);letter-spacing:-.055em;margin-bottom:2rem}
+.intro__lead{
+  font-family:var(--f-d);font-weight:600;letter-spacing:-.025em;
+  font-size:clamp(1.3rem,2.3vw,1.85rem);line-height:1.26;max-width:30ch;margin-bottom:1.4rem;
+}
+.intro__p{color:var(--dim);max-width:52ch;margin-bottom:1.8rem}
+
+.figs{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+  margin-top:clamp(2.5rem,5vw,4rem);
+}
+.figs li{border-top:1px solid var(--line-2);padding-top:1rem}
+.figs b{display:block;font-family:var(--f-d);font-weight:800;
+  font-size:clamp(2.2rem,3.8vw,3.4rem);line-height:1;letter-spacing:-.05em}
+.figs span{display:block;margin-top:.5rem;font-family:var(--f-m);font-size:.66rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+/* ================================================================ services */
+.svc{position:relative;padding-block:0 var(--sec);overflow:hidden}
+.svc__mark{
+  position:absolute;left:50%;top:clamp(2rem,6vw,5rem);width:min(1150px,130vw);
+  transform:translateX(-50%);fill:#EBEBE7;pointer-events:none;
+}
+.svc .wrap{position:relative}
+.svc__k{text-align:center;padding-top:var(--sec);margin-bottom:1.5rem}
+.svc__h{font-size:clamp(2.8rem,7.5vw,6.4rem);letter-spacing:-.055em;text-align:center}
+.svc__sub{text-align:center;color:var(--dim);max-width:46ch;margin:1.6rem auto 0;
+  font-size:clamp(1rem,1.5vw,1.15rem)}
+
+/* Each half of the offer gets its own kestrel pose, alternating sides. */
+.svc__half{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:var(--gap);align-items:center;margin-top:clamp(4rem,8vw,7rem);
+}
+.svc__half--flip .svc__art{order:2}
+.svc__art{margin:0}
+.svc__art img{width:100%;max-width:560px;margin-inline:auto;will-change:transform;
+  filter:drop-shadow(0 30px 30px rgba(0,0,0,.14))}
+.svc__title{
+  display:flex;align-items:baseline;gap:1rem;
+  font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.045em;
+  padding-bottom:1.4rem;margin-bottom:.4rem;border-bottom:1px solid var(--line-2);
+}
+.svc__title em{font-family:var(--f-m);font-style:normal;font-weight:400;font-size:.72rem;
+  letter-spacing:.2em;color:var(--barley)}
+.svc__item{padding-block:1.4rem;border-bottom:1px solid var(--line)}
+.svc__item h4{margin:0 0 .5rem;font-family:var(--f-d);font-weight:800;line-height:1.1;
+  font-size:clamp(1.2rem,1.8vw,1.45rem);letter-spacing:-.03em}
+.svc__item p{color:var(--dim);max-width:46ch}
+
+/* ================================================================= process
+   Static: a plain list, every step readable. With motion: pinned, and the
+   words light one at a time while that step's explanation sits beneath. */
+.flow{position:relative;background:var(--ground);padding-block:var(--sec)}
+.flow__stick{
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding-inline:var(--pad);
+}
+.flow__k{margin-bottom:clamp(1.5rem,3vh,2.5rem)}
+.flow__words{display:grid;gap:clamp(1.5rem,3vw,2.25rem)}
+.flow__words h3{
+  font-family:var(--f-d);font-weight:600;letter-spacing:-.045em;line-height:1.02;
+  font-size:clamp(2.4rem,6.6vw,5.4rem);color:var(--chalk);
+  transition:color .7s var(--ease);
+}
+.flow__words p{color:var(--dim);max-width:46ch;margin:.7rem auto 0}
+.flow__words em{display:block;font-family:var(--f-m);font-style:normal;font-size:.68rem;
+  letter-spacing:.2em;color:var(--barley);margin-bottom:.5rem}
+.flow__cta{margin-top:2.5rem}
+
+.motion .flow{height:calc(100vh + 6 * 55vh);height:calc(100svh + 6 * 55svh);padding:0}
+.motion .flow__stick{
+  position:sticky;top:0;height:100vh;height:100svh;justify-content:center;
+  padding-block:5rem clamp(9rem,22vh,13rem);
+}
+.motion .flow__words{gap:0}
+.motion .flow__words h3{color:#2B2B2E}
+.motion .flow__words li.on h3{color:var(--chalk)}
+.motion .flow__words p{
+  position:absolute;left:50%;bottom:clamp(3.5rem,9vh,6rem);width:min(560px,86vw);margin:0;
+  transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  transition:opacity .5s var(--ease),transform .7s var(--ease);
+}
+.motion .flow__words li.now p{opacity:1;transform:translate(-50%,0)}
+.motion .flow__cta{position:absolute;bottom:clamp(1.25rem,3vh,2rem);margin:0}
+
+/* ================================================================== cycle
+   The white set piece. Static by default: the bird at the end of its cycle
+   with all four beats listed. With motion the section pins and the frame loop
+   drives --x/--y/--s/--r while the poses cross-fade at the turns.
+   No overflow:hidden on the section itself — that makes it a scrollport and
+   silently kills the sticky child. The clipping lives on the pinned box. */
+.cycle{position:relative}
+.cycle__stick{
+  position:relative;min-height:100vh;min-height:100svh;overflow:hidden;
+  display:grid;align-content:center;padding:var(--sec) var(--pad);
+}
+.cycle__ghost{
+  position:absolute;left:50%;top:44%;margin:0;white-space:nowrap;pointer-events:none;
+  font-family:var(--f-d);font-weight:800;font-stretch:75%;text-transform:uppercase;
+  font-size:clamp(4rem,17vw,15rem);line-height:1;color:#E7E7E3;
+  transform:translate(-50%,-50%) translateX(var(--gx,0));will-change:transform;
+}
+.cycle__stage{position:absolute;inset:0;pointer-events:none}
+/* the field it works over: the dive bottoms out here and the perch sits on it */
+.cycle__ground{position:absolute;left:0;right:0;top:78%;height:1px;background:var(--line-2)}
+.cycle__ring{
+  position:absolute;left:50%;top:78%;width:14px;height:14px;margin:-7px 0 0 -7px;
+  border-radius:50%;border:1px solid var(--rufous-soft);opacity:0;
+}
+.cycle.hit .cycle__ring{animation:hit 1.2s var(--ease) forwards}
+@keyframes hit{0%{opacity:.85;transform:scale(.3)}100%{opacity:0;transform:scale(11)}}
+
+.cycle__bird{
+  position:absolute;left:50%;top:50%;width:min(44vw,480px,52vh);aspect-ratio:1;
+  transform:translate(-50%,-50%) translate3d(var(--x,20vw),var(--y,10vh),0)
+            rotate(var(--r,0deg)) scale(var(--s,.6));
+  will-change:transform;
+}
+/* every pose sits in the same square and keeps its own proportions */
+.cycle__pose{
+  position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;width:auto;height:auto;
+  opacity:0;transition:opacity .2s linear;
+}
+.cycle__pose.on{opacity:1}
+
+.cycle__copy{position:relative;z-index:2;align-self:end;width:min(46ch,52%)}
+.cycle__beats{margin-top:1.1rem}
+.cycle__beats b{
+  display:flex;align-items:baseline;gap:.9rem;
+  font-family:var(--f-d);font-weight:800;letter-spacing:-.04em;
+  font-size:clamp(1.9rem,3.6vw,3rem);line-height:1;
+}
+.cycle__beats em{font-family:var(--f-m);font-style:normal;font-weight:400;font-size:.7rem;
+  letter-spacing:.2em;color:var(--barley)}
+.cycle__beats p{color:var(--dim);max-width:44ch;margin-top:.8rem}
+.cycle__rail{
+  position:absolute;right:var(--pad);bottom:clamp(1.5rem,5vh,3rem);z-index:2;
+  display:flex;gap:1.4rem;
+  font-family:var(--f-m);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);
+}
+.cycle__rail li{transition:color .4s var(--ease)}
+.cycle__rail li.on{color:var(--chalk)}
+
+.motion .cycle{height:320vh;height:320svh}
+.motion .cycle__stick{position:sticky;top:0;height:100vh;height:100svh;padding-block:0}
+/* one beat at a time, cross-fading in place */
+.motion .cycle__beats{position:relative;min-height:12rem}
+.motion .cycle__beats li{
+  position:absolute;inset:0;opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .45s var(--ease),transform .55s var(--ease);
+}
+.motion .cycle__beats li.on{opacity:1;transform:none}
+
+/* ==================================================================== work */
+.work{padding-block:clamp(3rem,6vw,5rem) 0}
+.work__head{text-align:center;padding-bottom:clamp(1rem,3vw,2rem)}
+.work__h{font-size:clamp(2.8rem,7.5vw,6.4rem);letter-spacing:-.055em;margin:1.4rem 0 1.6rem}
+.work__sub{color:var(--dim);max-width:48ch;margin-inline:auto;font-size:clamp(1rem,1.5vw,1.15rem)}
+.proj{padding-block:clamp(3.25rem,6.5vw,5.5rem);border-bottom:1px solid var(--line)}
+.proj__wrap{
+  display:grid;grid-template-columns:1.15fr .85fr;
+  gap:clamp(2rem,5vw,4.5rem);align-items:center;
+}
+.proj:nth-child(odd) .proj__shot{order:2}
+
+.frame{
+  position:relative;border-radius:12px;overflow:hidden;
+  background:var(--raise);border:1px solid var(--line-2);
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.85);
+  transition:transform .8s var(--ease),border-color .5s;
+}
+.frame::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,color-mix(in srgb,var(--brand) 22%,transparent),transparent 55%);
+  opacity:0;transition:opacity .6s var(--ease);
+}
+.proj__shot:hover .frame{transform:translateY(-6px);border-color:color-mix(in srgb,var(--brand) 45%,var(--line-2))}
+.proj__shot:hover .frame::after{opacity:1}
+.frame__bar{
+  display:flex;gap:6px;align-items:center;
+  padding:11px 14px;background:var(--raise-2);border-bottom:1px solid var(--line);
+}
+.frame__bar i{width:8px;height:8px;border-radius:50%;background:var(--line-2)}
+.frame__bar i:first-child{background:color-mix(in srgb,var(--brand) 70%,var(--line-2))}
+.frame img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center}
+
+.proj__spec{
+  font-family:var(--f-m);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:1rem;
+}
+.proj__spec::before{
+  content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--brand);margin-right:.65rem;vertical-align:1px;
+}
+.proj__name{font-size:clamp(1.85rem,3.6vw,2.9rem);margin-bottom:1.1rem}
+.proj__txt{color:var(--dim);max-width:52ch}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+.tags li{
+  font-family:var(--f-m);font-size:.68rem;letter-spacing:.05em;
+  padding:.4rem .75rem;border:1px solid var(--line-2);border-radius:100px;color:var(--dim);
+}
+.proj__link{
+  display:inline-flex;align-items:center;gap:.45rem;margin-top:1.6rem;
+  font-weight:600;font-size:.95rem;text-decoration:none;color:var(--chalk);
+  padding-bottom:2px;
+  background-image:linear-gradient(var(--brand),var(--brand));
+  background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;
+  transition:background-size .45s var(--ease),color .3s var(--ease);
+}
+.proj__link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease)}
+.proj__link:hover{color:var(--brand)}
+.proj__link:hover svg{transform:translate(2px,-2px)}
+
+/* ==================================================================== seen */
+.seen{padding-block:var(--sec);background:var(--void)}
+.seen__wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2.5rem,6vw,5rem);align-items:center}
+.seen__lead{color:var(--dim);max-width:48ch;margin-bottom:1.4rem}
+.seen__lead:first-of-type{color:var(--chalk);font-size:clamp(1.05rem,1.7vw,1.2rem)}
+.seen__punch{
+  font-family:var(--f-d);font-weight:600;letter-spacing:-.025em;
+  font-size:clamp(1.15rem,2.1vw,1.5rem);line-height:1.25;
+  color:var(--chalk);max-width:24ch;margin:1.9rem 0 1.6rem;
+}
+.seen__field{position:relative;display:grid;place-items:center}
+.uv{width:100%;max-width:420px;overflow:visible}
+.uv__trails path{
+  fill:none;stroke:var(--barley);stroke-width:1.1;opacity:.20;
+  stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);
+}
+.in .uv__trails path{animation:trail 2.4s var(--ease) forwards}
+.in .uv__trails path:nth-child(2){animation-delay:.18s}
+.in .uv__trails path:nth-child(3){animation-delay:.36s}
+.in .uv__trails path:nth-child(4){animation-delay:.54s}
+.in .uv__trails path:nth-child(5){animation-delay:.72s}
+@keyframes trail{to{stroke-dashoffset:0}}
+
+/* a signal runs up each trail to the strike point — the bird reading them */
+.uv__pulse path{
+  fill:none;stroke:var(--barley);stroke-width:2.1;stroke-linecap:round;opacity:0;
+  stroke-dasharray:30 var(--len,600);stroke-dashoffset:var(--len,600);
+  filter:drop-shadow(0 0 7px rgba(217,160,91,.85));
+}
+.in .uv__pulse path{animation:runner 3.4s var(--ease-io) 2.1s infinite}
+.in .uv__pulse path:nth-child(2){animation-delay:2.4s}
+.in .uv__pulse path:nth-child(3){animation-delay:2.75s}
+.in .uv__pulse path:nth-child(4){animation-delay:3.1s}
+.in .uv__pulse path:nth-child(5){animation-delay:3.45s}
+@keyframes runner{
+  0%{stroke-dashoffset:var(--len,600);opacity:0}
+  10%{opacity:1}
+  70%{opacity:1}
+  85%,100%{stroke-dashoffset:-30;opacity:0}
+}
+
+.uv__mark{fill:var(--rufous-soft)}
+.in .uv__mark{animation:strike 3.4s var(--ease-io) 2.1s infinite}
+@keyframes strike{
+  0%,58%{r:5;filter:none}
+  70%{r:8;filter:drop-shadow(0 0 12px rgba(224,129,84,.95))}
+  100%{r:5;filter:none}
+}
+.uv__ring{fill:none;stroke:var(--rufous-soft);stroke-width:1;opacity:0}
+.in .uv__ring{animation:ping 3.4s var(--ease-io) 2.5s infinite}
+.in .uv__ring--2{animation-delay:3.1s}
+@keyframes ping{0%{opacity:.75;transform:scale(.35);transform-origin:204px 92px}
+  100%{opacity:0;transform:scale(1.9);transform-origin:204px 92px}}
+.uv__cap{
+  margin-top:1.5rem;font-family:var(--f-m);font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);text-align:center;
+}
+
+/* ================================================================= contact */
+.contact{padding-block:var(--sec) clamp(3.5rem,6vw,5rem)}
+.contact__wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,6vw,5rem)}
+/* the crouched kestrel sits on the headline */
+.contact__rest{width:min(330px,68%);margin:0 0 -.35rem .5rem;
+  filter:drop-shadow(0 12px 10px rgba(0,0,0,.12))}
+.contact__h{font-size:clamp(2.8rem,8vw,6rem);letter-spacing:-.05em;margin-bottom:1.75rem}
+.contact__sub{color:var(--dim);max-width:40ch;margin-bottom:2.5rem}
+.contact__direct{display:grid;gap:.1rem}
+.contact__direct li{
+  display:grid;grid-template-columns:6.5rem 1fr;align-items:baseline;
+  gap:1rem;padding-block:.9rem;border-top:1px solid var(--line);
+}
+.contact__direct span{font-family:var(--f-m);font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint)}
+.contact__direct a{text-decoration:none;font-size:1.02rem;transition:color .3s}
+.contact__direct a:hover{color:var(--barley)}
+.contact__direct a[aria-disabled]{pointer-events:none;color:var(--dim)}
+
+.form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-content:start}
+.field{display:grid;gap:.45rem}
+.field--wide{grid-column:1/-1}
+.field label{font-family:var(--f-m);font-size:.66rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint)}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--raise);color:var(--chalk);
+  border:1px solid var(--line-2);border-radius:8px;
+  padding:.85rem 1rem;font-family:var(--f-b);font-size:.98rem;
+  transition:border-color .3s,background .3s;
+}
+.field textarea{resize:vertical;min-height:118px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--barley);background:var(--raise-2);outline:none;
+}
+.field input:user-invalid{border-color:var(--rufous)}
+.form__note{grid-column:1/-1;font-size:.88rem;color:var(--barley);min-height:1.4em}
+
+/* ================================================================== footer */
+.foot{padding-block:clamp(2.5rem,4vw,3.5rem) 2.25rem;background:var(--void)}
+.foot__wrap{display:grid;grid-template-columns:1.4fr 1fr;column-gap:var(--gap);row-gap:1.5rem;align-items:start}
+.foot__brand{display:flex;gap:1rem;align-items:flex-start}
+.foot__brand svg{width:34px;height:34px;fill:var(--chalk);flex:none;opacity:.9}
+.foot__brand b{display:block;font-family:var(--f-d);font-size:1.15rem;letter-spacing:-.04em}
+.foot__brand span{display:block;margin-top:.35rem;font-size:.88rem;color:var(--faint);max-width:38ch}
+.foot__nav{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;justify-content:flex-end}
+.foot__nav a{text-decoration:none;font-size:.9rem;color:var(--dim);transition:color .3s}
+.foot__nav a:hover{color:var(--chalk)}
+.foot__legal{
+  grid-column:1/-1;margin-top:clamp(1.25rem,2.5vw,2rem);padding-top:1.4rem;
+  border-top:1px solid var(--line);
+  font-family:var(--f-m);font-size:.68rem;letter-spacing:.1em;color:var(--faint);
+}
+
+/* ============================================================== responsive */
+@media (max-width:1000px){
+  .proj__wrap{grid-template-columns:1fr;gap:2rem}
+  .proj:nth-child(odd) .proj__shot{order:0}
+  .seen__wrap,.contact__wrap,.foot__wrap{grid-template-columns:1fr}
+  .foot__nav{justify-content:flex-start;margin-top:.5rem}
+  .svc__half{grid-template-columns:1fr;gap:1.5rem}
+  .svc__half--flip .svc__art{order:0}
+  .svc__art img{max-width:440px}
+}
+
+@media (max-width:860px){
+  .intro__wrap{grid-template-columns:1fr}
+  .intro__art img{height:min(62vh,560px)}
+  .figs{grid-template-columns:repeat(2,1fr);gap:1.5rem 1.25rem}
+}
+
+/* Tablets and phones. The four nav links need ~830px beside the brand and the
+   button, and the two-column hero needs the width to keep the bird off the
+   wordmark, so both switch here rather than at the phone breakpoint. */
+@media (max-width:900px){
+  .nav__links{display:none}
+  .nav__links + .nav__end{margin-left:auto}
+  .nav__toggle{display:grid}
+  .nav .btn--sm{display:none}
+  .nav{padding-block:.85rem}
+
+  /* one column: the offer first, then the kestrel underneath, whole */
+  .hero{padding-top:6.5rem;align-items:start}
+  .hero__inner{grid-template-columns:1fr;gap:clamp(2rem,5vh,3rem)}
+  .hero__h{font-size:clamp(3.2rem,13vw,6rem)}
+  .hero__cta .btn{flex:1 1 auto;justify-content:center;max-width:22rem}
+  .hero__bird{justify-self:center}
+  /* 101vw: the film is 0.868x as wide as it is tall, so it stays inside 88vw */
+  .hero__img{height:min(48vh,440px,101vw);height:min(48svh,440px,101vw)}
+  .hero__scroll{display:none}
+
+  /* Stacked: the bird works above the ground line and the copy sits under it,
+     so the dive never crosses the words. */
+  .cycle__stick{align-content:end;padding-bottom:4.5rem}
+  .cycle__copy{width:min(50ch,88%);align-self:end}
+  .cycle__bird{width:min(52vw,34vh)}
+  .cycle__ground,.cycle__ring{top:62%}
+  .motion .cycle__beats{min-height:12rem}
+  .motion .cycle{height:300vh;height:300svh}
+}
+
+@media (max-width:760px){
+
+  .svc__art img{max-width:320px}
+  /* Stacked: the bird works the top of the stage and the copy sits under the
+     ground line, so the dive never crosses the words. */
+  .cycle__stick{padding-bottom:5rem}
+  .cycle__copy{width:auto}
+  .cycle__beats b{font-size:clamp(1.7rem,7vw,2.4rem)}
+  .motion .cycle__beats{min-height:12.5rem}
+  .cycle__bird{width:min(62vw,30vh)}
+  .cycle__ground,.cycle__ring{top:52%}
+  .cycle__ghost{top:26%;font-size:clamp(3rem,15vw,7rem)}
+  .cycle__rail{left:var(--pad);right:auto;gap:1rem;font-size:.58rem;bottom:1.5rem}
+  .intro__art{order:0}
+
+  .proj{padding-block:3rem}
+  .proj__spec{font-size:.62rem;letter-spacing:.1em;max-width:26ch}
+  .bird{width:30px;height:30px;margin:-15px 0 0 -15px}
+  .flight__line{opacity:.3}
+  .proj__shot{margin-inline:calc(var(--pad) * -1)}
+  .frame{border-radius:0;border-inline:0}
+  .frame img{aspect-ratio:16/11}
+
+  .foot__nav a{padding-block:.55rem}                 /* thumb-sized targets */
+  .form{grid-template-columns:1fr}
+  .contact__direct li{grid-template-columns:1fr;gap:.2rem}
+}
+
+/* ========================================================= reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .bird{opacity:1}
+  html:focus-within{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  .rv{opacity:1;transform:none}
+  .line>span{transform:none}
+  .hero__scroll i::after{display:none}
+  .uv__trails path{stroke-dashoffset:0}
+}
