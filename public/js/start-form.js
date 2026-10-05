@@ -4,6 +4,7 @@ import { parsePostcode, compassName, orientationFactor, COMPASS_POINTS, compassB
 import { createDial } from './dial.js';
 import { esc } from './format.js';
 import { siteConfig } from './state.js';
+import { icon } from './icons.js';
 
 let lookupSeq = 0;
 
@@ -34,7 +35,7 @@ export function mountStart(host, { state, onDone, cta = 'Next: your roof', headi
   ${heading ? '<h2 class="start-title">Which way does your roof face?</h2>' : ''}
   <div class="field">
     <label for="${id}-pc">Your postcode</label>
-    <input id="${id}-pc" name="postcode" type="text" inputmode="text" autocomplete="postal-code" maxlength="9" placeholder="e.g. LS1 4AP" value="${esc(input.postcode)}" aria-describedby="${id}-place ${id}-err">
+    <div class="input-icon">${icon('pin', { size: 20 })}<input id="${id}-pc" name="postcode" type="text" inputmode="text" autocomplete="postal-code" maxlength="9" placeholder="e.g. LS1 4AP" value="${esc(input.postcode)}" aria-describedby="${id}-place ${id}-err"></div>
     <p class="hint place" id="${id}-place" aria-live="polite"></p>
     <p class="error" id="${id}-err" role="alert" hidden></p>
   </div>

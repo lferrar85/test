@@ -4,6 +4,7 @@
 import { parsePostcode } from './model.js';
 import { siteConfig, saveLast } from './state.js';
 import { esc } from './format.js';
+import { initials } from './icons.js';
 
 const ENDPOINT = { quote: 'quote', battery: 'battery', contact: 'contact', installer: 'installer-apply' };
 const SERVICE = { quote: 'solar', battery: 'battery' };
@@ -41,7 +42,7 @@ export function renderMatched(box, list, consentNames) {
   if (box) {
     box.hidden = false;
     box.innerHTML = list.length
-      ? `<p class="eyebrow">Your details would go to</p><ul>${list.map((i) => `<li><strong>${esc(i.name)}</strong>${i.demo ? ' <span class="sample-flag-inline">sample listing</span>' : ''}<span class="dim"> · ${esc(i.tagline || '')}</span></li>`).join('')}</ul>`
+      ? `<p class="eyebrow">Your details would go to</p><ul>${list.map((i) => `<li><span class="avatar" aria-hidden="true">${esc(initials(i.name))}</span><span><strong>${esc(i.name)}</strong>${i.demo ? ' <span class="sample-flag-inline">sample listing</span>' : ''}<br><span class="dim">${esc(i.tagline || '')}</span></span></li>`).join('')}</ul>`
       : '<p class="eyebrow">No installers cover that area yet</p><p>We’ll keep your request and get in touch if that changes. You can also <a href="' + esc(siteConfig().links.installers) + '">browse all installers</a>.</p>';
   }
   if (consentNames) consentNames.textContent = list.length ? nameList(list) : 'the installers matched to your postcode';

@@ -6,6 +6,7 @@ import { ledgerHtml } from './ledger.js';
 import { monthlyChart, paybackChart } from './charts.js';
 import { loadState, saveState, siteConfig } from './state.js';
 import { mountStart } from './start-form.js';
+import { icon } from './icons.js';
 import { bindForm, previewMatches, renderMatched } from './forms.js';
 
 const A = D.ASSUMPTIONS;
@@ -45,7 +46,7 @@ const panelGrid = (n) => {
 
 const tiles = (name, legend, options, value, cls = '') =>
   `<fieldset class="choice ${cls}"><legend>${esc(legend)}</legend><div class="tiles">${options
-    .map(([v, l, hint, extra = '']) => `<label class="tile"><input type="radio" name="${name}" value="${esc(v)}"${String(v) === String(value) ? ' checked' : ''}>${extra}<span class="tile-label">${esc(l)}</span><span class="tile-hint">${esc(hint)}</span></label>`)
+    .map(([v, l, hint, extra = '']) => `<label class="tile"><input type="radio" name="${name}" value="${esc(v)}"${String(v) === String(value) ? ' checked' : ''}><span class="tile-check">${icon('check', { size: 14 })}</span>${extra}<span class="tile-label">${esc(l)}</span><span class="tile-hint">${esc(hint)}</span></label>`)
     .join('')}</div></fieldset>`;
 
 const spaceTiles = (name, value) =>
@@ -194,11 +195,20 @@ function verdict(r) {
 function compareTable(r) {
   const best = r.scenarios.reduce((a, b) => (b.net > a.net ? b : a));
   const fastest = r.scenarios.filter((s) => s.payback != null).reduce((a, b) => (b.payback < a.payback ? b : a), { payback: Infinity });
-  const row = (s) => {
-    const tags = [s === best ? 'Best 25-year gain' : '', s === fastest ? 'Fastest payback' : ''].filter(Boolean);
-    return `<tr${s.battery === r.input.battery ? ' class="is-selected"' : ''}><th scope="row">${s.battery ? `Solar + ${s.battery} kWh battery` : 'Solar only'}${tags.length ? `<span class="row-tags">${tags.map((t) => `<span class="row-tag">${t}</span>`).join('')}</span>` : ''}</th><td>${gbp(s.cost.total)}</td><td>${gbpRound(s.money.saving)}</td><td>${years(s.payback)}</td><td>${gbpRound(s.net, 50)}</td></tr>`;
+  const card = (s) => {
+    const selected = s.battery === r.input.battery;
+    const tags = [
+      selected ? '<span class="pill pill-sun">Your selection</span>' : '',
+      s === best ? '<span class="pill pill-green">Best 25-year gain</span>' : '',
+      s === fastest ? '<span class="pill pill-green">Fastest payback</span>' : '',
+    ].join('');
+    return `<article class="option${selected ? ' is-selected' : ''}"><h3>${s.battery ? `Solar + ${s.battery} kWh battery` : 'Solar only'}</h3><p class="option-tags">${tags}</p><dl>
+      <div><dt>Typical cost</dt><dd>${gbp(s.cost.total)}</dd></div>
+      <div><dt>Saves in year one</dt><dd class="is-big">${gbpRound(s.money.saving)}</dd></div>
+      <div><dt>Pays back in</dt><dd>${years(s.payback)}</dd></div>
+      <div><dt>25-year gain</dt><dd>${gbpRound(s.net, 50)}</dd></div></dl></article>`;
   };
-  return `<div class="table-wrap"><table class="data-table compare"><caption class="visually-hidden">Your options compared at typical prices</caption><thead><tr><th scope="col">Option</th><th scope="col">Typical cost</th><th scope="col">Saves in year one</th><th scope="col">Pays back</th><th scope="col">25-year gain</th></tr></thead><tbody>${r.scenarios.map(row).join('')}</tbody></table></div>`;
+  return `<div class="options" role="list" aria-label="Your options compared at typical prices">${r.scenarios.map(card).join('')}</div>`;
 }
 
 function batteryInsight(r) {
@@ -222,15 +232,15 @@ function mainHtml(r) {
   <p class="eyebrow">Your solar statement · ${esc(i.postcode)} · ${esc(direction)}-facing</p>
   <h1 class="res-headline" id="res-title" tabindex="-1"><span class="mark">${gbpRound(r.money.saving)}</span><span class="per"> a year</span></h1>
   <p class="res-sub">Likely range ${gbpRound(r.money.low)} to ${gbpRound(r.money.high)} in year one. ${r.payback ? `Pays for itself in about <strong>${years(r.payback)}</strong>${q ? ` at your quote of ${gbp(q.quote)}` : ''}.` : 'It doesn’t pay for itself within 25 years on these assumptions.'}</p>
-  <p class="res-verdict">${verdict(r)}</p>
+  <p class="res-verdict${r.payback != null && r.payback <= 12 ? '' : ' is-warn'}">${verdict(r)}</p>
   <a class="link-arrow adjust-jump" href="#tune">Adjust panels, battery and prices</a>
 </section>
 <dl class="strip">
-  <div><dt>System</dt><dd>${kwp(r.system.kWp)}<small>${r.system.panels} panels, about ${Math.round(r.system.areaM2)} m²</small></dd></div>
-  <div><dt>Makes</dt><dd>${num(r.system.annualGen)}<small>kWh a year, ${num(r.system.yieldPerKwp)} per kWp</small></dd></div>
-  <div><dt>Costs</dt><dd>${gbp(r.cost.used)}<small>${q ? 'your quote' : 'typical price, 0% VAT'}</small></dd></div>
-  <div><dt>25-year gain</dt><dd>${gbpRound(r.net25, 50)}<small>after the cost and an inverter swap</small></dd></div>
-  <div><dt>Carbon</dt><dd>${r.co2Tonnes.toFixed(1)} t<small>CO₂ saved a year</small></dd></div>
+  <div><dt>${icon('roof')}System</dt><dd>${kwp(r.system.kWp)}<small>${r.system.panels} panels, about ${Math.round(r.system.areaM2)} m²</small></dd></div>
+  <div><dt>${icon('bolt')}Makes</dt><dd>${num(r.system.annualGen)}<small>kWh a year, ${num(r.system.yieldPerKwp)} per kWp</small></dd></div>
+  <div><dt>${icon('receipt')}Costs</dt><dd>${gbp(r.cost.used)}<small>${q ? 'your quote' : 'typical price, 0% VAT'}</small></dd></div>
+  <div><dt>${icon('chart')}25-year gain</dt><dd>${gbpRound(r.net25, 50)}<small>after the cost and an inverter swap</small></dd></div>
+  <div><dt>${icon('leaf')}Carbon</dt><dd>${r.co2Tonnes.toFixed(1)} t<small>CO₂ saved a year</small></dd></div>
 </dl>
 <section class="res-section" aria-labelledby="h-statement">
   <h2 id="h-statement">Your statement</h2>
