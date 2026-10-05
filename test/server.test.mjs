@@ -180,3 +180,17 @@ test('retention: purge removes submissions older than the cutoff and keeps recen
   assert.equal(db.purgeOlderThan(12, future), 2);
   assert.equal(db.get(ref), null);
 });
+
+test('property details from the calculator are kept when valid and dropped when not', async () => {
+  const res = await post('/api/quote', goodQuote({ calc: { property: 'semi', roofCovering: 'slate', homeAge: '1930_1990', ownership: 'rent' } }));
+  const ref = (await res.json()).ref;
+  const c = app.db.get(ref).data.calc;
+  assert.equal(c.property, 'semi');
+  assert.equal(c.roofCovering, 'slate');
+  assert.equal(c.homeAge, '1930_1990');
+  assert.equal(c.ownership, 'rent');
+  const bad = await post('/api/quote', goodQuote({ calc: { property: '<script>', ownership: 'squatter' } }));
+  const c2 = app.db.get((await bad.json()).ref).data.calc;
+  assert.equal(c2.property, null);
+  assert.equal(c2.ownership, null);
+});

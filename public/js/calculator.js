@@ -136,6 +136,7 @@ function viewRoof() {
         </div>
       </div>
       ${spaceTiles('roofs.0.space', r0.space)}
+      ${chips('roofCovering', 'What is the roof covered with?', [['tiles', 'Tiles'], ['slate', 'Slate'], ['flat', 'Flat roof'], ['metal', 'Metal'], ['unsure', 'Not sure']], i.roofCovering)}
       ${tiles('shading', 'Does anything shade the roof?', Object.entries(D.SHADING).map(([k, v]) => [k, v.label, v.hint]), i.shading, 'tiles-4')}
       <div class="choice second">
         <label class="check"><input type="checkbox" name="second" ${second ? 'checked' : ''}><span>I could also put panels on a second roof face</span></label>
@@ -161,6 +162,9 @@ function viewHome() {
   root.innerHTML = `<div class="wrap">${header('home', 'Tell us about the home', 'This is what decides how much of your solar you’ll use yourself, and that is where most of the saving comes from.')}
   <div class="step-grid">
     <div class="step-form">
+      ${chips('property', 'Type of property', [['detached', 'Detached'], ['semi', 'Semi-detached'], ['terraced', 'Terraced'], ['bungalow', 'Bungalow'], ['flat', 'Flat']], i.property)}
+      ${chips('homeAge', 'How old is the home?', [['pre1930', 'Before 1930'], ['1930_1990', '1930 to 1990'], ['1990_2010', '1990 to 2010'], ['post2010', 'After 2010'], ['unsure', 'Not sure']], i.homeAge)}
+      ${chips('ownership', 'Do you own the property?', [['own', 'I own it'], ['landlord', 'I’m a landlord'], ['rent', 'I rent it']], i.ownership)}
       ${chips('bedrooms', 'Bedrooms', bedOpts, i.bedrooms, 'chips-row')}
       ${chips('occupants', 'People living there', bedOpts, i.occupants, 'chips-row')}
       ${tiles('occupancy', 'Who’s home during the day?', Object.entries(D.OCCUPANCY).map(([k, v]) => [k, v.label, v.hint]), i.occupancy, 'tiles-3')}
@@ -347,6 +351,10 @@ function calcSummary() {
   return {
     roofs: i.roofs.map((x, n) => ({ azimuth: x.azimuth, tilt: x.tilt, space: x.space, panels: r.system.faces[n]?.panels ?? 0 })),
     shading: i.shading,
+    property: i.property || null,
+    roofCovering: i.roofCovering || null,
+    homeAge: i.homeAge || null,
+    ownership: i.ownership || null,
     bedrooms: i.bedrooms,
     occupants: i.occupants,
     occupancy: i.occupancy,
@@ -377,6 +385,7 @@ function quoteSection() {
       <p class="eyebrow">Next step, only if you want it</p>
       <h2 id="h-quotes">Get up to three quotes for this system.</h2>
       <p>Installers covering ${esc(state.place || i.postcode)} will see your roof, your usage and this estimate, so they can quote for the real job instead of starting from scratch. You’ll see exactly who gets your details before you send anything.</p>
+      ${i.ownership === 'rent' ? '<p class="note">If you rent, you will normally need your landlord’s written permission before any solar work can go ahead. Installers will ask for it.</p>' : ''}
       <div data-matched class="matched" hidden></div>
       <ul class="plain-list fine-list"><li>Free. We’re paid by installers, never by you.</li><li>No more than three installers, ever.</li><li>You can say no to any of them.</li></ul>
     </div>

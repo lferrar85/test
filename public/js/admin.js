@@ -17,7 +17,7 @@ function detail(s) {
   if (s.kind === 'installer') return `${d.company || ''}, MCS ${d.mcs_number || '?'}, areas ${d.areas || '?'}`;
   const c = d.calc;
   const parts = [];
-  if (c) parts.push(`${c.kWp ?? '?'} kWp`, `saves £${c.saving ?? '?'}/yr`, c.payback ? `payback ${c.payback}y` : '');
+  if (c) parts.push(`${c.kWp ?? '?'} kWp`, `saves £${c.saving ?? '?'}/yr`, c.payback ? `payback ${c.payback}y` : '', c.property || '', c.roofCovering ? `${c.roofCovering} roof` : '', c.homeAge ? `home ${c.homeAge}` : '', c.ownership || '');
   if (s.kind === 'battery') parts.push(`solar: ${d.existing_solar || '?'}`, d.system_kwp ? `${d.system_kwp} kWp` : '', d.goal || '');
   if (d.notes) parts.push(`“${d.notes}”`);
   return parts.filter(Boolean).join(' · ');
