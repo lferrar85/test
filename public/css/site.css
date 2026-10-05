@@ -125,7 +125,7 @@ button { font: inherit; color: inherit; }
 button.link { background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--sun); text-decoration-thickness: 0.14em; text-underline-offset: 0.18em; font-weight: 600; }
 
 /* ---- Header ------------------------------------------------------------- */
-.site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); isolation: isolate; }
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; border-bottom: 1px solid var(--line); isolation: isolate; }
 /* The frosted layer lives on a pseudo-element: backdrop-filter on the header itself would make it
    the containing block for the fixed mobile menu and clip that menu to the header's height. */
 .site-header::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(245, 239, 226, 0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
