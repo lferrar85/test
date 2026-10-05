@@ -35,6 +35,18 @@ npm run export               # static copy of the whole site in ./dist
 | 404, sitemap.xml, robots.txt | |
 | Admin: submissions, status, CSV export, delete (password-protected, not linked) | `/admin` |
 
+## Deploy to Netlify
+
+`netlify.toml` is included. Netlify runs `npm run export` (static pages) and serves `netlify/functions/api.mjs` at `/api/*` for the forms.
+
+1. Push this branch to GitHub, then in Netlify choose **Add new site > Import an existing project** and pick the repo and branch.
+2. Leave the build settings as detected (they come from `netlify.toml`).
+3. Under **Site configuration > Environment variables** add `WEBHOOK_URL`: where each lead is POSTed as JSON (a Zapier or Make webhook that writes to Google Sheets, email or your CRM). Until it's set the forms return an error on purpose, so no lead is silently lost.
+4. Optional: `CONTACT_EMAIL`, `COMPANY_NAME`, `COMPANY_NUMBER`, `COMPANY_ADDRESS`, `ICO_NUMBER`, `SITE_NAME`.
+5. Add your custom domain under **Domain management**.
+
+Netlify has no database or admin page: leads live wherever your webhook sends them. The `/admin`, SQLite store, rate limiting and the 12-month purge are for the Node server (`npm start`) only. If you stay on Netlify, apply the retention promise in your own sheet or CRM.
+
 ## How it works
 
 ```
