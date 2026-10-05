@@ -265,7 +265,7 @@ function createRenderer(canvas, fallback, initial) {
   if (!gl) {
     canvas.hidden = true;
     canvas.dataset.status = 'fallback';
-    return { update() {}, dispose() {}, aim() {}, setSun() {}, celebrate() {}, rest() {} };
+    return { update() {}, dispose() {}, aim() {}, setSun() {}, celebrate() {}, rest() {}, hold() {} };
   }
   let options = initial;
   const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -475,6 +475,12 @@ function createRenderer(canvas, fallback, initial) {
     state.charge = Math.max(state.charge, 0.9); state.pulse = 0; state.pulseAngle = state.angle; state.holding = false;
     requestFrame();
   }
+  // Hold to charge the aurora; release to send it along the horizon.
+  function hold(on) {
+    if (on) { if (options.auroraEnabled) { state.holding = true; state.pulseAngle = state.target; requestFrame(); } return; }
+    if (state.holding && state.charge > .42 && !still() && options.auroraEnabled) { state.pulse = 0; state.pulseAngle = state.angle; }
+    state.holding = false; requestFrame();
+  }
   function rest() {
     state.holding = false; state.target = geometry ? geometry.rest : 0; state.targetReveal = 0; state.targetDrift = [0, 0]; requestFrame();
   }
@@ -497,7 +503,7 @@ function createRenderer(canvas, fallback, initial) {
   listen(window, 'resize', resize);
   try { setup(); resize(); loadTexture(); } catch { fail(); }
   return {
-    aim, setSun, celebrate, rest,
+    aim, setSun, celebrate, rest, hold,
     update(next) {
       const previous = options; options = next;
       if (previous.starCount !== options.starCount && state.ready && !state.lost) updateStars();

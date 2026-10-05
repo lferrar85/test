@@ -27,16 +27,20 @@ if (host) {
     }
   }
 
-  // East is the left of the horizon, west the right, south the middle.
-  const sunFraction = (az) => {
-    const d = ((((az - 180) % 360) + 540) % 360) - 180;
-    // keep the sun on the open part of the sky, clear of the form card on the right
-    return 0.05 + 0.55 * (0.5 + 0.5 * Math.max(-1, Math.min(1, d / 90)));
-  };
+  // The sun follows the pointer across the whole hero. Press and hold on the sky to charge an
+  // aurora, release to send it along the horizon.
+  const hero = space && space.closest('.hero');
+  if (blaze && hero) {
+    hero.addEventListener('pointermove', (e) => blaze.aim(e.clientX, e.clientY));
+    hero.addEventListener('pointerleave', () => blaze.rest());
+    hero.addEventListener('pointerdown', (e) => {
+      if (e.button === 0 && !e.target.closest('.hero-tool, a, button, input, select')) blaze.hold(true);
+    });
+    for (const t of ['pointerup', 'pointercancel']) window.addEventListener(t, () => blaze.hold(false));
+  }
 
   mountStart(host, {
     state,
-    onAzimuth: (az) => blaze && blaze.setSun(sunFraction(az)),
     onDone() {
       state.step = 'roof';
       saveState(state);
