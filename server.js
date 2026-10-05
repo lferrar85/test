@@ -52,6 +52,7 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'X-Frame-Options': 'DENY',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  ...(PROD ? { 'Strict-Transport-Security': 'max-age=31536000' } : {}),
 };
 
 // ---------------------------------------------------------------------------
@@ -243,6 +244,10 @@ export function createApp({ db = openDb() } = {}) {
         const html = await readFile(path.join(PUBLIC, 'admin.html'));
         return send(res, 200, html, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' });
       }
+      if (pathname === '/healthz') {
+        db.list('', 1);
+        return json(res, 200, { ok: true });
+      }
       if (pathname === '/robots.txt') return send(res, 200, robotsTxt(), { 'Content-Type': MIME['.txt'] });
       if (pathname === '/sitemap.xml') return send(res, 200, sitemapXml(), { 'Content-Type': MIME['.xml'] });
       if (pathname === '/favicon.ico') return send(res, 204, '');
@@ -266,8 +271,22 @@ export function createApp({ db = openDb() } = {}) {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const { handler } = createApp();
+  const { handler, db } = createApp();
   const port = Number(process.env.PORT || 3000);
+  // Keep the privacy notice's promise: delete submissions older than RETENTION_MONTHS (default 12), daily.
+  const months = Number(process.env.RETENTION_MONTHS || 12);
+  const purge = () => {
+    try {
+      const n = db.purgeOlderThan(months);
+      if (n) console.log(`Retention: deleted ${n} submission(s) older than ${months} months.`);
+    } catch (e) {
+      console.error('Retention purge failed:', e.message);
+    }
+  };
+  if (process.env.AUTO_PURGE !== '0') {
+    purge();
+    setInterval(purge, 24 * 3600_000).unref();
+  }
   http.createServer(handler).listen(port, () => {
     console.log(`${SITE.name} running at http://localhost:${port}`);
     if (!process.env.ADMIN_PASSWORD) console.log('Admin disabled: set ADMIN_PASSWORD to enable /admin');

@@ -203,3 +203,15 @@ test('quick quote answers are kept when valid and dropped when not', async () =>
   assert.equal(a.homeBuilt, null);
   assert.equal(a.addressLine, '1 Campion Avenue');
 });
+
+test('healthz answers, and backups produce a readable copy of the leads', async () => {
+  assert.equal((await fetch(base + '/healthz')).status, 200);
+  const { mkdtempSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { DatabaseSync } = await import('node:sqlite');
+  const file = mkdtempSync(tmpdir() + '/rwbk-') + '/copy.sqlite';
+  app.db.backupTo(file);
+  const copy = new DatabaseSync(file);
+  assert.ok(copy.prepare('select count(*) n from submissions').get().n > 0);
+  copy.close();
+});

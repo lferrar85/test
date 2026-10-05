@@ -1,0 +1,22 @@
+# Render blueprint: Dashboard > New > Blueprint, pick this repo.
+services:
+  - type: web
+    name: roofworth
+    runtime: docker
+    plan: starter            # a persistent disk needs a paid instance
+    healthCheckPath: /healthz
+    disk:
+      name: leads
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false          # you enter this in the dashboard
+      - key: SITE_URL
+        sync: false          # e.g. https://www.yourdomain.co.uk
+      - key: WEBHOOK_URL
+        sync: false          # optional: copy every lead to Zapier/Make/Slack
+      - key: CONTACT_EMAIL
+        sync: false
+      - key: COMPANY_NAME
+        sync: false

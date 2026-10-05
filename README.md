@@ -35,6 +35,20 @@ npm run export               # static copy of the whole site in ./dist
 | 404, sitemap.xml, robots.txt | |
 | Admin: submissions, status, CSV export, delete (password-protected, not linked) | `/admin` |
 
+## Run the Node server with admin and lead storage (recommended)
+
+This keeps every lead in SQLite, with the `/admin` page (list, status, delete, CSV export), fair lead rotation, rate limiting and automatic 12-month deletion.
+
+**Render (easiest):** push the branch, then Dashboard > New > Blueprint and pick the repo. `render.yaml` creates a Docker web service with a 1 GB persistent disk at `/data` (a paid instance is required for the disk). Enter `ADMIN_PASSWORD` and `SITE_URL` when asked. Then open `https://your-domain/admin` and sign in as `admin`.
+
+**Any Docker host (Fly.io, Railway, a VPS):** `docker build -t roofworth . && docker run -p 10000:10000 -v roofworth-data:/data -e ADMIN_PASSWORD=... -e SITE_URL=https://... roofworth`. Mount a volume at `/data` or leads are lost on redeploy.
+
+- `GET /healthz` is the health check. Always serve over HTTPS: the admin uses HTTP Basic auth.
+- Old leads are deleted daily after `RETENTION_MONTHS` (default 12). Set `AUTO_PURGE=0` to turn that off.
+- Backups: `node scripts/backup.mjs` writes a dated copy to `./backups`. Schedule it and copy the files off the server.
+- Set `WEBHOOK_URL` to also copy each lead to Zapier, Make, Slack or a CRM, which doubles as a second backup.
+- Lead emails and phone numbers are personal data: keep `ADMIN_PASSWORD` long and unique.
+
 ## Deploy to Netlify
 
 `netlify.toml` is included. Netlify runs `npm run export` (static pages) and serves `netlify/functions/api.mjs` at `/api/*` for the forms.
