@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "kestrel-solar-works",
+    "name": "Kestrel Solar Works",
+    "tagline": "Roof-first design for terraces and semis",
+    "about": "Sample listing. A small regional installer profile, here to show how installer pages look. Replace with a real partner once their details and certifications have been checked.",
+    "regions": ["yorks", "emids", "nw", "ne"],
+    "services": ["solar", "battery", "ev"],
+    "accreditations": ["MCS", "TrustMark", "RECC"],
+    "demo": true
+  },
+  {
+    "slug": "harbour-and-hill-energy",
+    "name": "Harbour & Hill Energy",
+    "tagline": "Solar and batteries across the South West",
+    "about": "Sample listing. Shows an installer with solar, battery and heat pump services. Replace with a real partner once checked.",
+    "regions": ["sw", "se", "wales"],
+    "services": ["solar", "battery", "heatpump"],
+    "accreditations": ["MCS", "HIES"],
+    "demo": true
+  },
+  {
+    "slug": "northlight-renewables",
+    "name": "Northlight Renewables",
+    "tagline": "Installers for Scottish roofs and Scottish weather",
+    "about": "Sample listing. Shows an installer covering Scotland and the North of England. Replace with a real partner once checked.",
+    "regions": ["scot", "ne", "nw"],
+    "services": ["solar", "battery"],
+    "accreditations": ["MCS", "RECC"],
+    "demo": true
+  },
+  {
+    "slug": "fenwick-power-co",
+    "name": "Fenwick Power Co",
+    "tagline": "Big roofs, farm buildings and new builds",
+    "about": "Sample listing. Shows an installer that handles larger and agricultural roofs. Replace with a real partner once checked.",
+    "regions": ["east", "emids", "wmids"],
+    "services": ["solar", "battery"],
+    "accreditations": ["MCS", "TrustMark"],
+    "demo": true
+  },
+  {
+    "slug": "marlowe-solar",
+    "name": "Marlowe Solar",
+    "tagline": "London and Home Counties specialists",
+    "about": "Sample listing. Shows an installer for London and the South East, with scaffolding and DNO paperwork handled in-house. Replace with a real partner once checked.",
+    "regions": ["london", "se", "east"],
+    "services": ["solar", "battery", "ev"],
+    "accreditations": ["MCS", "RECC", "TrustMark"],
+    "demo": true
+  },
+  {
+    "slug": "tidewater-energy",
+    "name": "Tidewater Energy",
+    "tagline": "Coastal homes, salt-air rated kit",
+    "about": "Sample listing. Shows an installer focused on coastal properties across the South and Wales. Replace with a real partner once checked.",
+    "regions": ["sw", "se", "wales", "london"],
+    "services": ["solar", "battery"],
+    "accreditations": ["MCS", "HIES"],
+    "demo": true
+  },
+  {
+    "slug": "ashgrove-renewables",
+    "name": "Ashgrove Renewables",
+    "tagline": "Midlands installs, one team start to finish",
+    "about": "Sample listing. Shows an installer covering the Midlands and North West with an in-house install crew. Replace with a real partner once checked.",
+    "regions": ["wmids", "emids", "nw", "wales"],
+    "services": ["solar", "battery", "heatpump"],
+    "accreditations": ["MCS", "TrustMark"],
+    "demo": true
+  },
+  {
+    "slug": "glenmore-energy-systems",
+    "name": "Glenmore Energy Systems",
+    "tagline": "Northern Ireland and the Borders",
+    "about": "Sample listing. Shows an installer covering Northern Ireland and Scotland. Replace with a real partner once checked.",
+    "regions": ["ni", "scot"],
+    "services": ["solar", "battery", "ev"],
+    "accreditations": ["MCS"],
+    "demo": true
+  }
+]

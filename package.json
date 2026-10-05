@@ -1,0 +1,15 @@
+{
+  "name": "roofworth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "UK solar savings calculator and installer quote-matching site (working name: Roofworth)",
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "PORT=3000 node server.js",
+    "test": "node --test test/*.test.mjs",
+    "export": "node scripts/export-static.mjs",
+    "links": "node scripts/check-links.mjs"
+  }
+}

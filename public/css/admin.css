@@ -1,0 +1,12 @@
+.admin { background: var(--paper); }
+.admin-bar { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; padding: 0.75rem 1.25rem; border-bottom: 1.5px solid var(--ink); background: var(--paper-2); }
+.admin-tabs { display: flex; gap: 0.25rem; flex-wrap: wrap; flex: 1; }
+.admin-tabs button { font: inherit; padding: 0.35rem 0.8rem; border: 1.5px solid var(--ink); background: transparent; border-radius: 999px; cursor: pointer; }
+.admin-tabs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.admin-main { padding: 1.25rem; }
+.admin-count { margin: 0 0 0.75rem; color: var(--muted); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.admin-table th, .admin-table td { text-align: left; vertical-align: top; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--line); }
+.admin-table .mono { font-family: var(--font-mono); font-size: 0.78rem; white-space: nowrap; }
+.admin-table .pre { white-space: pre-line; }
+.admin-table .wide { min-width: 18rem; max-width: 34rem; overflow-wrap: anywhere; }
