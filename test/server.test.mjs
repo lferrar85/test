@@ -194,3 +194,12 @@ test('property details from the calculator are kept when valid and dropped when 
   assert.equal(c2.property, null);
   assert.equal(c2.ownership, null);
 });
+
+test('quick quote answers are kept when valid and dropped when not', async () => {
+  const res = await post('/api/quote', goodQuote({ answers: { roofType: 'mono', roofMaterial: 'slate', bedrooms: '3_4', ownership: 'buying', timing: 'asap', homeBuilt: 'nope', addressLine: '1 Campion Avenue' } }));
+  const a = app.db.get((await res.json()).ref).data.answers;
+  assert.equal(a.roofType, 'mono');
+  assert.equal(a.ownership, 'buying');
+  assert.equal(a.homeBuilt, null);
+  assert.equal(a.addressLine, '1 Campion Avenue');
+});
