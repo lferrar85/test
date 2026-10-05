@@ -52,8 +52,8 @@ export function createDial(host, { azimuth = 180, tilt = 35, onChange = () => {}
 
   host.innerHTML = `<svg class="dial" viewBox="-24 -24 448 448" role="slider" tabindex="0" aria-label="Which way your roof faces, as a compass bearing" aria-valuemin="0" aria-valuemax="359" aria-orientation="horizontal" focusable="true">
   <defs>
-    <radialGradient id="dial-grad" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9eff8"/></radialGradient>
-    <linearGradient id="dial-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc83a"/><stop offset="1" stop-color="#ff9500"/></linearGradient>
+    <radialGradient id="dial-grad" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#efefeb"/></radialGradient>
+    <linearGradient id="dial-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe45c"/><stop offset="1" stop-color="#ffb400"/></linearGradient>
   </defs>
   <circle class="dial-disc" cx="${CX}" cy="${CY}" r="${R_OUT}"/>
   <circle class="dial-ring" cx="${CX}" cy="${CY}" r="${R_IN}"/>

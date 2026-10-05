@@ -48,7 +48,7 @@ export function mountStart(host, { state, onDone, cta = 'Next: your roof', headi
       ${COMPASS_POINTS.map((n) => `<button type="button" class="compass-btn" data-bearing="${compassBearing(n)}" aria-pressed="false" aria-label="${n}"><span aria-hidden="true">${n.split('-').map((w) => w[0].toUpperCase()).join('')}</span></button>`).join('')}
     </div>
   </fieldset>
-  <button class="btn btn-lg btn-block" type="submit"><span>${esc(cta)}</span><span class="arrow" aria-hidden="true">→</span></button>
+  <button class="btn btn-lg btn-block btn-dark" type="submit"><span>${esc(cta)}</span><span class="arrow" aria-hidden="true">→</span></button>
 </form>`;
 
   const form = host.querySelector('form');
