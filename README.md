@@ -49,6 +49,10 @@ This keeps every lead in SQLite, with the `/admin` page (list, status, delete, C
 - Set `WEBHOOK_URL` to also copy each lead to Zapier, Make, Slack or a CRM, which doubles as a second backup.
 - Lead emails and phone numbers are personal data: keep `ADMIN_PASSWORD` long and unique.
 
+## The space hero
+
+The home hero is `public/js/earth-blaze.js`, a dependency-free port of the "Earth Blaze" WebGL component (stars, nebula, a planetary limb, aurora). The Roof Dial moves the sun along the horizon, and continuing from the form fires an aurora burst. Colours are tinted to the yellow theme in `public/js/start.js`. It respects reduced-motion, pauses when off-screen, and falls back to a CSS gradient without WebGL. By default the planet uses a generated texture. For a real NASA Blue Marble look, self-host a cloud-free equirectangular Earth image (e.g. `/img/earth.jpg`), set `EARTH_TEXTURE_URL=/img/earth.jpg`, and keep it on your own domain so the Content-Security-Policy and browser CORS rules allow it.
+
 ## Deploy to Netlify
 
 `netlify.toml` is included. Netlify runs `npm run export` (static pages) and serves `netlify/functions/api.mjs` at `/api/*` for the forms.

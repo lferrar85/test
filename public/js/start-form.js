@@ -26,7 +26,7 @@ async function lookupPlace(pc) {
   }
 }
 
-export function mountStart(host, { state, onDone, cta = 'Next: your roof', heading = true }) {
+export function mountStart(host, { state, onDone, onAzimuth = () => {}, cta = 'Next: your roof', heading = true }) {
   const cfg = siteConfig();
   const input = state.input;
   const id = `sf${Math.random().toString(36).slice(2, 6)}`;
@@ -79,9 +79,11 @@ export function mountStart(host, { state, onDone, cta = 'Next: your roof', headi
     onChange(az) {
       input.roofs[0].azimuth = az;
       syncReadout(az);
+      onAzimuth(az);
     },
   });
   syncReadout(input.roofs[0].azimuth);
+  onAzimuth(input.roofs[0].azimuth);
 
   for (const b of buttons) {
     b.addEventListener('click', () => {

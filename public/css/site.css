@@ -823,3 +823,26 @@ input[type='range']::-moz-range-track { background: var(--line-strong); }
 .field-check .check input { margin-top: 0.15rem; }
 .site-nav a:not(.btn), .site-nav .btn { white-space: nowrap; }
 @media (max-width: 70rem) and (min-width: 56.01rem) { .site-nav a:not(.btn) { padding: 0.5rem 0.55rem; } .site-nav { gap: 0.6rem; } }
+
+/* ---- Space hero: Earth at dusk behind the headline ---------------------- */
+.hero-space { background: #000; color: #fff; min-height: 46rem; }
+.hero-space::before, .hero-space::after { display: none; }
+.space-bg { position: absolute; inset: 0; z-index: 0; }
+.eb-canvas, .eb-fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.eb-fallback { background: radial-gradient(ellipse at 50% 112%, rgba(255, 190, 0, 0.55) 0%, rgba(120, 80, 0, 0.25) 28%, transparent 58%), radial-gradient(ellipse at 30% 30%, #2a2210 0%, #0c0a05 40%, #000 80%); }
+.space-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.08) 55%, transparent 100%); pointer-events: none; }
+.hero-space h1 { color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5); }
+.hero-space .grad { background: var(--sun); color: #111; box-shadow: 0 10px 40px -8px rgba(255, 208, 0, 0.55); }
+.hero-space .lede { color: rgba(255, 255, 255, 0.86); }
+.hero-space .checks li { color: #fff; }
+.hero-space .checks .icon-check { background: var(--sun); color: #111; }
+.hero-space .trust-row { color: rgba(255, 255, 255, 0.86); }
+.hero-space .trust-row .icon { color: var(--sun); }
+.hero-space .hero-badge { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); color: #fff; box-shadow: none; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.hero-space .hero-badge .icon-tile { background: var(--sun); color: #111; }
+.hero-space .hero-tool { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 40px 90px -20px rgba(0, 0, 0, 0.75), 0 0 80px -10px rgba(255, 208, 0, 0.25); }
+.hero-space .dial-sun { filter: drop-shadow(0 0 14px rgba(255, 208, 0, 0.9)); }
+.sun-hint { margin: 0.8rem 0 0; font-size: var(--step--1); color: rgba(255, 255, 255, 0.7); display: flex; gap: 0.5rem; align-items: center; }
+@media (prefers-reduced-motion: reduce) { .eb-canvas { opacity: 0.9; } }
+
+.hero-space .hero-tool { color: var(--ink); }
