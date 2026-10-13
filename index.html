@@ -20,6 +20,7 @@
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#services">Services</a>
+      <a href="#quote">Get a quote</a>
       <a href="#skips">Skips</a>
       <a href="#yard">The yard</a>
       <a href="#reviews">Reviews</a>
@@ -60,7 +61,7 @@
         </p>
         <div class="hero__actions" data-reveal>
           <a class="btn btn--blue" href="tel:+441162667497">Call 0116 266 7497</a>
-          <a class="btn btn--ghost" href="#skips">Skip sizes &amp; prices</a>
+          <a class="btn btn--ghost" href="#quote">Get a skip quote</a>
         </div>
       </div>
 
@@ -87,6 +88,7 @@
 
       <div class="services__grid">
         <article class="svc svc--lead" data-reveal>
+          <img class="svc__img" src="media/tiles/scrap.jpg" alt="" loading="lazy" />
           <span class="svc__num">01</span>
           <h3>Scrap metal</h3>
           <p>We buy all common metals: iron, steel, copper, aluminium, cast iron, stainless and brass. Bring it in yourself and go over the weighbridge, or we'll dismantle and collect.</p>
@@ -95,30 +97,60 @@
           </ul>
         </article>
         <article class="svc" data-reveal>
+          <img class="svc__img" src="media/tiles/skips.jpg" alt="" loading="lazy" />
           <span class="svc__num">02</span>
           <h3>Skip hire</h3>
           <p>Mini, midi and maxi skips from 3 to 12 cubic metres, delivered across Leicester and the county.</p>
         </article>
         <article class="svc" data-reveal>
+          <img class="svc__img" src="media/tiles/roro.jpg" alt="" loading="lazy" />
           <span class="svc__num">03</span>
           <h3>Roll-on / roll-off</h3>
           <p>Bulk containers and articulated lorries for sites that fill a skip before lunch.</p>
         </article>
         <article class="svc" data-reveal>
+          <img class="svc__img" src="media/tiles/demolition.jpg" alt="" loading="lazy" />
           <span class="svc__num">04</span>
           <h3>Demolition services</h3>
           <p>Strip-out, site clearance and demolition, with the metal recovered and the waste handled under one licence.</p>
         </article>
         <article class="svc" data-reveal>
+          <img class="svc__img" src="media/tiles/hazardous.jpg" alt="" loading="lazy" />
           <span class="svc__num">05</span>
           <h3>Hazardous waste</h3>
           <p>Licensed transfer station for hazardous waste, including asbestos by arrangement. Call before you load.</p>
         </article>
         <article class="svc" data-reveal>
+          <img class="svc__img" src="media/tiles/tipper.jpg" alt="" loading="lazy" />
           <span class="svc__num">06</span>
           <h3>Tipper hire &amp; aggregates</h3>
           <p>Tipper hire, plus tipping for trade vans. Hardcore and soil are priced separately: ask before you load.</p>
         </article>
+      </div>
+    </section>
+
+    <!-- ============ GET A QUOTE ============ -->
+    <section class="getquote" id="quote">
+      <div class="section-head section-head--light" data-reveal>
+        <p class="overline">Get a quote</p>
+        <h2>What's going<br/>in the skip?</h2>
+        <p class="section-head__note">Pick the waste type and we'll show the right sizes. Some wastes have to travel on their own: plasterboard and asbestos can't go in a mixed skip.</p>
+      </div>
+
+      <div class="getquote__layout">
+        <div class="waste-grid" data-waste-grid></div>
+
+        <aside class="quote-panel" data-quote-panel>
+          <p class="quote-panel__title">Price depends on your postcode</p>
+          <p class="quote-panel__text">Permits, distance and tip rates vary across the county. Enter yours for an accurate quote.</p>
+          <label class="quote-panel__label" for="postcode">Delivery postcode</label>
+          <div class="quote-panel__row">
+            <input class="quote-panel__input" id="postcode" name="postcode" type="text" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-postcode />
+            <button class="btn quote-panel__btn" type="button" data-postcode-check>Check</button>
+          </div>
+          <p class="quote-panel__result" data-postcode-result aria-live="polite"></p>
+          <a class="quote-panel__tel" href="tel:+441162667497">Or call 0116 266 7497</a>
+        </aside>
       </div>
     </section>
 
@@ -149,29 +181,16 @@
       </svg>
 
       <div class="section-head section-head--light" data-reveal>
-        <p class="overline">Skip hire · Three steps</p>
-        <h2>Postcode.<br/>Pick a skip.<br/>Booked.</h2>
+        <p class="overline">Skip sizes</p>
+        <h2>Pick a size.<br/>Booked.</h2>
         <p class="section-head__note">Sizes in cubic metres with the yard equivalent. Bin-bag counts and dimensions are approximate. On-road placement needs a council permit, which we arrange.</p>
       </div>
 
       <form class="flow" data-flow novalidate>
 
-        <!-- STEP 1 -->
+        <!-- STEP A: size -->
         <fieldset class="flow__step" data-step="1">
-          <legend class="flow__legend"><span class="flow__num">01</span> Where's it going?</legend>
-          <div class="postcode">
-            <label class="postcode__label" for="postcode">Delivery postcode</label>
-            <div class="postcode__row">
-              <input class="postcode__input" id="postcode" name="postcode" type="text" inputmode="text" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-postcode />
-              <button class="btn btn--blue" type="button" data-postcode-check>Check</button>
-            </div>
-            <p class="postcode__result" data-postcode-result aria-live="polite"></p>
-          </div>
-        </fieldset>
-
-        <!-- STEP 2 -->
-        <fieldset class="flow__step" data-step="2">
-          <legend class="flow__legend"><span class="flow__num">02</span> Pick a skip</legend>
+          <legend class="flow__legend"><span class="flow__num">01</span> Pick a size</legend>
           <div class="skip-grid" role="radiogroup" aria-label="Skip size">
 
             <label class="skip-card" style="--scale: 0.62">
@@ -237,14 +256,15 @@
           </div>
         </fieldset>
 
-        <!-- STEP 3 -->
-        <fieldset class="flow__step" data-step="3">
-          <legend class="flow__legend"><span class="flow__num">03</span> Book it</legend>
+        <!-- STEP B: book -->
+        <fieldset class="flow__step" data-step="2">
+          <legend class="flow__legend"><span class="flow__num">02</span> Book it</legend>
           <div class="book">
             <div class="book__summary" data-summary>
               <span class="book__label">Your skip</span>
               <strong class="book__skip" data-summary-skip>6 m³ Builder's</strong>
               <span class="book__meta" data-summary-meta>≈ 8 yd · 80 bin bags · 3.4 × 1.7 × 1.2 m</span>
+              <span class="book__meta" data-summary-waste>General waste</span>
               <span class="book__meta" data-summary-postcode>Postcode not entered yet</span>
             </div>
             <div class="book__fields">
@@ -253,9 +273,17 @@
               <label class="field"><span>Delivery date</span><input type="date" name="date" data-date /></label>
               <label class="field"><span>What's going in it?</span>
                 <select name="waste">
-                  <option>General / mixed</option>
-                  <option>Soil &amp; hardcore (inert)</option>
-                  <option>Wood, plasterboard &amp; light</option>
+                  <option selected>General waste</option>
+                  <option>Garden waste</option>
+                  <option>Soil &amp; muck</option>
+                  <option>Inert waste</option>
+                  <option>Hardcore</option>
+                  <option>Plasterboard</option>
+                  <option>Wood</option>
+                  <option>Metal</option>
+                  <option>Mixed trade</option>
+                  <option>Wait &amp; load</option>
+                  <option>Asbestos</option>
                   <option>Not sure: call me</option>
                 </select>
               </label>
