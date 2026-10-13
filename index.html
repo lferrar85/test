@@ -124,38 +124,151 @@
 
     <!-- ============ SKIPS ============ -->
     <section class="skips" id="skips">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+          <!-- Isometric open-top skip, drawn once, reused at each size -->
+          <symbol id="skip-iso" viewBox="0 0 210 130">
+            <!-- shadow -->
+            <ellipse cx="118" cy="112" rx="78" ry="12" class="sk-shadow"/>
+            <!-- left side -->
+            <path d="M40 30 L90 52 L95 106 L55 88 Z" class="sk-side"/>
+            <!-- front -->
+            <path d="M90 52 L190 36 L175 92 L95 106 Z" class="sk-front"/>
+            <!-- inside -->
+            <path d="M40 30 L140 14 L190 36 L90 52 Z" class="sk-inside"/>
+            <path d="M48 32 L140 18 L182 35 L94 48 Z" class="sk-inside-deep"/>
+            <!-- rim -->
+            <path d="M40 30 L140 14 L190 36 L90 52 Z" class="sk-rim"/>
+            <!-- lifting lugs -->
+            <rect x="96" y="58" width="9" height="12" class="sk-lug"/>
+            <rect x="176" y="42" width="9" height="12" class="sk-lug"/>
+            <!-- side name -->
+            <text x="104" y="86" class="sk-text" transform="matrix(1 -0.16 0.08 1 0 0)">WATTS</text>
+          </symbol>
+        </defs>
+      </svg>
+
       <div class="section-head section-head--light" data-reveal>
-        <p class="overline">Skip hire</p>
-        <h2>Pick a size.<br/>We'll drop it tomorrow.</h2>
-        <p class="section-head__note">Sizes in cubic metres. Call for a price on your postcode; permits arranged for on-road placement.</p>
+        <p class="overline">Skip hire · Three steps</p>
+        <h2>Postcode.<br/>Pick a skip.<br/>Booked.</h2>
+        <p class="section-head__note">Sizes in cubic metres with the yard equivalent. Bin-bag counts and dimensions are approximate. On-road placement needs a council permit, which we arrange.</p>
       </div>
 
-      <div class="skips__row" data-skips>
-        <figure class="skip" data-reveal style="--m3: 3">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
-          <figcaption><strong>3</strong><span>Mini</span></figcaption>
-        </figure>
-        <figure class="skip" data-reveal style="--m3: 4">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
-          <figcaption><strong>4</strong><span>Midi</span></figcaption>
-        </figure>
-        <figure class="skip" data-reveal style="--m3: 6">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
-          <figcaption><strong>6</strong><span>Maxi</span></figcaption>
-        </figure>
-        <figure class="skip" data-reveal style="--m3: 8">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
-          <figcaption><strong>8</strong><span>Builder's</span></figcaption>
-        </figure>
-        <figure class="skip" data-reveal style="--m3: 12">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
-          <figcaption><strong>12</strong><span>Large</span></figcaption>
-        </figure>
-        <figure class="skip skip--roro" data-reveal style="--m3: 30">
-          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M4 4h92v34H4z" /><circle cx="18" cy="40" r="3"/><circle cx="82" cy="40" r="3"/></svg>
-          <figcaption><strong>RoRo</strong><span>Bulk</span></figcaption>
-        </figure>
-      </div>
+      <form class="flow" data-flow novalidate>
+
+        <!-- STEP 1 -->
+        <fieldset class="flow__step" data-step="1">
+          <legend class="flow__legend"><span class="flow__num">01</span> Where's it going?</legend>
+          <div class="postcode">
+            <label class="postcode__label" for="postcode">Delivery postcode</label>
+            <div class="postcode__row">
+              <input class="postcode__input" id="postcode" name="postcode" type="text" inputmode="text" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-postcode />
+              <button class="btn btn--blue" type="button" data-postcode-check>Check</button>
+            </div>
+            <p class="postcode__result" data-postcode-result aria-live="polite"></p>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="flow__step" data-step="2">
+          <legend class="flow__legend"><span class="flow__num">02</span> Pick a skip</legend>
+          <div class="skip-grid" role="radiogroup" aria-label="Skip size">
+
+            <label class="skip-card" style="--scale: 0.62">
+              <input type="radio" name="skip" value="3" data-skip data-name="Mini" data-m3="3" data-yd="4" data-bags="35" data-dims="1.8 × 1.3 × 1.0 m" />
+              <span class="skip-card__art"><svg><use href="#skip-iso"/></svg></span>
+              <span class="skip-card__size"><strong>3</strong> m³ <small>≈ 4 yd</small></span>
+              <span class="skip-card__name">Mini</span>
+              <span class="skip-card__bags">≈ 35 bin bags</span>
+              <span class="skip-card__dims">1.8 × 1.3 × 1.0 m</span>
+              <span class="skip-card__for">Garden clear-out, small bathroom refit</span>
+            </label>
+
+            <label class="skip-card" style="--scale: 0.72">
+              <input type="radio" name="skip" value="4" data-skip data-name="Midi" data-m3="4" data-yd="5" data-bags="50" data-dims="2.4 × 1.4 × 1.1 m" />
+              <span class="skip-card__art"><svg><use href="#skip-iso"/></svg></span>
+              <span class="skip-card__size"><strong>4</strong> m³ <small>≈ 5 yd</small></span>
+              <span class="skip-card__name">Midi</span>
+              <span class="skip-card__bags">≈ 50 bin bags</span>
+              <span class="skip-card__dims">2.4 × 1.4 × 1.1 m</span>
+              <span class="skip-card__for">Kitchen rip-out, house move clear-out</span>
+            </label>
+
+            <label class="skip-card skip-card--popular" style="--scale: 0.84">
+              <input type="radio" name="skip" value="6" data-skip data-name="Builder's" data-m3="6" data-yd="8" data-bags="80" data-dims="3.4 × 1.7 × 1.2 m" checked />
+              <span class="skip-card__flag">Most hired</span>
+              <span class="skip-card__art"><svg><use href="#skip-iso"/></svg></span>
+              <span class="skip-card__size"><strong>6</strong> m³ <small>≈ 8 yd</small></span>
+              <span class="skip-card__name">Builder's</span>
+              <span class="skip-card__bags">≈ 80 bin bags</span>
+              <span class="skip-card__dims">3.4 × 1.7 × 1.2 m</span>
+              <span class="skip-card__for">Rubble, soil and hardcore. The trade standard.</span>
+            </label>
+
+            <label class="skip-card" style="--scale: 0.92">
+              <input type="radio" name="skip" value="8" data-skip data-name="Large" data-m3="8" data-yd="10" data-bags="100" data-dims="3.7 × 1.8 × 1.5 m" />
+              <span class="skip-card__art"><svg><use href="#skip-iso"/></svg></span>
+              <span class="skip-card__size"><strong>8</strong> m³ <small>≈ 10 yd</small></span>
+              <span class="skip-card__name">Large</span>
+              <span class="skip-card__bags">≈ 100 bin bags</span>
+              <span class="skip-card__dims">3.7 × 1.8 × 1.5 m</span>
+              <span class="skip-card__for">Full house strip-out, shop refit</span>
+            </label>
+
+            <label class="skip-card" style="--scale: 1">
+              <input type="radio" name="skip" value="12" data-skip data-name="Maxi" data-m3="12" data-yd="16" data-bags="160" data-dims="4.1 × 1.8 × 1.8 m" />
+              <span class="skip-card__art"><svg><use href="#skip-iso"/></svg></span>
+              <span class="skip-card__size"><strong>12</strong> m³ <small>≈ 16 yd</small></span>
+              <span class="skip-card__name">Maxi</span>
+              <span class="skip-card__bags">≈ 160 bin bags</span>
+              <span class="skip-card__dims">4.1 × 1.8 × 1.8 m</span>
+              <span class="skip-card__for">Light bulky waste only: no soil or hardcore</span>
+            </label>
+
+            <label class="skip-card skip-card--roro" style="--scale: 1.08">
+              <input type="radio" name="skip" value="roro" data-skip data-name="Roll-on / roll-off" data-m3="20–30" data-yd="30–40" data-bags="400+" data-dims="6.1 × 2.4 × 1.9 m" />
+              <span class="skip-card__art"><svg viewBox="0 0 210 130"><ellipse cx="110" cy="112" rx="90" ry="12" class="sk-shadow"/><path d="M20 28 L60 46 L62 104 L24 88 Z" class="sk-side"/><path d="M60 46 L200 28 L196 86 L62 104 Z" class="sk-front"/><path d="M20 28 L160 10 L200 28 L60 46 Z" class="sk-inside"/><path d="M20 28 L160 10 L200 28 L60 46 Z" class="sk-rim"/><circle cx="80" cy="108" r="6" class="sk-lug"/><circle cx="180" cy="94" r="6" class="sk-lug"/><text x="80" y="84" class="sk-text" transform="matrix(1 -0.13 0.03 1 0 0)">WATTS</text></svg></span>
+              <span class="skip-card__size"><strong>20–30</strong> m³ <small>≈ 30–40 yd</small></span>
+              <span class="skip-card__name">Roll-on / roll-off</span>
+              <span class="skip-card__bags">400+ bin bags</span>
+              <span class="skip-card__dims">6.1 × 2.4 × 1.9 m</span>
+              <span class="skip-card__for">Demolition, site clearance, factory waste</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="flow__step" data-step="3">
+          <legend class="flow__legend"><span class="flow__num">03</span> Book it</legend>
+          <div class="book">
+            <div class="book__summary" data-summary>
+              <span class="book__label">Your skip</span>
+              <strong class="book__skip" data-summary-skip>6 m³ Builder's</strong>
+              <span class="book__meta" data-summary-meta>≈ 8 yd · 80 bin bags · 3.4 × 1.7 × 1.2 m</span>
+              <span class="book__meta" data-summary-postcode>Postcode not entered yet</span>
+            </div>
+            <div class="book__fields">
+              <label class="field"><span>Name</span><input type="text" name="name" autocomplete="name" required /></label>
+              <label class="field"><span>Phone</span><input type="tel" name="phone" autocomplete="tel" required /></label>
+              <label class="field"><span>Delivery date</span><input type="date" name="date" data-date /></label>
+              <label class="field"><span>What's going in it?</span>
+                <select name="waste">
+                  <option>General / mixed</option>
+                  <option>Soil &amp; hardcore (inert)</option>
+                  <option>Wood, plasterboard &amp; light</option>
+                  <option>Not sure: call me</option>
+                </select>
+              </label>
+              <label class="field field--check"><input type="checkbox" name="road" /><span>It'll sit on the road (we'll sort the permit)</span></label>
+            </div>
+            <div class="book__actions">
+              <button class="btn btn--blue" type="submit">Send booking request</button>
+              <a class="btn btn--ghost btn--ghost-dark" href="tel:+441162667497">Or call 0116 266 7497</a>
+            </div>
+            <p class="book__note" data-book-note>We confirm price and delivery slot by phone. No payment taken online.</p>
+          </div>
+        </fieldset>
+      </form>
     </section>
 
     <!-- ============ THE YARD ============ -->

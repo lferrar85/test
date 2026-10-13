@@ -1,4 +1,5 @@
 import Lenis from 'lenis'
+import { initSkipFlow } from './skips.js'
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -21,6 +22,7 @@ const ticketValue = document.querySelector('[data-ticket-value]')
 const ticketPct = document.querySelector('[data-ticket-pct]')
 
 document.querySelector('[data-year]').textContent = new Date().getFullYear()
+initSkipFlow(lenis)
 
 /* ---------- Scroll-linked effects ---------- */
 let lastScroll = 0

@@ -185,25 +185,94 @@ img, svg, video { display: block; max-width: 100%; }
 /* ---------- Skips (light) ---------- */
 .skips { background: var(--bone); color: var(--ink); color-scheme: light; padding-bottom: var(--space-3xl); }
 .skips .overline { color: var(--blue-deep); }
-.skips__row {
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-m); align-items: end;
-  padding-inline: var(--gutter);
+
+/* ---------- Skip hire flow ---------- */
+.flow { padding-inline: var(--gutter); display: grid; gap: var(--space-2xl); border: 0; }
+.flow__step { border: 0; padding: 0; min-width: 0; }
+.flow__legend { font-family: var(--display); font-weight: 800; font-size: var(--step-3); text-transform: uppercase; line-height: 1; display: flex; align-items: baseline; gap: 0.5em; margin-bottom: var(--space-m); padding: 0; }
+.flow__num { font-family: var(--mono); font-weight: 400; font-size: var(--step--1); letter-spacing: 0.12em; color: var(--blue-deep); }
+
+/* Step 1 */
+.postcode { max-width: 34rem; }
+.postcode__label { display: block; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mist); margin-bottom: 0.5rem; }
+.postcode__row { display: flex; gap: 0.5rem; }
+.postcode__input {
+  flex: 1; min-width: 0; font-family: var(--display); font-weight: 700; font-size: var(--step-3); text-transform: uppercase; letter-spacing: 0.04em;
+  padding: 0.35em 0.6em; background: #fff; color: var(--ink); border: 2px solid var(--ink); border-radius: 0;
 }
-.skip { display: flex; flex-direction: column; gap: var(--space-xs); align-items: center; text-align: center; }
-.skip svg {
-  width: 100%; height: auto;
-  /* each skip grows with its volume */
-  max-width: calc(5rem + var(--m3) * 0.55rem);
-  fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round;
-  transition: fill 0.4s var(--ease-out);
+.postcode__input::placeholder { color: var(--ink-faint); }
+.postcode__input:focus { outline: none; border-color: var(--blue); }
+.postcode__result { margin-top: 0.75rem; font-size: var(--step--1); min-height: 1.5em; }
+.postcode__result.is-good { color: #0b6b3a; }
+.postcode__result.is-warn { color: #8a5f00; }
+.postcode__result.is-bad { color: #a3261f; }
+
+/* Step 2: skip cards */
+.skip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-m); }
+.skip-card {
+  position: relative; display: grid; gap: 0.2rem; padding: var(--space-m); cursor: pointer;
+  background: #fff; border: 2px solid var(--ink-faint);
+  transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
-.skip--roro svg { max-width: 100%; stroke: var(--ink); }
-.skip--roro circle { fill: var(--ink); }
-.skip figcaption { display: flex; flex-direction: column; line-height: 1; }
-.skip strong { font-family: var(--display); font-weight: 800; font-size: var(--step-4); }
-.skip span { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mist); margin-top: 0.35em; }
-@media (hover: hover) { .skip:hover svg { fill: var(--blue); } }
-@media (max-width: 800px) { .skips__row { grid-template-columns: repeat(3, 1fr); } }
+.skip-card input { position: absolute; opacity: 0; pointer-events: none; }
+.skip-card__art { display: grid; place-items: center; height: 10rem; margin-bottom: var(--space-xs); }
+.skip-card__art svg { width: calc(100% * var(--scale, 1)); max-width: 100%; height: auto; overflow: visible; transition: transform 0.5s var(--ease-out); }
+.skip-card__flag { position: absolute; top: 0; left: 0; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; background: var(--ink); color: var(--bone); padding: 0.35em 0.7em; }
+.skip-card__size { font-family: var(--display); font-weight: 800; font-size: var(--step-2); line-height: 1; text-transform: uppercase; }
+.skip-card__size strong { font-size: var(--step-5); }
+.skip-card__size small { font-family: var(--mono); font-weight: 400; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--ink-mist); margin-left: 0.4em; }
+.skip-card__name { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-deep); }
+.skip-card__bags { font-weight: 600; margin-top: 0.5rem; }
+.skip-card__dims { font-family: var(--mono); font-size: var(--step--1); color: var(--ink-mist); }
+.skip-card__for { font-size: var(--step--1); color: var(--ink-mist); margin-top: 0.4rem; }
+.skip-card::after {
+  content: "Selected"; position: absolute; top: 0; right: 0; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--blue); color: #fff; padding: 0.35em 0.7em; opacity: 0; transition: opacity 0.3s;
+}
+.skip-card:has(input:checked) { border-color: var(--blue); }
+.skip-card:has(input:checked)::after { opacity: 1; }
+.skip-card:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 3px; }
+@media (hover: hover) {
+  .skip-card:hover { border-color: var(--ink); transform: translateY(-3px); }
+  .skip-card:hover .skip-card__art svg { transform: translateY(-4px) rotate(-1.5deg); }
+}
+@media (max-width: 900px) { .skip-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .skip-grid { grid-template-columns: 1fr; } .skip-card__art { height: 8rem; } }
+
+/* Isometric skip colours */
+.sk-shadow { fill: rgba(18,20,22,0.12); }
+.sk-side { fill: #124a9a; }
+.sk-front { fill: var(--blue); }
+.sk-inside { fill: #0b2f63; }
+.sk-inside-deep { fill: #071f45; }
+.sk-rim { fill: none; stroke: #c9ced6; stroke-width: 4; stroke-linejoin: round; }
+.sk-lug { fill: #c9ced6; }
+.sk-text { font-family: var(--display); font-weight: 800; font-size: 22px; fill: #fff; letter-spacing: 0.02em; }
+
+/* Step 3: book */
+.book { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-l); background: #fff; border: 2px solid var(--ink); padding: var(--space-l); }
+.book__summary { display: grid; gap: 0.35rem; align-content: start; border-right: 1px solid var(--ink-faint); padding-right: var(--space-l); }
+.book__label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mist); }
+.book__skip { font-family: var(--display); font-weight: 800; font-size: var(--step-4); line-height: 1; text-transform: uppercase; color: var(--blue-deep); }
+.book__meta { font-family: var(--mono); font-size: var(--step--1); color: var(--ink-mist); }
+.book__fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-s); }
+.field { display: grid; gap: 0.35rem; }
+.field > span { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mist); }
+.field input, .field select { font: inherit; font-size: var(--step-0); padding: 0.55em 0.7em; background: var(--bone); color: var(--ink); border: 2px solid var(--ink-faint); border-radius: 0; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--blue); background: #fff; }
+.field--check { grid-column: 1 / -1; grid-template-columns: auto 1fr; align-items: center; gap: 0.6rem; }
+.field--check input { width: 1.1rem; height: 1.1rem; accent-color: var(--blue); }
+.field--check > span { font-family: var(--body); font-size: var(--step-0); letter-spacing: 0; text-transform: none; color: var(--ink); }
+.book__actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-xs); }
+.btn--ghost-dark { color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.btn--ghost-dark::after { background: var(--ink); }
+@media (hover: hover) { .btn--ghost-dark:hover { color: var(--bone); } }
+.book__note { grid-column: 1 / -1; font-size: var(--step--1); color: var(--ink-mist); }
+@media (max-width: 860px) {
+  .book { grid-template-columns: 1fr; }
+  .book__summary { border-right: 0; border-bottom: 1px solid var(--ink-faint); padding-right: 0; padding-bottom: var(--space-m); }
+  .book__fields { grid-template-columns: 1fr; }
+}
 
 /* ---------- The yard (sticky) ---------- */
 .yard { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-xl); padding: var(--space-3xl) var(--gutter); background: var(--ink-2); }
