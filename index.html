@@ -1,20 +1,272 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lenis Demo</title>
+  <title>T. Watts — Scrap Metal, Skip Hire & Waste, Leicester</title>
+  <meta name="description" content="Family-run scrap metal merchants and skip hire on Barkby Road, Leicester. Computerised weighbridge, same-day payment, skips from 3 to 12 cubic metres, roll-on/roll-off and site clearance." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121416'/%3E%3Cpath d='M5 8h5l3 12 3-12h3l3 12 3-12h5l-6 18h-4l-3-11-3 11h-4z' fill='%23f2a900'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-  <nav>
-    <a href="#one">One</a>
-    <a href="#two">Two</a>
-    <a href="#three">Three</a>
-  </nav>
-  <section id="one"><h1>Smooth scroll with Lenis</h1></section>
-  <section id="two"><h1 data-parallax>Parallax element</h1></section>
-  <section id="three"><h1>Anchor links glide too</h1></section>
+
+  <header class="nav" data-nav>
+    <a class="nav__brand" href="#top" aria-label="T. Watts home">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" fill="currentColor" class="nav__brand-bg"/><path d="M5 8h5l3 12 3-12h3l3 12 3-12h5l-6 18h-4l-3-11-3 11h-4z" fill="var(--amber)"/></svg>
+      <span>T. Watts</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#skips">Skips</a>
+      <a href="#yard">The yard</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav__call" href="tel:+441162667497">
+      <span class="nav__call-label">Call the yard</span>
+      <span class="nav__call-num">0116 266 7497</span>
+    </a>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" data-hero>
+      <div class="hero__media" data-hero-media>
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/media/hero-poster.jpg">
+          <!-- Swap for drone / yard footage: keep ≤ 3 MB, 1280×720, H.264 -->
+          <source src="/media/hero.mp4" type="video/mp4" />
+        </video>
+        <div class="hero__scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero__ghost" aria-hidden="true" data-ghost>WATTS</div>
+
+      <div class="hero__content">
+        <p class="overline" data-reveal>
+          <span class="overline__dot"></span>
+          Barkby Road, Leicester LE4 · Family-run
+        </p>
+        <h1 class="hero__title">
+          <span class="hero__line" data-reveal>Scrap in.</span>
+          <span class="hero__line" data-reveal><em>Paid</em> same day.</span>
+          <span class="hero__line" data-reveal>Skips out.</span>
+        </h1>
+        <p class="hero__lede" data-reveal>
+          Leicester's scrap metal merchants and skip hire yard. Computerised weighbridge, competitive rates, and a crew that's quick at loading once you're in place.
+        </p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--amber" href="tel:+441162667497">Call 0116 266 7497</a>
+          <a class="btn btn--ghost" href="#skips">Skip sizes &amp; prices</a>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true" data-marquee>
+      <div class="marquee__track" data-marquee-track>
+        <span>Copper</span><span>Steel</span><span>Aluminium</span><span>Cast iron</span><span>Stainless</span><span>Brass</span><span>Lead</span><span>Cable</span><span>Ferrous</span><span>Non-ferrous</span>
+        <span>Copper</span><span>Steel</span><span>Aluminium</span><span>Cast iron</span><span>Stainless</span><span>Brass</span><span>Lead</span><span>Cable</span><span>Ferrous</span><span>Non-ferrous</span>
+      </div>
+    </div>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="services" id="services">
+      <div class="section-head" data-reveal>
+        <p class="overline">What we do</p>
+        <h2>One yard.<br/>Everything that's heavy.</h2>
+      </div>
+
+      <div class="services__grid">
+        <article class="svc svc--lead" data-reveal>
+          <span class="svc__num">01</span>
+          <h3>Scrap metal</h3>
+          <p>We buy all common metals: iron, steel, copper, aluminium, cast iron, stainless and brass. Bring it in yourself and go over the weighbridge, or we'll dismantle and collect.</p>
+          <ul class="svc__tags">
+            <li>Computerised weighbridge</li><li>Same-day bank transfer</li><li>Collection &amp; dismantling</li>
+          </ul>
+        </article>
+        <article class="svc" data-reveal>
+          <span class="svc__num">02</span>
+          <h3>Skip hire</h3>
+          <p>Mini, midi and maxi skips from 3 to 12 cubic metres, delivered across Leicester and the county.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <span class="svc__num">03</span>
+          <h3>Roll-on / roll-off</h3>
+          <p>Bulk containers and articulated lorries for sites that fill a skip before lunch.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <span class="svc__num">04</span>
+          <h3>Site clearance &amp; demolition</h3>
+          <p>Strip-out, clearance and demolition with the waste handled under one licence.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <span class="svc__num">05</span>
+          <h3>Vehicles &amp; WEEE</h3>
+          <p>End-of-life vehicles and electrical waste taken and processed properly.</p>
+        </article>
+        <article class="svc" data-reveal>
+          <span class="svc__num">06</span>
+          <h3>Tipper hire &amp; aggregates</h3>
+          <p>Tipper hire, plus tipping for trade vans. Hardcore and soil are priced separately: ask before you load.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SKIPS ============ -->
+    <section class="skips" id="skips">
+      <div class="section-head section-head--light" data-reveal>
+        <p class="overline">Skip hire</p>
+        <h2>Pick a size.<br/>We'll drop it tomorrow.</h2>
+        <p class="section-head__note">Sizes in cubic metres. Call for a price on your postcode; permits arranged for on-road placement.</p>
+      </div>
+
+      <div class="skips__row" data-skips>
+        <figure class="skip" data-reveal style="--m3: 3">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
+          <figcaption><strong>3</strong><span>Mini</span></figcaption>
+        </figure>
+        <figure class="skip" data-reveal style="--m3: 4">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
+          <figcaption><strong>4</strong><span>Midi</span></figcaption>
+        </figure>
+        <figure class="skip" data-reveal style="--m3: 6">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
+          <figcaption><strong>6</strong><span>Maxi</span></figcaption>
+        </figure>
+        <figure class="skip" data-reveal style="--m3: 8">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
+          <figcaption><strong>8</strong><span>Builder's</span></figcaption>
+        </figure>
+        <figure class="skip" data-reveal style="--m3: 12">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M8 6h84l-8 32H16z" /></svg>
+          <figcaption><strong>12</strong><span>Large</span></figcaption>
+        </figure>
+        <figure class="skip skip--roro" data-reveal style="--m3: 30">
+          <svg viewBox="0 0 100 44" aria-hidden="true"><path d="M4 4h92v34H4z" /><circle cx="18" cy="40" r="3"/><circle cx="82" cy="40" r="3"/></svg>
+          <figcaption><strong>RoRo</strong><span>Bulk</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ THE YARD ============ -->
+    <section class="yard" id="yard">
+      <div class="yard__sticky">
+        <p class="overline" data-reveal>How the yard works</p>
+        <h2 data-reveal>Weighed.<br/>Graded.<br/>Paid.</h2>
+      </div>
+      <ol class="yard__steps">
+        <li class="step" data-reveal>
+          <span class="step__num">1</span>
+          <h3>Drive onto the weighbridge</h3>
+          <p>Computerised, ticketed, and the same bridge for everyone. The forklift driver will talk you through where to go and what to do.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step__num">2</span>
+          <h3>We grade what you've brought</h3>
+          <p>Sort your metals before you arrive and you'll get the better rate. Mixed loads are graded as mixed.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step__num">3</span>
+          <h3>Paid by bank transfer, same day</h3>
+          <p>No cash on site, as the law requires. Bring photo ID and your bank details and the transfer goes out before you've left the car park.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="reviews" id="reviews">
+      <div class="section-head" data-reveal>
+        <p class="overline">From Google reviews</p>
+        <h2>Word from the gate.</h2>
+      </div>
+      <div class="reviews__wall">
+        <blockquote class="quote quote--big" data-reveal>
+          <p>Best scrap yard / waste recycling centre in the Midlands. Wouldn't go anywhere else.</p>
+          <cite>David Parker</cite>
+        </blockquote>
+        <blockquote class="quote" data-reveal>
+          <p>Nice people to deal with, never had any problems. Always found them to offer competitive rates. I don't go anywhere else.</p>
+          <cite>Matthew Dunne</cite>
+        </blockquote>
+        <blockquote class="quote" data-reveal>
+          <p>Everyone I spoke to was very polite and courteous. The forklift driver was great at explaining all that was going on and all that I should be doing.</p>
+          <cite>Angela Joesbury</cite>
+        </blockquote>
+        <blockquote class="quote quote--amber" data-reveal>
+          <p>Go there most days for tipping our work vans. Great lads, and the lady helps our company out very well.</p>
+          <cite>Ash Bash</cite>
+        </blockquote>
+        <blockquote class="quote" data-reveal>
+          <p>Good prices, friendly staff. Highly recommended.</p>
+          <cite>Maciej Benedyczak</cite>
+        </blockquote>
+        <blockquote class="quote" data-reveal>
+          <p>Very competitive with pricing, plus all the lads are very friendly.</p>
+          <cite>Steve Phillips</cite>
+        </blockquote>
+        <blockquote class="quote" data-reveal>
+          <p>Used these guys to sell some scrap. Very helpful and good prices. Highly recommended.</p>
+          <cite>Paul Carder</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact">
+      <div class="contact__grid">
+        <div class="contact__block" data-reveal>
+          <p class="overline">Find the yard</p>
+          <address>
+            T. Watts Scrap Metal Merchants Ltd<br/>
+            Barkby Road<br/>
+            Leicester LE4 9LG
+          </address>
+          <a class="contact__map" href="https://maps.google.com/?q=T+Watts+Scrap+Metal+Merchants+Barkby+Road+Leicester+LE4+9LG" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+        </div>
+        <div class="contact__block" data-reveal>
+          <p class="overline">Phone</p>
+          <a class="contact__tel" href="tel:+441162667497">0116 266 7497</a>
+          <a class="contact__tel contact__tel--alt" href="tel:+441162668684">0116 266 8684</a>
+        </div>
+        <div class="contact__block" data-reveal>
+          <p class="overline">Hours</p>
+          <table class="hours">
+            <tr><th>Mon – Fri</th><td>07:30 – 16:30</td></tr>
+            <tr><th>Saturday</th><td>07:30 – 11:30</td></tr>
+            <tr><th>Sunday</th><td>Closed</td></tr>
+          </table>
+          <p class="contact__note">Bring photo ID and bank details for scrap payments.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__ghost" aria-hidden="true" data-ghost-footer>WATTS</div>
+    <div class="footer__bar">
+      <span>© <span data-year></span> T. Watts Scrap Metal Merchants Ltd</span>
+      <span>Licensed waste carrier · Leicester</span>
+      <a href="https://www.facebook.com/WattsSkips/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </footer>
+
+  <!-- Signature: live weighbridge ticket, driven by Lenis scroll -->
+  <aside class="ticket" aria-hidden="true" data-ticket>
+    <span class="ticket__label">Weighbridge</span>
+    <span class="ticket__value"><span data-ticket-value>0.000</span> t</span>
+    <span class="ticket__meta"><span data-ticket-pct>0</span>% of page</span>
+  </aside>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
