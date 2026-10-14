@@ -49,10 +49,12 @@
     <!-- HERO: the Watts lorry drives in; scroll and it drops the skip -->
     <section class="hero" data-hero>
       <div class="hero__stage">
-        <canvas class="hero__canvas" data-hero-canvas aria-label="A Watts skip lorry drives into the yard carrying a blue Watts skip."></canvas>
+        <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="media/hero-poster.jpg" aria-hidden="true">
+          <!-- PLACEHOLDER footage (not Watts). Replace with Watts' own film: same filename, 1280px wide, under 5 MB. -->
+          <source src="media/hero.webm" type="video/webm" />
+          <source src="media/hero.mp4" type="video/mp4" />
+        </video>
         <div class="hero__grade" aria-hidden="true"></div>
-        <div class="hero__flare" aria-hidden="true"></div>
-        <img class="hero__fallback" src="media/skips/lorry.webp" alt="A Watts skip lorry carrying a blue Watts skip" hidden data-hero-fallback />
 
         <div class="hero__copy">
           <div class="hero__state is-on" data-state="0">
@@ -67,9 +69,8 @@
 
         </div>
 
-        <p class="hero__caption" data-caption aria-hidden="true"><span>Next working day</span>Dropped where you need it.</p>
         <div class="hero__foot">
-          <span class="hint" data-hint><span class="hint__mouse"></span>Scroll to drop the skip</span>
+          <span class="hint" data-hint><span class="hint__mouse"></span>Scroll</span>
           <span class="hint" data-open>Open today 07:30 – 16:30</span>
         </div>
       </div>

@@ -94,10 +94,10 @@ button { font: inherit; }
 @media (max-width: 900px) { .nav { grid-template-columns: auto auto; justify-content: space-between; } .nav__links, .nav__tel { display: none; } }
 
 /* ---------- Hero ---------- */
-.hero { height: 230vh; position: relative; }
+.hero { height: 100vh; height: 100svh; position: relative; }
 .hero__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; isolation: isolate; color: #fff; }
 .hero__stage { background: #d9d3c8; }
-.hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -3; touch-action: pan-y; }
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
 /* film grade: a soft dark wash behind the copy, a vignette, warm sun flare */
 .hero__grade { position: absolute; inset: 0; z-index: -2; pointer-events: none;
   background:
@@ -132,7 +132,7 @@ button { font: inherit; }
 .hint__mouse::after { content: ""; position: absolute; left: 50%; top: 3px; width: 2px; height: 4px; margin-left: -1px; background: var(--ink); border-radius: 2px; animation: wheel 1.6s infinite; }
 @keyframes wheel { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(6px); opacity: 0; } }
 @media (max-width: 900px) {
-  .hero { height: 200vh; }
+  .hero { height: 100svh; }
   .hero__copy { width: auto; right: var(--gutter); top: 5.5rem; }
   .hero__caption { white-space: normal; width: 90vw; bottom: 5rem; }
   .hero__grade { background: linear-gradient(180deg, rgba(6,22,42,0.7) 0%, rgba(6,22,42,0.35) 45%, rgba(6,22,42,0) 65%); }

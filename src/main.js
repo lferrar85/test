@@ -56,26 +56,14 @@ requestAnimationFrame(raf)
 /* ---------- Hero ---------- */
 const heroSection = $('[data-hero]')
 const hint = $('[data-hint]')
-const heroCopy = $('.hero__copy')
-const caption = $('[data-caption]')
-function onHeroProgress(p) {
-  const out = Math.min(1, Math.max(0, (p - 0.03) / 0.22))
-  heroCopy.style.opacity = 1 - out
-  heroCopy.style.transform = `translateY(${out * -40}px)`
-  heroCopy.style.pointerEvents = out > 0.5 ? 'none' : ''
-  caption.classList.toggle('is-on', p > 0.62)
-  hint.style.opacity = p > 0.05 ? 0 : 1
-}
-import('./hero.js')
-  .then(({ initHero }) => initHero({ canvas: $('[data-hero-canvas]'), section: heroSection, onProgress: onHeroProgress, reduceMotion }))
-  .catch(() => { $('[data-hero-fallback]').hidden = false; $('[data-hero-canvas]').remove() })
+lenis.on('scroll', ({ scroll }) => (hint.style.opacity = scroll > 40 ? 0 : 1))
 
 /* ---------- Nav, fab ---------- */
 const nav = $('[data-nav]')
 const fab = $('[data-fab]')
 let lastY = 0
 lenis.on('scroll', ({ scroll, direction }) => {
-  const heroEnd = heroSection.offsetHeight - window.innerHeight
+  const heroEnd = heroSection.offsetHeight - 120
   nav.classList.toggle('is-solid', scroll > heroEnd - 40)
   nav.classList.toggle('is-hidden', scroll > heroEnd && direction === 1 && scroll > lastY)
   fab.classList.toggle('is-on', scroll > heroEnd + 200)
