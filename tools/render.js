@@ -41,5 +41,5 @@ window.renderRoro = () => shoot(buildRoro(), { w: 800, h: 560, cam: [7.2, 4.4, 1
 window.renderLorry = (lower = 0, opts = {}) => {
   const l = buildLorry()
   l.setLower(lower)
-  return shoot(l.group, { w: 1600, h: 900, cam: [8, 2.4, 13], look: [-1.2, 1.7, 0], fov: 30, ...opts })
+  return shoot(l.group, { w: 1600, h: 900, cam: [10.5, 1.3, 9.5], look: [-0.6, 1.9, 0], fov: 30, ...opts })
 }

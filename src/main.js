@@ -55,17 +55,15 @@ requestAnimationFrame(raf)
 
 /* ---------- Hero ---------- */
 const heroSection = $('[data-hero]')
-const ghost = $('[data-ghost]')
-const states = $$('[data-state]')
 const hint = $('[data-hint]')
-let heroState = 0
+const heroCopy = $('.hero__copy')
+const caption = $('[data-caption]')
 function onHeroProgress(p) {
-  ghost.style.transform = `translate(calc(-50% + ${p * -18}vw), -100%)`
-  const s = p > 0.55 ? 1 : 0
-  if (s !== heroState) {
-    heroState = s
-    states.forEach((el, i) => { el.classList.toggle('is-on', i === s); el.setAttribute('aria-hidden', i !== s) })
-  }
+  const out = Math.min(1, Math.max(0, (p - 0.03) / 0.22))
+  heroCopy.style.opacity = 1 - out
+  heroCopy.style.transform = `translateY(${out * -40}px)`
+  heroCopy.style.pointerEvents = out > 0.5 ? 'none' : ''
+  caption.classList.toggle('is-on', p > 0.62)
   hint.style.opacity = p > 0.05 ? 0 : 1
 }
 import('./hero.js')

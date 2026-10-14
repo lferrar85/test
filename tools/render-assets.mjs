@@ -18,7 +18,7 @@ const save = (name, url) => writeFileSync(out + name + '.png', Buffer.from(url.s
 
 const preview = process.argv[2] === 'preview'
 const jobs = preview
-  ? [['lorry', 'renderLorry', [0]], ['skip-mixed', 'renderSkip', ['mixed']], ['skip-garden', 'renderSkip', ['garden']]]
+  ? [['lorry', 'renderLorry', [0]], ['lorry-side', 'renderLorry', [0, { cam: [-1, 2.0, 15], look: [-0.6, 1.8, 0] }]], ['lorry-down', 'renderLorry', [1, { cam: [2, 2.6, 16], look: [-2.5, 1.6, 0] }]]]
   : [
       ...['general', 'garden', 'muck', 'inert', 'hardcore', 'plasterboard', 'wood', 'metal', 'mixed', 'empty', 'asbestos']
         .map((f) => ['skip-' + f, 'renderSkip', [f]]),

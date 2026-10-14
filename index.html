@@ -49,11 +49,9 @@
     <!-- HERO: the Watts lorry drives in; scroll and it drops the skip -->
     <section class="hero" data-hero>
       <div class="hero__stage">
-        <div class="sky" aria-hidden="true">
-          <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span><span class="cloud c4"></span>
-        </div>
-        <div class="hero__ghost" aria-hidden="true" data-ghost>WATTS</div>
-        <canvas class="hero__canvas" data-hero-canvas aria-label="A Watts skip lorry carrying a blue Watts skip. Drag to turn it."></canvas>
+        <canvas class="hero__canvas" data-hero-canvas aria-label="A Watts skip lorry drives into the yard carrying a blue Watts skip."></canvas>
+        <div class="hero__grade" aria-hidden="true"></div>
+        <div class="hero__flare" aria-hidden="true"></div>
         <img class="hero__fallback" src="media/skips/lorry.webp" alt="A Watts skip lorry carrying a blue Watts skip" hidden data-hero-fallback />
 
         <div class="hero__copy">
@@ -66,14 +64,12 @@
               <a class="btn btn--white btn--lg" href="tel:+441162667497" data-magnetic>Call 0116 266 7497</a>
             </div>
           </div>
-          <div class="hero__state" data-state="1" aria-hidden="true">
-            <p class="tag tag--yellow">Next working day</p>
-            <p class="hero__title">Dropped<br /><span>right where</span><br />you need it.</p>
-          </div>
+
         </div>
 
+        <p class="hero__caption" data-caption aria-hidden="true"><span>Next working day</span>Dropped where you need it.</p>
         <div class="hero__foot">
-          <span class="hint" data-hint><span class="hint__mouse"></span>Scroll to drop the skip · Drag the lorry</span>
+          <span class="hint" data-hint><span class="hint__mouse"></span>Scroll to drop the skip</span>
           <span class="hint" data-open>Open today 07:30 – 16:30</span>
         </div>
       </div>
