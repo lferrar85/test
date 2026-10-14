@@ -3,344 +3,206 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>T. Watts — Scrap Metal, Skip Hire & Waste, Leicester</title>
-  <meta name="description" content="Family-run scrap metal merchants and skip hire on Barkby Road, Leicester. Computerised weighbridge, same-day payment, skips from 3 to 30 cubic metres, demolition and licensed waste." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0b0d'/%3E%3Cpath d='M5 8h5l3 12 3-12h3l3 12 3-12h5l-6 18h-4l-3-11-3 11h-4z' fill='%231f6fd2'/%3E%3C/svg%3E" />
+  <title>Watts — Skip Hire & Scrap Metal, Leicester</title>
+  <meta name="description" content="Skip hire and scrap metal on Barkby Road, Leicester. Skips from 3 to 30 cubic metres for every kind of waste, delivered next working day. Scrap weighed on a computerised bridge and paid the same day." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230777bf'/%3E%3Cpath d='M5 8h5l3 12 3-12h3l3 12 3-12h5l-6 18h-4l-3-11-3 11h-4z' fill='%23fff'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,500;125,700;125,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wdth,wght@0,100,400;0,100,500;0,100,800;0,125,800;1,100,500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
 
-  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+  <!-- The Watts logo, redrawn from their sign -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="logo" viewBox="0 0 690 290">
+      <g stroke="#6f6f6f" stroke-width="5" stroke-linejoin="round">
+        <path d="M22 62 160 26 252 74 118 112Z" fill="#ececec" />
+        <path d="M48 66 158 38 226 74 120 101Z" fill="#a9a9a9" stroke="none" />
+        <path d="M22 62 118 112 134 272 54 226Z" fill="#d2d2d2" />
+        <path d="M118 112 252 74 236 226 134 272Z" fill="#bdbdbd" />
+      </g>
+      <text x="26" y="258" transform="skewX(-3.4)" font-family="Archivo Black" font-size="268" fill="currentColor">W</text>
+      <text x="236" y="214" font-family="Archivo Black" font-size="168" fill="currentColor">atts</text>
+      <text x="318" y="268" transform="skewX(-11)" font-family="Archivo" font-weight="500" font-size="50" fill="currentColor">WATTS GROUP</text>
+    </symbol>
+  </svg>
+
+  <div class="cursor" aria-hidden="true"><span class="cursor__ring"><span class="cursor__label" data-cursor-label></span></span><span class="cursor__dot"></span></div>
 
   <header class="nav" data-nav>
-    <a class="nav__brand" href="#top" aria-label="T. Watts home">
-      <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M5 8h5l3 12 3-12h3l3 12 3-12h5l-6 18h-4l-3-11-3 11h-4z" fill="currentColor"/></svg>
-      <span>Watts</span>
-    </a>
+    <a class="nav__logo" href="#top" aria-label="Watts home"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#why">Why Watts</a>
-      <a href="#quote">Skips</a>
-      <a href="#faq">FAQ</a>
+      <a href="#skips">Skips</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#scrap">Scrap metal</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="nav__right">
       <a class="nav__tel" href="tel:+441162667497">0116 266 7497</a>
-      <a class="pill" href="#quote">Get a quote</a>
+      <button class="btn btn--blue" type="button" data-quote data-magnetic>Get a quote</button>
     </div>
   </header>
 
   <main id="top">
 
-    <!-- HERO -->
+    <!-- HERO: the Watts lorry drives in; scroll and it drops the skip -->
     <section class="hero" data-hero>
-      <div class="hero__media" data-hero-media>
-        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/media/hero-poster.jpg">
-          <source src="/media/hero.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div class="glow glow--hero" aria-hidden="true" data-glow></div>
-
-      <div class="hero__inner">
-        <p class="eyebrow" data-lines><span>One yard. Barkby Road, Leicester.</span></p>
-        <h1 class="hero__title" data-lines>
-          <span>Every tonne,</span>
-          <span>weighed <em>fairly.</em></span>
-        </h1>
-        <p class="hero__sub" data-lines><span>Scrap metal, skip hire and licensed waste, run by one family from one yard since the days when a weighbridge was a set of scales. Still paid the same day.</span></p>
-        <div class="hero__cta" data-lines>
-          <span>
-            <a class="pill pill--lg" href="#quote">Get a quote</a>
-            <a class="link-arrow" href="#services">Our services</a>
-          </span>
+      <div class="hero__stage">
+        <div class="sky" aria-hidden="true">
+          <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span><span class="cloud c4"></span>
         </div>
-      </div>
+        <div class="hero__ghost" aria-hidden="true" data-ghost>WATTS</div>
+        <canvas class="hero__canvas" data-hero-canvas aria-label="A Watts skip lorry carrying a blue Watts skip. Drag to turn it."></canvas>
+        <img class="hero__fallback" src="media/skips/lorry.webp" alt="A Watts skip lorry carrying a blue Watts skip" hidden data-hero-fallback />
 
-      <div class="hero__foot">
-        <span class="mono">Scroll</span>
-        <span class="mono" data-open>Open today 07:30 — 16:30</span>
-      </div>
-    </section>
-
-    <!-- MANIFESTO + FACTS -->
-    <section class="intro light" id="about">
-      <div class="container intro__grid">
-        <h2 class="statement" data-lines>
-          <span>We weigh it.</span>
-          <span>We pay it.</span>
-          <span>We take the rest.</span>
-        </h2>
-        <div class="intro__side">
-          <p class="intro__text" data-reveal>Bring us the metal and you'll see it weighed on a computerised bridge and paid into your account before you've turned the van round. Need the rest of the site cleared? Same yard, same licence, same phone number.</p>
-          <a class="link-arrow" href="#why" data-reveal>Why people come back</a>
-        </div>
-
-      </div>
-      <div class="container facts" data-reveal>
-        <div class="fact"><strong><span data-count="30" data-prefix="3–">3–30</span></strong><span>cubic metres of skip, mini to roll-on/roll-off</span></div>
-        <div class="fact"><strong>Same day</strong><span>bank transfer for scrap, once it's over the bridge</span></div>
-        <div class="fact"><strong><span data-count="6">6</span> days</strong><span>a week, from 07:30. Sundays we sleep</span></div>
-      </div>
-    </section>
-
-    <!-- JOURNEY: scroll-driven drive from the gate to the bridge -->
-    <section class="journey light" data-journey aria-label="How a load moves through the yard">
-      <div class="journey__stage">
-        <svg class="journey__svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <path id="route" d="M -80 760 C 260 760, 300 470, 620 470 S 980 190, 1520 150" />
-          </defs>
-          <use href="#route" class="road" />
-          <use href="#route" class="road__dash" />
-          <!-- weighbridge plate -->
-          <g class="plate" transform="translate(620 470)">
-            <rect x="-120" y="-38" width="240" height="76" rx="2" />
-            <line x1="-120" y1="0" x2="120" y2="0" />
-          </g>
-          <!-- stops -->
-          <g class="stop" transform="translate(160 756)"><circle r="6" /><text x="0" y="-22">Gate</text></g>
-          <g class="stop" transform="translate(620 470)"><circle r="6" /><text x="0" y="-62">Weighbridge</text></g>
-          <g class="stop" transform="translate(1180 226)"><circle r="6" /><text x="0" y="-22">Grade &amp; pay</text></g>
-          <!-- top-down lorry -->
-          <g class="lorry" data-lorry>
-            <rect class="lorry__trailer" x="-70" y="-15" width="100" height="30" rx="2" />
-            <rect class="lorry__cab" x="32" y="-13" width="30" height="26" rx="3" />
-            <rect class="lorry__screen" x="54" y="-9" width="4" height="18" rx="1" />
-            <rect class="lorry__wheel" x="-62" y="-18" width="10" height="4" /><rect class="lorry__wheel" x="-62" y="14" width="10" height="4" />
-            <rect class="lorry__wheel" x="-46" y="-18" width="10" height="4" /><rect class="lorry__wheel" x="-46" y="14" width="10" height="4" />
-            <rect class="lorry__wheel" x="38" y="-16" width="10" height="4" /><rect class="lorry__wheel" x="38" y="12" width="10" height="4" />
-          </g>
-        </svg>
-
-        <div class="hud">
-          <div class="hud__cell"><span class="mono">Speed</span><strong><span data-speed>00</span><small>km/h</small></strong></div>
-          <div class="hud__cell"><span class="mono">Weighbridge</span><strong><span data-tonnes>0.000</span><small>t</small></strong></div>
-          <div class="hud__cell"><span class="mono">Stage</span><strong data-stage>Arriving</strong></div>
-        </div>
-
-        <p class="journey__caption" data-caption>Drive in off Barkby Road. No booking needed for scrap.</p>
-      </div>
-    </section>
-
-    <!-- SERVICES: sticky headline + rows -->
-    <section class="services light" id="services" data-services>
-      <div class="container services__grid">
-        <div class="services__sticky">
-          <p class="eyebrow">Services</p>
-          <h2 class="h2" data-lines><span>Everything</span><span>that's heavy.</span><span>One gate.</span></h2>
-        </div>
-
-        <ol class="rows">
-          <li class="row" data-reveal>
-            <span class="row__n mono">01</span>
-            <div class="row__body">
-              <h3>Scrap metal</h3>
-              <p>Copper, brass, aluminium, lead, stainless, cast and steel. Sort it before you arrive and you'll get the better grade. Mixed is graded as mixed, and we'll tell you so at the bridge.</p>
-            </div>
-            <span class="row__meta mono">Weigh · grade · pay</span>
-          </li>
-          <li class="row" data-reveal>
-            <span class="row__n mono">02</span>
-            <div class="row__body">
-              <h3>Skip hire</h3>
-              <p>Mini to maxi, three to twelve cubic metres, delivered across Leicester and the county. Permits arranged for anything sitting on the road.</p>
-            </div>
-            <span class="row__meta mono">3 – 12 m³</span>
-          </li>
-          <li class="row" data-reveal>
-            <span class="row__n mono">03</span>
-            <div class="row__body">
-              <h3>Roll-on / roll-off</h3>
-              <p>Twenty to thirty cubic metre containers and artic loads for sites that fill a skip before lunch.</p>
-            </div>
-            <span class="row__meta mono">20 – 30 m³</span>
-          </li>
-          <li class="row" data-reveal>
-            <span class="row__n mono">04</span>
-            <div class="row__body">
-              <h3>Demolition &amp; clearance</h3>
-              <p>Strip-out, site clearance and demolition with the metal recovered and the waste handled under one licence, by one crew.</p>
-            </div>
-            <span class="row__meta mono">One licence</span>
-          </li>
-          <li class="row" data-reveal>
-            <span class="row__n mono">05</span>
-            <div class="row__body">
-              <h3>Hazardous &amp; asbestos</h3>
-              <p>Licensed transfer station. Asbestos goes in a sealed, lockable container by arrangement. Ring before you load anything you're unsure of.</p>
-            </div>
-            <span class="row__meta mono">By arrangement</span>
-          </li>
-          <li class="row" data-reveal>
-            <span class="row__n mono">06</span>
-            <div class="row__body">
-              <h3>Vehicles, WEEE &amp; tipping</h3>
-              <p>End-of-life vehicles, electrical waste, and tipping for trade vans. Hardcore and soil are priced on their own, upfront, so there are no surprises at the bridge.</p>
-            </div>
-            <span class="row__meta mono">ELV · WEEE</span>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- WHY -->
-    <section class="why" id="why">
-      <div class="glow glow--why" aria-hidden="true"></div>
-      <div class="container">
-        <p class="eyebrow">Why Watts</p>
-        <h2 class="h2 h2--wide" data-lines><span>A yard that works</span><span>the way you'd run it.</span></h2>
-        <ul class="points">
-          <li data-reveal><span class="mono">01</span><h3>One phone number</h3><p>Scrap, skips, clearance, the awkward stuff. One call to the yard and someone who can actually say yes picks up.</p></li>
-          <li data-reveal><span class="mono">02</span><h3>A bridge you can watch</h3><p>Computerised weighbridge, printed ticket, the same bridge for everyone. The forklift driver walks you through it.</p></li>
-          <li data-reveal><span class="mono">03</span><h3>Paid before you leave</h3><p>Bank transfer on the day. No cash, as the law requires: bring photo ID and your sort code.</p></li>
-          <li data-reveal><span class="mono">04</span><h3>Priced upfront</h3><p>Hardcore, soil and mixed loads are quoted as what they are before you tip, not after.</p></li>
-          <li data-reveal><span class="mono">05</span><h3>Licensed for the lot</h3><p>Waste carrier, transfer station, hazardous and asbestos by arrangement. Under one roof so nothing gets subcontracted away.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- QUOTES -->
-    <section class="voices light" id="reviews">
-      <div class="container">
-        <p class="eyebrow">From Google reviews</p>
-        <h2 class="h2 h2--wide" data-lines><span>Trusted</span><span class="muted">at the gate.</span></h2>
-        <div class="voices__grid">
-          <blockquote class="voice voice--lead" data-reveal>
-            <p>Best scrap yard and waste recycling centre in the Midlands. Wouldn't go anywhere else.</p>
-            <cite>David Parker</cite>
-          </blockquote>
-          <blockquote class="voice" data-reveal>
-            <p>Nice people to deal with, never had any problems. Always found them to offer competitive rates.</p>
-            <cite>Matthew Dunne</cite>
-          </blockquote>
-          <blockquote class="voice" data-reveal>
-            <p>The forklift driver was great at explaining all that was going on and all that I should be doing.</p>
-            <cite>Angela Joesbury</cite>
-          </blockquote>
-          <blockquote class="voice" data-reveal>
-            <p>Go there most days for tipping our work vans. Great lads, and the lady helps our company out very well.</p>
-            <cite>Ash Bash</cite>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUOTE PANEL -->
-    <section class="quote light" id="quote">
-      <div class="glow glow--quote" aria-hidden="true"></div>
-      <div class="container">
-        <div class="quote__head">
-          <p class="eyebrow">Skip hire</p>
-          <h2 class="h2" data-lines><span>Three answers.</span><span class="muted">One price.</span></h2>
-        </div>
-
-        <form class="panel" data-flow novalidate>
-          <div class="panel__step">
-            <label class="panel__label" for="postcode"><span class="mono">01</span> Where's it going?</label>
-            <div class="panel__pc">
-              <input id="postcode" name="postcode" type="text" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-postcode />
-              <button class="pill pill--ghost" type="button" data-postcode-check>Check</button>
-            </div>
-            <p class="panel__result mono" data-postcode-result aria-live="polite"></p>
-          </div>
-
-          <div class="panel__step">
-            <p class="panel__label"><span class="mono">02</span> What's going in it?</p>
-            <div class="chips" role="radiogroup" aria-label="Waste type" data-waste-chips>
-              <label><input type="radio" name="waste" value="General waste" checked /><span>General</span></label>
-              <label><input type="radio" name="waste" value="Garden waste" /><span>Garden</span></label>
-              <label><input type="radio" name="waste" value="Soil & muck" /><span>Soil &amp; muck</span></label>
-              <label><input type="radio" name="waste" value="Hardcore" /><span>Hardcore</span></label>
-              <label><input type="radio" name="waste" value="Inert" /><span>Inert</span></label>
-              <label><input type="radio" name="waste" value="Plasterboard" /><span>Plasterboard</span></label>
-              <label><input type="radio" name="waste" value="Wood" /><span>Wood</span></label>
-              <label><input type="radio" name="waste" value="Metal" /><span>Metal</span></label>
-              <label><input type="radio" name="waste" value="Mixed trade" /><span>Mixed trade</span></label>
-              <label><input type="radio" name="waste" value="Wait & load" /><span>Wait &amp; load</span></label>
-              <label><input type="radio" name="waste" value="Asbestos" /><span>Asbestos</span></label>
+        <div class="hero__copy">
+          <div class="hero__state is-on" data-state="0">
+            <p class="tag"><span class="tag__dot"></span>Barkby Road, Leicester · Handling with care</p>
+            <h1 class="hero__title">Skips in.<br /><span>Scrap out.</span></h1>
+            <p class="hero__sub">Skip hire for every kind of waste, and scrap metal weighed and paid the same day. One family yard, one phone number.</p>
+            <div class="hero__cta">
+              <button class="btn btn--blue btn--lg" type="button" data-quote data-magnetic>Get a skip quote</button>
+              <a class="btn btn--white btn--lg" href="tel:+441162667497" data-magnetic>Call 0116 266 7497</a>
             </div>
           </div>
-
-          <div class="panel__step">
-            <p class="panel__label"><span class="mono">03</span> How big?</p>
-            <div class="sizes" role="radiogroup" aria-label="Skip size" data-sizes>
-              <label><input type="radio" name="skip" value="3" data-name="Mini" /><strong>3</strong><span>m³ · Mini</span><small>≈ 35 bags</small></label>
-              <label><input type="radio" name="skip" value="4" data-name="Midi" /><strong>4</strong><span>m³ · Midi</span><small>≈ 50 bags</small></label>
-              <label><input type="radio" name="skip" value="6" data-name="Builder's" checked /><strong>6</strong><span>m³ · Builder's</span><small>≈ 80 bags</small></label>
-              <label><input type="radio" name="skip" value="8" data-name="Large" /><strong>8</strong><span>m³ · Large</span><small>≈ 100 bags</small></label>
-              <label><input type="radio" name="skip" value="12" data-name="Maxi" /><strong>12</strong><span>m³ · Maxi</span><small>≈ 160 bags</small></label>
-              <label><input type="radio" name="skip" value="RoRo" data-name="Roll-on / roll-off" /><strong>20+</strong><span>m³ · RoRo</span><small>400+ bags</small></label>
-            </div>
+          <div class="hero__state" data-state="1" aria-hidden="true">
+            <p class="tag tag--yellow">Next working day</p>
+            <p class="hero__title">Dropped<br /><span>right where</span><br />you need it.</p>
           </div>
+        </div>
 
-          <div class="panel__book">
-            <div class="panel__summary">
-              <span class="mono">Your request</span>
-              <strong data-summary>6 m³ Builder's · General waste</strong>
-              <span class="mono" data-summary-pc>Postcode to confirm</span>
-            </div>
-            <div class="panel__fields">
-              <label><span class="mono">Name</span><input type="text" name="name" autocomplete="name" required /></label>
-              <label><span class="mono">Phone</span><input type="tel" name="phone" autocomplete="tel" required /></label>
-              <label><span class="mono">Date</span><input type="date" name="date" data-date /></label>
-              <label class="check"><input type="checkbox" name="road" /><span>It'll sit on the road, so a permit's needed</span></label>
-            </div>
-            <div class="panel__actions">
-              <button class="pill pill--lg" type="submit">Send the request</button>
-              <a class="link-arrow" href="tel:+441162667497">Or call 0116 266 7497</a>
-            </div>
-            <p class="panel__note mono" data-book-note>We confirm price and slot by phone. Nothing is charged online.</p>
-          </div>
-        </form>
+        <div class="hero__foot">
+          <span class="hint" data-hint><span class="hint__mouse"></span>Scroll to drop the skip · Drag the lorry</span>
+          <span class="hint" data-open>Open today 07:30 – 16:30</span>
+        </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq light" id="faq">
-      <div class="container faq__grid">
+    <!-- MARQUEE -->
+    <div class="tape" aria-hidden="true">
+      <div class="tape__track" data-tape>
+        <span>Skip hire</span><span>Scrap metal</span><span>Same-day payment</span><span>Roll-on / roll-off</span><span>Wait &amp; load</span><span>Licensed waste</span><span>Demolition</span>
+        <span>Skip hire</span><span>Scrap metal</span><span>Same-day payment</span><span>Roll-on / roll-off</span><span>Wait &amp; load</span><span>Licensed waste</span><span>Demolition</span>
+      </div>
+    </div>
+
+    <!-- WASTE TYPES -->
+    <section class="types" id="skips">
+      <div class="wrap">
+        <div class="head">
+          <p class="kicker">01 — Skips by waste type</p>
+          <h2 class="h2" data-split>What's going in it?</h2>
+          <p class="head__note">Pick what you're throwing away and we'll send the right skip. Some waste has to travel on its own, so it pays to sort it.</p>
+        </div>
+        <div class="types__grid" data-types></div>
+      </div>
+    </section>
+
+    <!-- SIZES -->
+    <section class="sizes" id="sizes">
+      <div class="wrap">
+        <div class="head head--light">
+          <p class="kicker">02 — Sizes, drawn to scale</p>
+          <h2 class="h2" data-split>Mini to massive.</h2>
+          <p class="head__note">Every skip below is shown at its real size against the others. Bag counts are rough, based on standard bin bags.</p>
+        </div>
+        <div class="sizes__row" data-sizes></div>
+      </div>
+    </section>
+
+    <!-- SCRAP -->
+    <section class="scrap" id="scrap">
+      <div class="wrap scrap__grid">
+        <div class="scrap__media" data-tilt>
+          <img src="media/skips/skip-metal.webp" alt="A Watts skip full of scrap steel, pipe and copper" loading="lazy" />
+          <span class="scrap__sticker">We pay<br />for this one</span>
+        </div>
+        <div class="scrap__copy">
+          <p class="kicker">03 — Scrap metal</p>
+          <h2 class="h2" data-split>Weighed. Graded. Paid.</h2>
+          <ol class="steps">
+            <li><b>Drive onto the bridge.</b> Computerised and ticketed. The forklift driver will talk you through it.</li>
+            <li><b>We grade it.</b> Sorted metal gets the better rate. Mixed is graded as mixed, and we'll tell you so.</li>
+            <li><b>Same-day transfer.</b> No cash by law, so bring photo ID and your bank details.</li>
+          </ol>
+          <ul class="metals">
+            <li>Copper</li><li>Brass</li><li>Aluminium</li><li>Lead</li><li>Stainless</li><li>Cable</li><li>Cast iron</li><li>Steel</li><li>Cars (ELV)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" aria-label="Google reviews">
+      <div class="reviews__row" data-row="1">
+        <blockquote><p>“Best scrap yard and waste recycling centre in the Midlands. Wouldn't go anywhere else.”</p><cite>David Parker</cite></blockquote>
+        <blockquote><p>“Nice people to deal with, never had any problems. Always competitive rates.”</p><cite>Matthew Dunne</cite></blockquote>
+        <blockquote><p>“Good prices, friendly staff. Highly recommended.”</p><cite>Maciej Benedyczak</cite></blockquote>
+        <blockquote><p>“Very competitive with pricing, plus all the lads are very friendly.”</p><cite>Steve Phillips</cite></blockquote>
+      </div>
+      <div class="reviews__row reviews__row--rev" data-row="-1">
+        <blockquote><p>“The forklift driver was great at explaining all that was going on.”</p><cite>Angela Joesbury</cite></blockquote>
+        <blockquote><p>“Go there most days for tipping our work vans. Great lads.”</p><cite>Ash Bash</cite></blockquote>
+        <blockquote><p>“Very helpful and good prices. Highly recommended.”</p><cite>Paul Carder</cite></blockquote>
+        <blockquote><p>“Lads are sound, quick at loading once in place.”</p><cite>Andy Everett</cite></blockquote>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="wrap contact__grid">
         <div>
-          <p class="eyebrow">Questions</p>
-          <h2 class="h2" data-lines><span>Straight answers,</span><span>before you set off.</span></h2>
+          <p class="kicker">Ready when you are</p>
+          <a class="contact__tel" href="tel:+441162667497" data-magnetic>0116 266 7497</a>
+          <div class="contact__cta">
+            <button class="btn btn--blue btn--lg" type="button" data-quote data-magnetic>Get a skip quote</button>
+            <a class="btn btn--ghost btn--lg" href="https://maps.google.com/?q=T+Watts+Scrap+Metal+Merchants+Barkby+Road+Leicester+LE4+9LG" target="_blank" rel="noopener">Directions ↗</a>
+          </div>
         </div>
-        <div class="faq__list">
-          <details data-reveal><summary>What do I need to bring to sell scrap?</summary><p>Photo ID and the bank details you want paying into. Scrap can't be paid in cash in the UK, so it's a same-day transfer instead.</p></details>
-          <details data-reveal><summary>Do you collect, or do I bring it in?</summary><p>Both. Most people drive in and go over the bridge. For bigger loads, vehicles or anything that needs dismantling, we'll come to you.</p></details>
-          <details data-reveal><summary>Can hardcore and soil go in a general skip?</summary><p>They can, but they're charged as hardcore and soil, so it's cheaper to keep them separate. We'll say which before you tip.</p></details>
-          <details data-reveal><summary>Can the skip go on the road?</summary><p>Yes. It needs a council permit, which we arrange and add to the price. Tick the box on the request and we'll sort it.</p></details>
-          <details data-reveal><summary>Do you take asbestos?</summary><p>By arrangement, in a sealed lockable container. Ring first, every time.</p></details>
-          <details data-reveal><summary>When are you open?</summary><p>07:30 to 16:30 Monday to Friday, 07:30 to 11:30 on Saturday. Closed Sunday.</p></details>
-        </div>
+        <dl class="contact__facts">
+          <div><dt>Yard</dt><dd>T. Watts Scrap Metal Merchants Ltd<br />Barkby Road, Leicester LE4 9LG</dd></div>
+          <div><dt>Hours</dt><dd>Mon – Fri 07:30 – 16:30<br />Sat 07:30 – 11:30 · Sun closed</dd></div>
+          <div><dt>Also on</dt><dd><a href="tel:+441162668684">0116 266 8684</a> · <a href="https://www.facebook.com/WattsSkips/" target="_blank" rel="noopener">Facebook</a></dd></div>
+        </dl>
       </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-      <div class="glow glow--cta" aria-hidden="true"></div>
-      <div class="container cta__inner">
-        <h2 class="cta__title" data-lines><span>Ready</span><span>to tip?</span></h2>
-        <div class="cta__right">
-          <a class="cta__tel" href="tel:+441162667497">0116 266 7497</a>
-          <address>T. Watts Scrap Metal Merchants Ltd<br/>Barkby Road, Leicester LE4 9LG</address>
-          <a class="link-arrow" href="https://maps.google.com/?q=T+Watts+Scrap+Metal+Merchants+Barkby+Road+Leicester+LE4+9LG" target="_blank" rel="noopener">Open in Maps</a>
-        </div>
-      </div>
+      <div class="contact__logo" aria-hidden="true"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></div>
+      <p class="contact__legal">© <span data-year></span> T. Watts Scrap Metal Merchants Ltd · Licensed waste carrier</p>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__grid">
-      <p class="footer__line">One yard. Everything that's heavy.</p>
-      <div class="footer__cols">
-        <div><span class="mono">Yard</span><a href="#services">Services</a><a href="#quote">Skip hire</a><a href="#why">Why Watts</a><a href="#faq">FAQ</a></div>
-        <div><span class="mono">Hours</span><span>Mon – Fri 07:30 – 16:30</span><span>Sat 07:30 – 11:30</span><span>Sun closed</span></div>
-        <div><span class="mono">Contact</span><a href="tel:+441162667497">0116 266 7497</a><a href="tel:+441162668684">0116 266 8684</a><a href="https://www.facebook.com/WattsSkips/" target="_blank" rel="noopener">Facebook</a></div>
+  <button class="fab" type="button" data-quote data-fab>Get a quote <span aria-hidden="true">→</span></button>
+
+  <!-- QUOTE DRAWER -->
+  <div class="drawer" data-drawer aria-hidden="true">
+    <div class="drawer__scrim" data-close></div>
+    <form class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="q-title" data-flow novalidate>
+      <div class="drawer__top">
+        <img class="drawer__skip" src="media/skips/skip-general.webp" alt="" data-drawer-img />
+        <button class="drawer__x" type="button" data-close aria-label="Close">×</button>
       </div>
-      <p class="footer__legal mono">© <span data-year></span> T. Watts Scrap Metal Merchants Ltd · Licensed waste carrier · Leicester</p>
-    </div>
-  </footer>
+      <h2 id="q-title" class="drawer__title">Your skip quote</h2>
+
+      <label class="field"><span>Delivery postcode</span>
+        <span class="field__pc"><input name="postcode" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-postcode /><button class="btn btn--dark" type="button" data-pc-check>Check</button></span>
+      </label>
+      <p class="field__msg" data-pc-msg aria-live="polite"></p>
+
+      <fieldset class="field"><legend>What's going in it?</legend><div class="chips" data-chips></div></fieldset>
+      <fieldset class="field"><legend>Size</legend><div class="chips" data-size-chips></div></fieldset>
+
+      <div class="field__two">
+        <label class="field"><span>Name</span><input name="name" autocomplete="name" required /></label>
+        <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required /></label>
+      </div>
+      <div class="field__two">
+        <label class="field"><span>Date</span><input name="date" type="date" data-date /></label>
+        <label class="field field--check"><input type="checkbox" name="road" /><span>Goes on the road (permit needed)</span></label>
+      </div>
+      <button class="btn btn--blue btn--lg btn--full" type="submit">Send request</button>
+      <p class="drawer__note" data-note>We ring back to confirm price and slot. Nothing is charged online.</p>
+    </form>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

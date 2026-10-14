@@ -1,8 +1,6 @@
-# T. Watts — Scrap Metal, Skip Hire & Waste, Leicester
+# Watts — Skip Hire & Scrap Metal, Leicester
 
-Single-page site built with [Vite](https://vite.dev) and [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll.
-
-## Run
+Single-page site: Vite, [Lenis](https://github.com/darkroomengineering/lenis) smooth scroll, and a live [three.js](https://threejs.org) hero.
 
 ```sh
 npm install
@@ -10,13 +8,19 @@ npm run dev      # http://localhost:5173
 npm run build    # production build in dist/
 ```
 
-## Swap in real footage
+## How it's put together
 
-The hero plays `public/media/hero.mp4` (a generated placeholder). Replace it with drone or yard footage:
-1280×720, H.264, muted, ≤ 3 MB, looping cleanly. Replace `public/media/hero-poster.jpg` with a still from it.
+- `src/three/` holds the 3D models: the Watts skip (`skip.js`), the waste that fills it (`waste.js`), the skip-loader lorry (`lorry.js`), and the logo, livery and materials (`materials.js`).
+- `src/hero.js` is the live hero: the lorry drives in, you can drag it, and scrolling lowers the skip.
+- The skip pictures in `public/media/skips/` are rendered from the same models. To change a skip or add a waste type, edit the models, then with `npm run dev` running:
 
-## Things to confirm with the yard
+  ```sh
+  node tools/render-assets.mjs   # writes tools/out/*.png
+  ```
 
-- Opening hours in the Contact section come from an old directory listing.
-- Skip sizes offered and the "RoRo" bulk option.
-- Facebook link in the footer.
+  and convert to webp into `public/media/skips/` (see the commit history for the crop script).
+
+## To confirm with the yard
+
+- Opening hours (from an old directory listing), the booking email address in `src/main.js`, bin-bag counts and skip dimensions.
+- Set `BOOKING_ENDPOINT` in `src/main.js` to send quotes to a form service instead of opening an email.
