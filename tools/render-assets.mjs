@@ -17,7 +17,16 @@ await page.evaluate(() => window.ready)
 const save = (name, url) => writeFileSync(out + name + '.png', Buffer.from(url.split(',')[1], 'base64'))
 
 const preview = process.argv[2] === 'preview'
-const jobs = preview
+const COMBOS = {
+  general: [4, 5, 8, 10, 16], garden: [4, 5, 8, 10], muck: [4, 5], inert: [4, 5, 8], hardcore: [4, 5, 8],
+  plasterboard: [4, 5, 8], wood: [4, 5, 8, 10, 16], metal: [4, 5, 8, 10, 16], mixed: [4, 5, 8, 10, 16], empty: [8, 10, 16],
+}
+const M3 = { 4: 3, 5: 4, 8: 6, 10: 8, 16: 12 }
+const comboJobs = [
+  ...Object.entries(COMBOS).flatMap(([t, ys]) => ys.map((y) => [`p-${t}-${y}`, 'renderCombo', [t, M3[y]]])),
+  ['p-asbestos-sealed', 'renderCombo', ['asbestos', 6]],
+]
+const jobs = process.argv[2] === 'combos' ? comboJobs : preview
   ? [['lorry', 'renderLorry', [0]], ['lorry-side', 'renderLorry', [0, { cam: [-1, 2.0, 15], look: [-0.6, 1.8, 0] }]], ['lorry-down', 'renderLorry', [1, { cam: [2, 2.6, 16], look: [-2.5, 1.6, 0] }]]]
   : [
       ...['general', 'garden', 'muck', 'inert', 'hardcore', 'plasterboard', 'wood', 'metal', 'mixed', 'empty', 'asbestos']

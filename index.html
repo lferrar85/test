@@ -31,12 +31,12 @@
   <div class="cursor" aria-hidden="true"><span class="cursor__ring"><span class="cursor__label" data-cursor-label></span></span><span class="cursor__dot"></span></div>
 
   <header class="nav" data-nav>
-    <a class="nav__logo" href="#top" aria-label="Watts home"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></a>
+    <a class="nav__logo" href="/" aria-label="Watts home"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#skips">Skips</a>
-      <a href="#sizes">Sizes</a>
-      <a href="#scrap">Scrap metal</a>
-      <a href="#contact">Contact</a>
+      <a href="/skips">Skips</a>
+      <a href="/skips#sizes">Sizes</a>
+      <a href="/#scrap">Scrap metal</a>
+      <a href="/#contact">Contact</a>
     </nav>
     <div class="nav__right">
       <a class="nav__tel" href="tel:+441162667497">0116 266 7497</a>
@@ -44,15 +44,47 @@
     </div>
   </header>
 
-  <main id="top">
+  <main id="app"></main>
+
+  <footer class="foot">
+    <div class="foot__watermark" aria-hidden="true"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></div>
+    <div class="wrap">
+      <div class="foot__top">
+        <a class="foot__logo" href="/" aria-label="Watts home"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></a>
+        <p class="foot__tag">Handling with care.<br /><span>Skip hire &amp; scrap metal, Leicester.</span></p>
+      </div>
+      <div class="foot__grid">
+        <nav aria-label="Skip hire"><h3>Skip hire</h3>
+          <a href="/skips">All skips</a><a href="/skips/general-waste">General waste</a><a href="/skips/garden-waste">Garden waste</a><a href="/skips/soil-and-muck">Soil &amp; muck</a><a href="/skips/hardcore">Hardcore</a><a href="/skips/plasterboard">Plasterboard</a><a href="/skips/wood">Wood</a><a href="/skips/mixed-trade">Mixed trade</a>
+        </nav>
+        <nav aria-label="Also"><h3>Also on offer</h3>
+          <a href="/skips/metal">Metal skips</a><a href="/skips/wait-and-load">Wait &amp; load</a><a href="/skips/asbestos">Asbestos</a><a href="/#scrap">Sell your scrap metal</a><a href="/skips#sizes">Skip size guide</a><a href="/skips#faq">Skip hire FAQs</a>
+        </nav>
+        <nav aria-label="Visit"><h3>Visit &amp; contact</h3>
+          <span>T. Watts Scrap Metal Merchants Ltd</span><span>Barkby Road, Leicester LE4 9LG</span>
+          <a href="tel:+441162667497">0116 266 7497</a><a href="tel:+441162668684">0116 266 8684</a>
+          <a href="https://maps.google.com/?q=T+Watts+Scrap+Metal+Merchants+Barkby+Road+Leicester+LE4+9LG" target="_blank" rel="noopener">Get directions ↗</a>
+          <a href="https://www.facebook.com/WattsSkips/" target="_blank" rel="noopener">Facebook ↗</a>
+        </nav>
+        <div><h3>Opening hours</h3>
+          <span>Mon – Fri 07:30 – 16:30</span><span>Saturday 07:30 – 11:30</span><span>Sunday closed</span>
+          <button class="btn btn--yellow" type="button" data-quote>Get a skip quote</button>
+        </div>
+      </div>
+      <p class="foot__legal">© <span data-year></span> T. Watts Scrap Metal Merchants Ltd · Licensed waste carrier</p>
+    </div>
+  </footer>
+
+<template id="tpl-home">
+
 
     <!-- HERO: the Watts lorry drives in; scroll and it drops the skip -->
     <section class="hero" data-hero>
       <div class="hero__stage">
-        <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="media/hero-poster.jpg" aria-hidden="true">
+        <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="/media/hero-poster.jpg" aria-hidden="true">
           <!-- PLACEHOLDER footage (not Watts). Replace with Watts' own film: same filename, 1280px wide, under 5 MB. -->
-          <source src="media/hero.webm" type="video/webm" />
-          <source src="media/hero.mp4" type="video/mp4" />
+          <source src="/media/hero.webm" type="video/webm" />
+          <source src="/media/hero.mp4" type="video/mp4" />
         </video>
         <div class="hero__grade" aria-hidden="true"></div>
 
@@ -88,23 +120,12 @@
     <section class="types" id="skips">
       <div class="wrap">
         <div class="head">
-          <p class="kicker">01 — Skips by waste type</p>
+          <p class="kicker">Skip hire</p>
           <h2 class="h2" data-split>What's going in it?</h2>
-          <p class="head__note">Pick what you're throwing away and we'll send the right skip. Some waste has to travel on its own, so it pays to sort it.</p>
+          <p class="head__note">Choose the waste you're throwing away, then pick a size. Some waste has to travel on its own, so it pays to sort it.</p>
         </div>
         <div class="types__grid" data-types></div>
-      </div>
-    </section>
-
-    <!-- SIZES -->
-    <section class="sizes" id="sizes">
-      <div class="wrap">
-        <div class="head head--light">
-          <p class="kicker">02 — Sizes, drawn to scale</p>
-          <h2 class="h2" data-split>Mini to massive.</h2>
-          <p class="head__note">Every skip below is shown at its real size against the others. Bag counts are rough, based on standard bin bags.</p>
-        </div>
-        <div class="sizes__row" data-sizes></div>
+        <p class="types__more"><a class="btn btn--dark" href="/skips">See all skips &amp; sizes</a></p>
       </div>
     </section>
 
@@ -112,7 +133,7 @@
     <section class="scrap" id="scrap">
       <div class="wrap scrap__grid">
         <div class="scrap__media" data-tilt>
-          <img src="media/skips/skip-metal.webp" alt="A Watts skip full of scrap steel, pipe and copper" loading="lazy" />
+          <img src="/media/skips/skip-metal.webp" alt="A Watts skip full of scrap steel, pipe and copper" loading="lazy" />
           <span class="scrap__sticker">We pay<br />for this one</span>
         </div>
         <div class="scrap__copy">
@@ -163,10 +184,8 @@
           <div><dt>Also on</dt><dd><a href="tel:+441162668684">0116 266 8684</a> · <a href="https://www.facebook.com/WattsSkips/" target="_blank" rel="noopener">Facebook</a></dd></div>
         </dl>
       </div>
-      <div class="contact__logo" aria-hidden="true"><svg viewBox="0 0 690 290"><use href="#logo" /></svg></div>
-      <p class="contact__legal">© <span data-year></span> T. Watts Scrap Metal Merchants Ltd · Licensed waste carrier</p>
     </section>
-  </main>
+</template>
 
   <button class="fab" type="button" data-quote data-fab>Get a quote <span aria-hidden="true">→</span></button>
 
@@ -175,7 +194,7 @@
     <div class="drawer__scrim" data-close></div>
     <form class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="q-title" data-flow novalidate>
       <div class="drawer__top">
-        <img class="drawer__skip" src="media/skips/skip-general.webp" alt="" data-drawer-img />
+        <img class="drawer__skip" src="/media/skips/skip-general.webp" alt="" data-drawer-img />
         <button class="drawer__x" type="button" data-close aria-label="Close">×</button>
       </div>
       <h2 id="q-title" class="drawer__title">Your skip quote</h2>

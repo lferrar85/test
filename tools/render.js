@@ -36,6 +36,12 @@ window.renderSize = (m3) => {
   return shoot(s, { w: 800, h: 560, cam: [4.6, 3.1, 7.6], look: [0, 0.95, 0] })
 }
 
+window.renderCombo = (fill, m3) => {
+  const s = buildSkip({ fill, seed: 3 })
+  s.scale.setScalar(Math.cbrt(m3 / 6))
+  return shoot(s, { w: 900, h: 640, cam: [5.4, 3.6, 8.9], look: [0, 1.0, 0] })
+}
+
 window.renderRoro = () => shoot(buildRoro(), { w: 800, h: 560, cam: [7.2, 4.4, 10.5], look: [0, 1.0, 0] })
 
 window.renderLorry = (lower = 0, opts = {}) => {
