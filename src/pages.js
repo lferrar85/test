@@ -10,12 +10,15 @@ const crumbs = (items) => `<nav class="crumbs" aria-label="Breadcrumb">${items
 const typeChips = (active) => `<nav class="tabs" aria-label="Waste types">${TYPES.map((t) =>
   `<a class="tab${t.id === active ? ' is-on' : ''}" href="/skips/${t.slug}">${esc(t.name)}</a>`).join('')}</nav>`
 
+const photoOr = (t, render, alt, eager) => `<img class="is-photo" src="/media/waste/${t.id}.jpg" alt="${esc(alt)}" loading="${eager ? 'eager' : 'lazy'}" onerror="this.onerror=null;this.classList.remove('is-photo');this.src='${render}'" />`
+
 export const typeCard = (t, i = 0) => {
   const cover = coverSize(t)
   const n = t.sizes.length
+  const alt = `A Watts skip ${t.id === 'empty' ? 'ready to load' : 'filled with ' + t.name.toLowerCase()}`
   return `<a class="card" href="/skips/${t.slug}" data-reveal data-cursor="View">
     ${t.badge ? `<span class="card__badge">${esc(t.badge)}</span>` : ''}
-    <span class="card__img"><img src="${skipImg(t, cover)}" alt="A Watts skip ${t.id === 'empty' ? 'ready to load' : 'filled with ' + esc(t.name.toLowerCase())}" loading="${i < 4 ? 'eager' : 'lazy'}" /><img class="card__photo" src="/media/waste/${t.id}.jpg" alt="${esc(t.name)}, real photo" loading="lazy" onerror="this.remove()" /></span>
+    <span class="card__img">${photoOr(t, skipImg(t, cover), alt, i < 4)}</span>
     <span class="card__body">
       <strong class="card__name">${esc(t.name)}</strong>
       <span class="card__lead">${esc(t.lead)}</span>
@@ -42,6 +45,16 @@ const yesno = (t) => `<div class="yn">
   <div class="yn__col yn__col--yes"><h3>Can go in</h3><ul>${t.yes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
   <div class="yn__col yn__col--no"><h3>Can't go in</h3><ul>${t.no.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
 </div>`
+
+const acc = (items) => `<div class="acc">${items.map(([q, a, open]) => `<details${open ? ' open' : ''}><summary>${esc(q)}</summary><div class="acc__body">${a}</div></details>`).join('')}</div>`
+const list = (xs) => `<ul class="plain">${xs.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
+
+const typeFaq = (t) => [
+  [`What can I put in a ${t.name.toLowerCase()} skip?`, list(t.yes)],
+  [`What can't I put in a ${t.name.toLowerCase()} skip?`, list(t.no)],
+  [`Which size ${t.name.toLowerCase()} skip do I need?`, t.sizes.includes('sealed') ? '<p>Asbestos is arranged by phone, and we choose the container to suit the job. Ring us on 0116 266 7497.</p>' : `<p>${t.sizes.filter((x) => x !== 'roro').map((x) => `A <b>${SIZES[x].yd} yard</b> (${SIZES[x].m3} m³) skip suits ${SIZES[x].use.charAt(0).toLowerCase() + SIZES[x].use.slice(1)}`).join('<br/>')}</p>`],
+  ['Can the skip go on the road?', '<p>Yes, with a council permit. We arrange it for you and add it to the price: tick the box on your quote request.</p>'],
+]
 
 const FAQ = [
   ['How full can I fill the skip?', 'Level with the top, and no higher. Anything sticking out above the sides is unsafe on the road and the driver can refuse to lift it, so pile heavy items low and fill the gaps with lighter waste.'],
@@ -100,6 +113,9 @@ export function typePage(t) {
         <aside class="tp__side"><h2>What goes in a ${esc(t.name.toLowerCase())} skip</h2>${yesno(t)}
           <p class="tp__call">Not sure which skip you need? <a href="tel:+441162667497">Ring 0116 266 7497</a> and we'll talk it through.</p></aside>
       </div>
+      <section class="seo"><h2>${esc(t.name)} skips in Leicester</h2>
+        <p>${esc(t.about)} We deliver across Leicester and Leicestershire from our yard on Barkby Road, usually the next working day. Prices depend on your postcode and any permit, so enter yours on the skip page or give us a ring.</p>
+        <h3>Frequently asked questions</h3>${acc(typeFaq(t))}</section>
     </div></div>`,
   }
 }
@@ -109,41 +125,44 @@ export function productPage(t, id) {
   const sealed = id === 'sealed'
   const title = sealed ? 'Sealed asbestos container' : `${sizeTitle(s)} – ${t.name}`
   const others = t.sizes.filter((x) => x !== id)
+  const sameSize = TYPES.filter((x) => x.id !== t.id && x.sizes.includes(id)).slice(0, 3)
   const spec = sealed
     ? [['Type', 'Closed, lockable container'], ['Approx. size', s.dims], ['Arranged', 'By phone, every time']]
     : [['Capacity', id === 'roro' ? `${s.m3} m³ (30–40 yard)` : `${s.yd} yard · ${s.m3} m³`], ['Approx. size (L × W × H)', s.dims], ['Holds roughly', `${s.bags} bin bags`], ['Best for', s.use]]
+  const ticks = sealed
+    ? ['Arranged by phone with the paperwork sorted', 'Closed, lockable container with hazard label', 'Licensed to take asbestos by arrangement']
+    : ['Delivered next working day to LE postcodes', 'Council permits arranged for roadside skips', 'We ring back with a price and a slot. Nothing is charged online']
   return {
     title: `${title} | ${SITE}`,
     desc: `${title}, hired in Leicester. ${s.use} Get a price for your postcode.`,
     html: `<div class="inner"><div class="wrap">
       ${crumbs([['Home', '/'], ['Skips', '/skips'], [t.name, `/skips/${t.slug}`], [sealed ? 'Sealed container' : sizeTitle(s)]])}
       <div class="pdp">
-        <div class="pdp__media"><img src="${skipImg(t, id)}" alt="${esc(title)}" /></div>
+        <div class="pdp__media"><img class="is-render" src="${skipImg(t, id)}" alt="${esc(title)}" />
+          <img class="pdp__photo is-photo" src="/media/waste/${t.id}.jpg" alt="${esc(t.name)}, real photo" onerror="this.remove()" /></div>
         <div class="pdp__info">
-          <p class="kicker">${esc(t.name)} skip</p>
           <h1 class="pdp__title">${esc(title)}</h1>
-          <p class="pdp__lead">${esc(t.about)}</p>
-          <dl class="specs">${spec.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+          <p class="pdp__from">${sealed ? 'Price on request' : 'Price from your postcode'}</p>
           <div class="buy" data-buy>
-            <p class="buy__title">${sealed ? 'Ring to arrange this one' : 'Get a price for your postcode'}</p>
-            ${sealed ? '' : `<label class="buy__label" for="pc">Delivery postcode</label>
-            <div class="buy__row"><input id="pc" type="text" autocomplete="postal-code" placeholder="LE4 9LG" maxlength="8" data-buy-pc /><button class="btn btn--dark" type="button" data-buy-check>Check</button></div>
+            <p class="buy__title">${sealed ? 'Asbestos is arranged by phone. Please ring us, or request a call back.' : 'Pricing and availability depend on your location. Please enter your postcode for an accurate price.'}</p>
+            ${sealed ? '' : `<div class="buy__row"><input id="pc" type="text" aria-label="Delivery postcode" autocomplete="postal-code" placeholder="E.G LE4 9LG" maxlength="8" data-buy-pc /><button class="btn btn--yellow" type="button" data-buy-check>Check</button></div>
             <p class="buy__msg" data-buy-msg aria-live="polite"></p>`}
-            <button class="btn btn--blue btn--lg btn--full" type="button" data-quote data-qtype="${t.id}" data-qsize="${id}" data-buy-go>${sealed ? 'Request a call back' : 'Get a price'}</button>
-            <a class="buy__tel" href="tel:+441162667497">Or call 0116 266 7497</a>
-            <p class="buy__note">${sealed ? 'We confirm the container, the paperwork and a slot by phone.' : 'Prices depend on your postcode, the waste and any permit. We ring back with a price and a slot. Nothing is charged online.'}</p>
           </div>
+          <ul class="ticks">${ticks.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+          <div class="pdp__cta">
+            <button class="btn btn--blue btn--lg" type="button" data-quote data-qtype="${t.id}" data-qsize="${id}" data-buy-go>${sealed ? 'Request a call back' : 'Get a price'}</button>
+            <a class="buy__tel" href="tel:+441162667497">Or call 0116 266 7497</a>
+          </div>
+          ${acc([
+            [`What can I put in my skip?`, yesno(t), true],
+            ['Skip size', `<dl class="specs specs--in">${spec.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`],
+            ['Permits and placing the skip', '<p>On your own land you can put a skip anywhere it fits. On the road it needs a council permit, which we arrange and add to the price. Tick the box on your quote request and we will sort it.</p>'],
+            ['How full can I fill it?', '<p>Level with the top, never higher. An overloaded skip cannot be lifted safely, and the driver can refuse to take it. Put heavy items low and fill the gaps with lighter waste.</p>'],
+          ])}
         </div>
       </div>
-      <div class="pdp__more">
-        <section class="pdp__box"><h2>What goes in</h2>${yesno(t)}</section>
-        <section class="pdp__box"><h2>Good to know</h2><ul class="know">
-          <li><b>Don't overfill.</b> Keep waste level with the top: overloaded skips can't be lifted.</li>
-          <li><b>On the road?</b> It needs a council permit. We arrange it and add it to the price.</li>
-          <li><b>Not sure?</b> Ring before you load anything you're unsure about.</li>
-        </ul></section>
-      </div>
-      ${others.length ? `<section class="pdp__others"><h2>Other ${esc(t.name.toLowerCase())} skips</h2><div class="cards cards--size" data-cards>${others.map((x, i) => sizeCard(t, x, i)).join('')}</div></section>` : ''}
+      ${others.length ? `<section class="pdp__others"><h2>You may also like</h2><div class="cards cards--size" data-cards>${others.map((x, i) => sizeCard(t, x, i)).join('')}</div></section>` : ''}
+      ${sameSize.length ? `<section class="pdp__others"><h2>Other waste types in ${sealed ? 'this size' : esc(sizeTitle(s))}</h2><div class="cards cards--size" data-cards>${sameSize.map((x, i) => sizeCard(x, id, i)).join('')}</div></section>` : ''}
     </div></div>`,
   }
 }
