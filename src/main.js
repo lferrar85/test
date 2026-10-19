@@ -33,7 +33,7 @@ const img = (n) => `media/skips/${n}.webp`
 $('[data-types]').innerHTML = TYPES.map((t, i) => `
   <button class="type" type="button" style="--c:${t.c};--on:${t.on || '#fff'}" data-type="${t.id}" data-reveal data-cursor="Quote">
     ${t.badge ? `<span class="type__badge">${t.badge}</span>` : ''}
-    <span class="type__img"><img src="${img('skip-' + t.id)}" alt="A Watts skip ${t.id === 'empty' ? 'ready to load' : 'filled with ' + t.name.toLowerCase()}" loading="${i < 4 ? 'eager' : 'lazy'}" /></span>
+    <span class="type__img"><img src="${img('skip-' + t.id)}" alt="A Watts skip ${t.id === 'empty' ? 'ready to load' : 'filled with ' + t.name.toLowerCase()}" loading="${i < 4 ? 'eager' : 'lazy'}" /><img class="type__photo" src="media/waste/${t.id}.jpg" alt="${t.name}, real photo" loading="lazy" onerror="this.remove()" /></span>
     <span class="type__name">${t.name}</span>
     <span class="type__lead">${t.lead}</span>
     <span class="type__lists"><p class="yes"><b>✓</b>${t.yes}</p><p class="no"><b>✕</b>${t.no}</p></span>
