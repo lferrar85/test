@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oswald Cox Saws Ltd | Saw Sharpening &amp; Tool Grinding, Leicester</title>
+  <meta name="description" content="Oswald Cox Saws Ltd, Leicester. Saws, tool and cutter grinding specialists since 1922. Precision saw sharpening, tool and cutter grinding, garden equipment servicing and repair.">
+  <meta name="theme-color" content="#C8102E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23C8102E'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='white' stroke-width='5' stroke-dasharray='3.5 2.4'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    :root {
+      --red: #C8102E;
+      --red-dark: #A00D25;
+      --brick: #8E2A22;
+      --brick-deep: #6E1F19;
+      --black: #111111;
+      --ink: #1C1C1C;
+      --grey: #6B6B6B;
+      --line: #E2DED8;
+      --stone: #F3F0EC;
+      --white: #FFFFFF;
+
+      --step--1: clamp(0.83rem, 0.79rem + 0.2vw, 0.95rem);
+      --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+      --step-1:  clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+      --step-2:  clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+      --step-3:  clamp(1.9rem, 1.5rem + 2vw, 3rem);
+      --step-4:  clamp(2.4rem, 1.7rem + 3.5vw, 4.6rem);
+
+      --space-s: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+      --space-m: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+      --space-l: clamp(2.25rem, 1.8rem + 1.8vw, 3.5rem);
+      --space-xl: clamp(4rem, 3rem + 4vw, 7rem);
+
+      --wrap: 1180px;
+      --header-h: 68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 8px); }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: var(--step-0);
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img, svg, iframe { max-width: 100%; display: block; }
+    h1, h2, h3, p { margin: 0; }
+    a { color: inherit; }
+    ::selection { background: var(--red); color: var(--white); }
+
+    :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+    .on-dark :focus-visible, .site-footer :focus-visible, .hero :focus-visible { outline-color: var(--white); }
+
+    .wrap { width: min(100% - 2rem, var(--wrap)); margin-inline: auto; }
+    .skip {
+      position: absolute; left: 1rem; top: -4rem; z-index: 100;
+      background: var(--black); color: var(--white); padding: .6rem 1rem; text-decoration: none; font-weight: 600;
+    }
+    .skip:focus { top: .75rem; }
+
+    .overline {
+      font-size: var(--step--1); font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--red); display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem;
+    }
+    .overline::before { content: ""; width: 2rem; height: 3px; background: currentColor; }
+    h2 {
+      font-size: var(--step-3); line-height: 1.08; letter-spacing: -0.03em; font-weight: 800; color: var(--black);
+      text-wrap: balance;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      font: inherit; font-weight: 700; font-size: var(--step-0); letter-spacing: .01em;
+      padding: .95rem 1.6rem; border: 2px solid var(--red); border-radius: 2px;
+      background: var(--red); color: var(--white); text-decoration: none; cursor: pointer;
+      transition: background-color .2s, color .2s, border-color .2s, transform .2s;
+    }
+    .btn svg { width: 1.15em; height: 1.15em; flex: none; }
+    .btn:active { transform: translateY(1px); }
+    .btn--ghost { background: transparent; color: var(--black); border-color: var(--black); }
+    @media (hover: hover) {
+      .btn:hover { background: var(--red-dark); border-color: var(--red-dark); }
+      .btn--ghost:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+    }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: sticky; top: 0; z-index: 50; height: var(--header-h);
+      background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .site-header::after { content: ""; position: absolute; inset: auto 0 -1px 0; height: 3px; background: var(--red); }
+    .site-header .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; min-width: 0; }
+    .brand-mark { width: 34px; height: 34px; flex: none; }
+    .brand-name { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; color: var(--red); font-size: 1.05rem; white-space: nowrap; }
+    .brand-name small { display: block; font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); margin-top: 2px; }
+    .nav { display: none; gap: 1.75rem; }
+    .nav a { text-decoration: none; font-weight: 600; font-size: .95rem; position: relative; padding: .35rem 0; }
+    .nav a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--red);
+      transform: scaleX(0); transform-origin: left; transition: transform .25s;
+    }
+    @media (hover: hover) { .nav a:hover::after { transform: scaleX(1); } }
+    .nav a:focus-visible::after { transform: scaleX(1); }
+    .header-phone {
+      display: inline-flex; align-items: center; gap: .5rem; text-decoration: none;
+      font-weight: 800; letter-spacing: -0.01em; color: var(--white); background: var(--black);
+      padding: .55rem .95rem; border-radius: 2px; white-space: nowrap; transition: background-color .2s;
+    }
+    .header-phone svg { width: 1em; height: 1em; }
+    .header-phone .num-long { display: none; }
+    @media (hover: hover) { .header-phone:hover { background: var(--red); } }
+    @media (min-width: 560px) { .header-phone .num-long { display: inline; } .header-phone .num-short { display: none; } }
+    @media (min-width: 900px) { .nav { display: flex; } }
+    @media (max-width: 380px) { .brand-name small { display: none; } .brand-name { font-size: .95rem; } }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; isolation: isolate; color: var(--white);
+      min-height: min(86vh, 760px); display: flex; align-items: flex-end;
+      padding-block: var(--space-xl) var(--space-l);
+      /* Photo sits on top; the brick pattern underneath shows if the photo is missing. */
+      background-color: var(--brick-deep);
+      background-image:
+        linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.35) 100%),
+        url("images/shop-front.jpg"),
+        repeating-linear-gradient(0deg, transparent 0 25px, rgba(0,0,0,.28) 25px 28px),
+        repeating-linear-gradient(90deg, transparent 0 62px, rgba(0,0,0,.2) 62px 65px),
+        linear-gradient(135deg, var(--brick) 0%, var(--brick-deep) 100%);
+      background-size: auto, cover, auto, auto, auto;
+      background-position: center, center 40%, 0 0, 0 0, center;
+    }
+    .fascia {
+      background: var(--white); color: var(--black); max-width: 40rem;
+      padding: clamp(1.5rem, 1.1rem + 2vw, 2.75rem);
+      border: 3px solid var(--black); outline: 3px solid var(--white); outline-offset: -9px;
+      position: relative;
+    }
+    .fascia h1 {
+      font-size: var(--step-4); line-height: .98; letter-spacing: -0.04em; font-weight: 900; color: var(--red);
+      text-wrap: balance;
+    }
+    .fascia .tagline {
+      margin-top: 1.1rem; font-size: var(--step-1); line-height: 1.3; font-weight: 600; color: var(--black); letter-spacing: -0.01em;
+      padding-top: 1.1rem; border-top: 2px solid var(--black);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .hero-actions .btn--ghost { border-color: var(--black); }
+    .badge {
+      position: absolute; right: -14px; top: -34px; transform: rotate(6deg);
+      width: 104px; height: 104px; border-radius: 50%;
+      background: var(--red); color: var(--white); border: 3px solid var(--white);
+      display: grid; place-content: center; text-align: center; line-height: 1.05;
+    }
+    .badge span { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .badge strong { font-size: 1.9rem; font-weight: 900; letter-spacing: -0.04em; }
+    @media (max-width: 520px) { .badge { width: 88px; height: 88px; right: -4px; top: -40px; } .badge strong { font-size: 1.6rem; } }
+
+    /* ---------- About ---------- */
+    .section { padding-block: var(--space-xl); }
+    .about-grid { display: grid; gap: var(--space-l); align-items: start; }
+    .about-copy p { font-size: var(--step-1); line-height: 1.55; color: var(--ink); max-width: 38rem; letter-spacing: -0.01em; }
+    .about-copy p + p { margin-top: 1.1rem; font-size: var(--step-0); color: var(--grey); letter-spacing: 0; }
+    .about-copy h2 { margin-bottom: var(--space-m); }
+    .stat { border-top: 4px solid var(--red); padding-top: 1.25rem; }
+    .stat-num { font-size: clamp(5rem, 3rem + 9vw, 9.5rem); font-weight: 900; line-height: .9; letter-spacing: -0.06em; color: var(--black); }
+    .stat-num sup { font-size: .4em; color: var(--red); vertical-align: top; position: relative; top: .1em; margin-left: .05em; }
+    .stat-label { margin-top: .75rem; font-weight: 600; max-width: 18rem; color: var(--grey); }
+    .stat-label b { color: var(--black); }
+    @media (min-width: 860px) { .about-grid { grid-template-columns: 1.5fr 1fr; gap: var(--space-xl); } }
+
+    /* ---------- Services ---------- */
+    .services { background: var(--stone); }
+    .section-head { max-width: 40rem; margin-bottom: var(--space-l); }
+    .section-head p { margin-top: 1rem; color: var(--grey); }
+    .service-grid { display: grid; gap: var(--space-m); }
+    .service { background: var(--white); border-top: 4px solid var(--red); padding: var(--space-m); display: flex; flex-direction: column; gap: 1rem; }
+    .service .icon { width: 56px; height: 56px; color: var(--red); }
+    .service h3 { font-size: var(--step-1); line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--black); }
+    .service p { color: var(--grey); }
+    .service ul { margin: auto 0 0; padding: 1rem 0 0; list-style: none; border-top: 1px solid var(--line); font-size: var(--step--1); font-weight: 600; }
+    .service li { padding: .2rem 0 .2rem 1.1rem; position: relative; }
+    .service li::before { content: ""; position: absolute; left: 0; top: .85em; width: .5rem; height: 2px; background: var(--red); }
+    @media (min-width: 560px) { .service-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 560px) { .service:last-child { grid-column: span 2; } }
+    @media (min-width: 960px) {
+      .service-grid { grid-template-columns: repeat(3, 1fr); }
+      .service:last-child { grid-column: auto; }
+      .service:nth-child(2) { margin-top: var(--space-m); }
+    }
+
+    /* ---------- Why us ---------- */
+    .why { background: var(--brick); color: var(--white); }
+    .why h2 { color: var(--white); }
+    .why .overline { color: var(--white); }
+    .why-grid { display: grid; gap: 0; border-top: 1px solid rgba(255,255,255,.3); }
+    .why-item { display: grid; grid-template-columns: auto 1fr; gap: 0 1.5rem; padding: var(--space-m) 0; border-bottom: 1px solid rgba(255,255,255,.3); }
+    .why-item .n { font-size: var(--step-3); font-weight: 900; letter-spacing: -0.04em; line-height: 1; color: rgba(255,255,255,.55); min-width: 2.2ch; }
+    .why-item h3 { font-size: var(--step-1); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+    .why-item p { margin-top: .4rem; color: rgba(255,255,255,.85); max-width: 28rem; }
+    .why-head { margin-bottom: var(--space-l); max-width: 36rem; }
+    @media (min-width: 760px) {
+      .why-grid { grid-template-columns: 1fr 1fr; column-gap: var(--space-xl); }
+    }
+
+    /* ---------- Contact ---------- */
+    .contact-grid { display: grid; gap: var(--space-l); }
+    .contact-details { display: grid; gap: 1.5rem; margin-top: var(--space-m); }
+    .detail dt { font-size: var(--step--1); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-bottom: .2rem; }
+    .detail dd { margin: 0; font-size: var(--step-1); font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; color: var(--black); }
+    .detail a { text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 2px no-repeat; transition: background-size .25s, color .2s; overflow-wrap: anywhere; }
+    .detail a { background-size: 100% 2px; }
+    @media (hover: hover) { .detail a:hover { color: var(--red); } }
+    .detail address { font-style: normal; }
+
+    form { display: grid; gap: 1.1rem; background: var(--stone); padding: var(--space-m); border-top: 4px solid var(--black); }
+    form h3 { font-size: var(--step-1); font-weight: 800; letter-spacing: -0.02em; color: var(--black); }
+    .field { display: grid; gap: .35rem; }
+    label { font-size: var(--step--1); font-weight: 700; color: var(--black); }
+    label .opt { font-weight: 500; color: var(--grey); }
+    input, select, textarea {
+      font: inherit; color: var(--black); background: var(--white); width: 100%;
+      border: 2px solid #CFC9C0; border-radius: 2px; padding: .8rem .9rem; transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { min-height: 9rem; resize: vertical; }
+    input:hover, select:hover, textarea:hover { border-color: var(--grey); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(200,16,46,.2); }
+    .form-note { font-size: var(--step--1); color: var(--grey); }
+    .form-status { font-weight: 600; min-height: 1.5em; }
+    .map { margin-top: var(--space-l); border: 3px solid var(--black); background: var(--stone); }
+    .map iframe { width: 100%; height: clamp(300px, 40vw, 440px); border: 0; filter: grayscale(.35) contrast(1.02); }
+    @media (min-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr 1.1fr; gap: var(--space-xl); align-items: start; }
+    }
+
+    /* ---------- Footer ---------- */
+    .site-footer { background: var(--black); color: rgba(255,255,255,.8); padding-block: var(--space-l) 1.5rem; border-top: 6px solid var(--red); }
+    .footer-top { display: grid; gap: var(--space-m); padding-bottom: var(--space-m); border-bottom: 1px solid rgba(255,255,255,.18); }
+    .footer-name { font-size: var(--step-2); font-weight: 900; letter-spacing: -0.03em; color: var(--white); line-height: 1.05; }
+    .footer-name em { font-style: normal; color: var(--red); }
+    .footer-est { margin-top: .5rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: var(--step--1); color: rgba(255,255,255,.6); }
+    .footer-contact { display: grid; gap: .35rem; font-weight: 500; }
+    .footer-contact a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); width: fit-content; transition: color .2s, border-color .2s; }
+    @media (hover: hover) { .footer-contact a:hover { color: var(--white); border-color: var(--white); } }
+    .footer-contact address { font-style: normal; }
+    .copyright { padding-top: 1.25rem; font-size: var(--step--1); color: rgba(255,255,255,.6); }
+    @media (min-width: 760px) { .footer-top { grid-template-columns: 1fr auto; align-items: end; } }
+
+    /* ---------- Reveal ---------- */
+    @media (prefers-reduced-motion: no-preference) {
+      .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; transition-delay: var(--d, 0s); }
+      .js .reveal.in { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Oswald Cox Saws Ltd, back to top">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" fill="#C8102E"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="3.5 2.4"/>
+          <circle cx="16" cy="16" r="2.5" fill="#fff"/>
+        </svg>
+        <span class="brand-name">Oswald Cox Saws Ltd<small>Est. 1922 · Leicester</small></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#why">Why us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-phone" href="tel:+441162517378" aria-label="Call us on 0116 251 7378">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        <span class="num-long">0116 251 7378</span><span class="num-short">Call</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top" aria-label="Oswald Cox Saws Ltd">
+      <div class="wrap">
+        <div class="fascia">
+          <div class="badge" aria-label="Established 1922"><span>Established</span><strong>1922</strong></div>
+          <h1>Oswald Cox Saws Ltd</h1>
+          <p class="tagline">Saws, Tool &amp; Cutter Grinding Specialists</p>
+          <div class="hero-actions">
+            <a class="btn" href="tel:+441162517378">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+              Call Us
+            </a>
+            <a class="btn btn--ghost" href="#contact">Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="wrap about-grid">
+        <div class="about-copy reveal">
+          <p class="overline">About us</p>
+          <h2>A specialist workshop, in Leicester since 1922.</h2>
+          <p>For over a hundred years, Oswald Cox Saws has been the name local trades and householders turn to when an edge needs to be right. We are a family-run specialist workshop with a hard-earned reputation for precision work.</p>
+          <p>Whether you run a joinery shop, a factory floor or a garden shed, we serve trade customers and the general public alike, with the same care for every blade, cutter and tool that comes through the door.</p>
+        </div>
+        <div class="stat reveal" style="--d:.1s">
+          <div class="stat-num">100<sup>+</sup></div>
+          <p class="stat-label"><b>years of experience</b> sharpening, grinding and repairing from Sanvey Gate.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section services" id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="overline">What we do</p>
+          <h2>Three specialisms, one workshop.</h2>
+        </div>
+        <div class="service-grid">
+          <article class="service reveal">
+            <!-- Saw blade -->
+            <svg class="icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+              <circle cx="28" cy="28" r="21" stroke-width="7" stroke-dasharray="5.2 3.9" />
+              <circle cx="28" cy="28" r="15" />
+              <circle cx="28" cy="28" r="4" />
+            </svg>
+            <h3>Saw Sharpening &amp; Repair</h3>
+            <p>Precision sharpening and repair for circular saws, bandsaws and other cutting blades, so they cut clean and true again.</p>
+            <ul>
+              <li>Circular saw blades</li>
+              <li>Bandsaw blades</li>
+              <li>Blade repair and re-tipping</li>
+            </ul>
+          </article>
+
+          <article class="service reveal" style="--d:.1s">
+            <!-- Milling cutter / end mill -->
+            <svg class="icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 4h14v20H21z" />
+              <path d="M21 24l5 6h4l5-6" />
+              <path d="M17 30h22v6H17z" />
+              <path d="M24 36v16M32 36v16M24 52h8" />
+              <path d="M21 10l14 5M21 17l14 5" />
+            </svg>
+            <h3>Tool &amp; Cutter Grinding</h3>
+            <p>Accurate grinding and re-sharpening of workshop tooling, restoring cutting performance and extending the life of your tools.</p>
+            <ul>
+              <li>Milling cutters and end mills</li>
+              <li>Drills and reamers</li>
+              <li>Planer knives and blades</li>
+            </ul>
+          </article>
+
+          <article class="service reveal" style="--d:.2s">
+            <!-- Hedge trimmer blade -->
+            <svg class="icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 22h50v8H3z" />
+              <path d="M7 30l3 12 3-12M17 30l3 12 3-12M27 30l3 12 3-12M37 30l3 12 3-12M47 30l3 12" />
+              <path d="M7 22l3-12 3 12M17 22l3-12 3 12M27 22l3-12 3 12M37 22l3-12 3 12M47 22l3-12" />
+            </svg>
+            <h3>Garden Equipment Servicing</h3>
+            <p>Practical servicing, sharpening and repair to keep your garden machinery running reliably, season after season.</p>
+            <ul>
+              <li>Lawnmower blades</li>
+              <li>Hedge trimmers</li>
+              <li>General servicing and repair</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why us -->
+    <section class="section why on-dark" id="why">
+      <div class="wrap">
+        <div class="why-head reveal">
+          <p class="overline">Why choose us</p>
+          <h2>Straightforward work, done properly.</h2>
+        </div>
+        <div class="why-grid">
+          <div class="why-item reveal">
+            <span class="n">01</span>
+            <div><h3>Over 100 years’ experience</h3><p>Generations of know-how, passed down and put to work on every job.</p></div>
+          </div>
+          <div class="why-item reveal" style="--d:.08s">
+            <span class="n">02</span>
+            <div><h3>Specialist precision grinding</h3><p>Accurate, consistent results from a workshop that does this and nothing else.</p></div>
+          </div>
+          <div class="why-item reveal" style="--d:.16s">
+            <span class="n">03</span>
+            <div><h3>Reliable turnaround</h3><p>We know your tools earn their keep, so we work to get them back to you when promised.</p></div>
+          </div>
+          <div class="why-item reveal" style="--d:.24s">
+            <span class="n">04</span>
+            <div><h3>Local, trusted business</h3><p>Rooted in Leicester and relied on by tradespeople and households alike.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="contact-grid">
+          <div class="reveal">
+            <p class="overline">Contact</p>
+            <h2>Get in touch with the workshop.</h2>
+            <dl class="contact-details">
+              <div class="detail">
+                <dt>Visit</dt>
+                <dd><address>Oswald Cox Saws Ltd<br>53–57 Sanvey Gate<br>Leicester, LE1 4BL</address></dd>
+              </div>
+              <div class="detail">
+                <dt>Phone</dt>
+                <dd><a href="tel:+441162517378">0116 251 7378</a></dd>
+              </div>
+              <div class="detail">
+                <dt>Email</dt>
+                <dd><a href="mailto:oswaldcox12@btconnect.com">oswaldcox12@btconnect.com</a></dd>
+              </div>
+            </dl>
+          </div>
+
+          <form id="contact-form" class="reveal" style="--d:.1s" novalidate>
+            <h3>Send us a message</h3>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="service">Service <span class="opt">(optional)</span></label>
+              <select id="service" name="service">
+                <option value="">Not sure / other</option>
+                <option>Saw Sharpening &amp; Repair</option>
+                <option>Tool &amp; Cutter Grinding</option>
+                <option>Garden Equipment Servicing</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button class="btn" type="submit">Send message</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <p class="form-note">Prefer to talk? Call <a href="tel:+441162517378"><strong>0116 251 7378</strong></a>.</p>
+          </form>
+        </div>
+
+        <div class="map reveal">
+          <iframe
+            title="Map showing Oswald Cox Saws Ltd, 53–57 Sanvey Gate, Leicester"
+            src="https://www.google.com/maps?q=53-57+Sanvey+Gate,+Leicester,+LE1+4BL&amp;output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <p class="footer-name">Oswald Cox <em>Saws</em> Ltd</p>
+          <p class="footer-est">Est. 1922</p>
+        </div>
+        <div class="footer-contact">
+          <address>53–57 Sanvey Gate, Leicester, LE1 4BL</address>
+          <a href="tel:+441162517378">0116 251 7378</a>
+          <a href="mailto:oswaldcox12@btconnect.com">oswaldcox12@btconnect.com</a>
+        </div>
+      </div>
+      <p class="copyright">&copy; <span id="year">2026</span> Oswald Cox Saws Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll reveal (content stays visible if JS or IntersectionObserver is unavailable)
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { items.forEach(function (el) { el.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
+    // Contact form: opens the visitor's email app with the message pre-filled.
+    // (Static site, no server. Swap for a form service/endpoint if one is added later.)
+    (function () {
+      var form = document.getElementById('contact-form');
+      var status = document.getElementById('form-status');
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var d = new FormData(form);
+        var name = (d.get('name') || '').trim(), email = (d.get('email') || '').trim(), msg = (d.get('message') || '').trim();
+        if (!name || !email || !msg || !/^\S+@\S+\.\S+$/.test(email)) {
+          status.style.color = '#C8102E';
+          status.textContent = 'Please add your name, a valid email address and a message.';
+          (form.querySelector(':invalid') || form.elements[!name ? 0 : !/^\S+@\S+\.\S+$/.test(email) ? 1 : 3]).focus();
+          return;
+        }
+        var service = d.get('service');
+        var subject = 'Website enquiry' + (service ? ' – ' + service : '');
+        var body = msg + '\n\n—\n' + name + '\n' + email;
+        window.location.href = 'mailto:oswaldcox12@btconnect.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        status.style.color = '#1C1C1C';
+        status.textContent = 'Opening your email app… if nothing happens, email oswaldcox12@btconnect.com or call 0116 251 7378.';
+      });
+    })();
+  </script>
+</body>
+</html>
