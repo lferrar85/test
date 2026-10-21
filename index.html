@@ -18,8 +18,8 @@
     :root {
       --red: #C8102E;
       --red-dark: #A00D25;
-      --brick: #8E2A22;
-      --brick-deep: #6E1F19;
+      --brick: #9B3B25;
+      --brick-deep: #6B2517;
       --black: #111111;
       --ink: #1C1C1C;
       --grey: #6B6B6B;
@@ -133,24 +133,31 @@
     /* ---------- Hero ---------- */
     .hero {
       position: relative; isolation: isolate; color: var(--white);
-      min-height: min(86vh, 760px); display: flex; align-items: flex-end;
-      padding-block: var(--space-xl) var(--space-l);
-      /* Photo sits on top; the brick pattern underneath shows if the photo is missing. */
+      padding-block: var(--space-l) var(--space-xl);
+      /* Brick courses in the colour of the shop's own wall */
       background-color: var(--brick-deep);
       background-image:
-        linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.35) 100%),
-        url("images/shop-front.jpg"),
         repeating-linear-gradient(0deg, transparent 0 25px, rgba(0,0,0,.28) 25px 28px),
         repeating-linear-gradient(90deg, transparent 0 62px, rgba(0,0,0,.2) 62px 65px),
         linear-gradient(135deg, var(--brick) 0%, var(--brick-deep) 100%);
-      background-size: auto, cover, auto, auto, auto;
-      background-position: center, center 40%, 0 0, 0 0, center;
     }
+    .hero-grid { display: grid; align-items: center; }
+    .hero-photo { margin: 0; border: 3px solid var(--white); background: var(--brick-deep); line-height: 0; }
+    .hero-photo img { width: 100%; height: auto; aspect-ratio: 769 / 735; object-fit: cover; object-position: top; }
     .fascia {
       background: var(--white); color: var(--black); max-width: 40rem;
       padding: clamp(1.5rem, 1.1rem + 2vw, 2.75rem);
       border: 3px solid var(--black); outline: 3px solid var(--white); outline-offset: -9px;
-      position: relative;
+      position: relative; z-index: 1;
+      margin: calc(var(--space-l) * -1.4) .75rem 0;
+      padding-top: 3.25rem;
+    }
+    /* Panel overlaps the lower-left of the photo (windows and door), never the sign itself */
+    @media (min-width: 900px) {
+      .hero { padding-block: var(--space-xl); }
+      .hero-grid { grid-template-columns: repeat(12, 1fr); }
+      .fascia { grid-column: 1 / 7; grid-row: 1; margin: 0 0 -2.5rem; max-width: none; align-self: end; padding-top: clamp(1.5rem, 1.1rem + 2vw, 2.75rem); }
+      .hero-photo { grid-column: 6 / 13; grid-row: 1; align-self: start; }
     }
     .fascia h1 {
       font-size: var(--step-4); line-height: .98; letter-spacing: -0.04em; font-weight: 900; color: var(--red);
@@ -163,13 +170,14 @@
     .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
     .hero-actions .btn--ghost { border-color: var(--black); }
     .badge {
-      position: absolute; right: -14px; top: -34px; transform: rotate(6deg);
+      position: absolute; right: -14px; top: -52px; transform: rotate(6deg);
       width: 104px; height: 104px; border-radius: 50%;
       background: var(--red); color: var(--white); border: 3px solid var(--white);
       display: grid; place-content: center; text-align: center; line-height: 1.05;
     }
     .badge span { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
     .badge strong { font-size: 1.9rem; font-weight: 900; letter-spacing: -0.04em; }
+    @media (min-width: 900px) { .badge { top: -34px; } }
     @media (max-width: 520px) { .badge { width: 88px; height: 88px; right: -4px; top: -40px; } .badge strong { font-size: 1.6rem; } }
 
     /* ---------- About ---------- */
@@ -298,7 +306,11 @@
   <main id="main">
     <!-- Hero -->
     <section class="hero" id="top" aria-label="Oswald Cox Saws Ltd">
-      <div class="wrap">
+      <div class="wrap hero-grid">
+        <figure class="hero-photo">
+          <img src="images/shop-front.webp" width="769" height="735" fetchpriority="high"
+               alt="The Oswald Cox Saws Ltd shop front on Sanvey Gate, Leicester: a red-brick unit with a white fascia sign">
+        </figure>
         <div class="fascia">
           <div class="badge" aria-label="Established 1922"><span>Established</span><strong>1922</strong></div>
           <h1>Oswald Cox Saws Ltd</h1>
