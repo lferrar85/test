@@ -412,7 +412,8 @@ function viewResults() {
     <div class="res-main" data-res-main></div>
     ${asideHtml(r)}
   </div></div>
-  ${quoteSection()}`;
+  ${quoteSection()}
+  ${document.getElementById('nx-tpl')?.innerHTML || ''}`;
   paintMain();
   const form = root.querySelector('form[data-form=quote]');
   bindForm(form, { kind: 'quote', matchedBox: root.querySelector('[data-matched]'), getExtra: () => ({ calc: calcSummary() }) });

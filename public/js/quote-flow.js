@@ -3,30 +3,38 @@ import { parsePostcode } from './model.js';
 import { loadState, siteConfig } from './state.js';
 import { bindForm, previewMatches, renderMatched } from './forms.js';
 import { esc } from './format.js';
+import { icon } from './icons.js';
+import { raySvg, HEAD_VIEW } from './mascot-art.js';
+import { mountRay } from './mascot.js';
 
 const root = document.getElementById('qf-root');
 const cfg = siteConfig();
 const saved = loadState();
 
+// Titles mark the key words with *stars*; they're highlighted on screen.
 const Q = [
-  { key: 'interest', title: 'What are you interested in?', opts: [['solar', 'Solar panels'], ['solar_battery', 'Solar panels and a battery'], ['battery', 'A battery for my existing solar']] },
-  { key: 'roofType', title: 'What is your property’s roof type?', opts: [['pitched', 'Pitched'], ['mono', 'Mono pitched'], ['flat', 'Flat'], ['other', 'Other'], ['unsure', 'Unsure']] },
-  { key: 'roofMaterial', title: 'What is your property’s roof material?', opts: [['concrete', 'Concrete tiles'], ['clay', 'Clay tiles'], ['slate', 'Slate tiles'], ['felt', 'Felt'], ['other', 'Other'], ['unsure', 'Unsure']] },
-  { key: 'homeBuilt', title: 'When was your home built?', opts: [['pre1900', 'Before 1900'], ['1900_1949', '1900 to 1949'], ['1950_1982', '1950 to 1982'], ['1983_1995', '1983 to 1995'], ['1996_2006', '1996 to 2006'], ['2007_2011', '2007 to 2011'], ['2012_on', '2012 onwards']] },
-  { key: 'bedrooms', title: 'How many bedrooms do you have?', opts: [['1_2', '1 to 2'], ['3_4', '3 to 4'], ['5_6', '5 to 6'], ['7_plus', '7 or more']] },
-  { key: 'address', title: 'Your address', type: 'address' },
-  { key: 'ownership', title: 'Do you own this property?', opts: [['own', 'Yes'], ['on_behalf', 'I’m looking on behalf of the homeowner'], ['buying', 'I’m in the process of buying'], ['renting', 'I’m renting this property']] },
-  { key: 'timing', title: 'When are you considering getting solar installed?', opts: [['asap', 'As soon as possible'], ['1_month', 'Within 1 month'], ['3_months', 'Within 3 months'], ['6_months', 'Within 6 months'], ['researching', 'Just researching']] },
-  { key: 'contact', title: 'Where should we send your results?', type: 'contact' },
+  { key: 'interest', title: 'What are you *interested in*?', say: 'Quick one. About a minute, I promise.', opts: [['solar', 'Solar panels'], ['solar_battery', 'Solar panels and a battery'], ['battery', 'A battery for my existing solar']] },
+  { key: 'roofType', title: 'What is your property’s *roof type*?', say: 'Pitched is the most common. Flat works too, with a frame.', opts: [['pitched', 'Pitched'], ['mono', 'Mono pitched'], ['flat', 'Flat'], ['other', 'Other'], ['unsure', 'Unsure']] },
+  { key: 'roofMaterial', title: 'What is your *roof made of*?', say: 'Slate needs a gentler touch, and installers price for it.', opts: [['concrete', 'Concrete tiles'], ['clay', 'Clay tiles'], ['slate', 'Slate tiles'], ['felt', 'Felt'], ['other', 'Other'], ['unsure', 'Unsure']] },
+  { key: 'homeBuilt', title: 'When was your *home built*?', say: 'Older homes are fine. It’s the roof that matters.', opts: [['pre1900', 'Before 1900'], ['1900_1949', '1900 to 1949'], ['1950_1982', '1950 to 1982'], ['1983_1995', '1983 to 1995'], ['1996_2006', '1996 to 2006'], ['2007_2011', '2007 to 2011'], ['2012_on', '2012 onwards']] },
+  { key: 'bedrooms', title: 'How many *bedrooms* do you have?', say: 'A rough guide to how much electricity you use.', opts: [['1_2', '1 to 2'], ['3_4', '3 to 4'], ['5_6', '5 to 6'], ['7_plus', '7 or more']] },
+  { key: 'address', title: 'Where’s the *roof*?', say: 'So we only pick installers who actually cover you.', type: 'address' },
+  { key: 'ownership', title: 'Do you *own* this property?', say: 'Renting? You’ll need the landlord’s say-so first.', opts: [['own', 'Yes'], ['on_behalf', 'I’m looking on behalf of the homeowner'], ['buying', 'I’m in the process of buying'], ['renting', 'I’m renting this property']] },
+  { key: 'timing', title: '*When* are you thinking of installing?', say: 'No rush. “Just researching” is a perfectly good answer.', opts: [['asap', 'As soon as possible'], ['1_month', 'Within 1 month'], ['3_months', 'Within 3 months'], ['6_months', 'Within 6 months'], ['researching', 'Just researching']] },
+  { key: 'contact', title: 'Where should we *send your quotes*?', say: 'Nearly there. Only the installers named below will see this.', type: 'contact' },
 ];
 
 const answers = { addressLine: '' };
 let postcode = saved.input.postcode || '';
 let i = 0;
 
+const title = (t) => esc(t).replace(/\*(.+?)\*/g, '<span class="mark">$1</span>');
+const secondsLeft = () => Math.max(10, (Q.length - 1 - i) * 7);
 function progress() {
   const pct = Math.round((i / (Q.length - 1)) * 100);
-  return `<div class="qf-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progress"><span style="width:${Math.max(6, pct)}%"></span></div><p class="qf-count">Step ${i + 1} of ${Q.length}</p>`;
+  const eyebrow = i === Q.length - 1 ? 'Almost there' : i === 0 ? 'Let’s start' : `Step ${i + 1} of ${Q.length}`;
+  return `<div class="qf-head"><span class="qf-brand">${esc(cfg.brand)}</span><div class="qf-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progress"><span style="width:${Math.max(6, pct)}%"></span></div><span class="qf-pct">${pct}%</span></div>
+  <div class="qf-meta"><p class="qf-eyebrow">${eyebrow}</p><p class="qf-time">${icon('clock')} ${i === Q.length - 1 ? 'Last step' : `${secondsLeft()} seconds`}</p></div>`;
 }
 const nav = (nextLabel, nextDisabled = false) =>
   `<div class="qf-nav"><button type="button" class="btn btn-ghost" data-prev${i === 0 ? ' disabled' : ''}>Previous</button><button type="button" class="btn btn-dark" data-next${nextDisabled ? ' disabled' : ''}>${nextLabel}</button></div>`;
@@ -54,7 +62,9 @@ function render() {
   } else {
     body = `<div class="qf-opts" role="radiogroup" aria-label="${esc(q.title)}">${q.opts.map(([v, l]) => `<button type="button" class="qf-opt" role="radio" aria-checked="${answers[q.key] === v}" data-v="${v}">${esc(l)}</button>`).join('')}</div>${nav('Next', !answers[q.key])}`;
   }
-  root.innerHTML = `${progress()}<h1 class="qf-title" id="qf-title" tabindex="-1">${esc(q.title)}</h1>${body}`;
+  root.querySelector('.qf-top').innerHTML = progress();
+  root.querySelector('.qf-main').innerHTML = `<h1 class="qf-title" id="qf-title" tabindex="-1">${title(q.title)}</h1>${body}`;
+  ray?.say(q.say);
   root.querySelector('#qf-title').focus({ preventScroll: true });
   if (q.type === 'contact') startContact();
 }
@@ -64,6 +74,15 @@ function startContact() {
   const pc = parsePostcode(postcode);
   if (pc) previewMatches(pc.region, 'quote').then((list) => renderMatched(form.querySelector('[data-matched]'), list, form.querySelector('[data-consent-names]')));
   bindForm(form, { kind: 'quote', getExtra: () => ({ name: `${form.elements.first.value} ${form.elements.last.value}`.trim(), answers: { ...answers } }) });
+}
+
+// The shell: progress on top, Ray with a line for each step, then the question. Only the
+// top and main parts re-render, so Ray keeps following the pointer between steps.
+root.innerHTML = `<div class="qf-top"></div><div class="qf-ray mascot" data-mascot>${raySvg({ id: 'qf', viewBox: HEAD_VIEW })}<p class="mascot-say" aria-hidden="true"></p></div><div class="qf-main"></div>`;
+const ray = mountRay(root.querySelector('[data-mascot]'));
+if (ray) {
+  root.addEventListener('pointermove', (e) => ray.aim(e.clientX, e.clientY));
+  root.addEventListener('pointerleave', () => ray.rest());
 }
 
 root.addEventListener('click', (e) => {

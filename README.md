@@ -49,9 +49,9 @@ This keeps every lead in SQLite, with the `/admin` page (list, status, delete, C
 - Set `WEBHOOK_URL` to also copy each lead to Zapier, Make, Slack or a CRM, which doubles as a second backup.
 - Lead emails and phone numbers are personal data: keep `ADMIN_PASSWORD` long and unique.
 
-## The space hero
+## Ray, the mascot
 
-The home hero is `public/js/earth-blaze.js`, a dependency-free port of the "Earth Blaze" WebGL component (stars, nebula, a planetary limb, aurora). The Roof Dial moves the sun along the horizon, and continuing from the form fires an aurora burst. Colours are tinted to the yellow theme in `public/js/start.js`. It respects reduced-motion, pauses when off-screen, and falls back to a CSS gradient without WebGL. By default the planet uses a generated texture. For a real NASA Blue Marble look, self-host a cloud-free equirectangular Earth image (e.g. `/img/earth.jpg`), set `EARTH_TEXTURE_URL=/img/earth.jpg`, and keep it on your own domain so the Content-Security-Policy and browser CORS rules allow it.
+The home hero is Ray, a cat in a hard hat and hi-vis drawn in plain SVG (`public/js/mascot-art.js`), so he renders without JavaScript. `public/js/mascot.js` makes him follow the pointer (eyes, head, ears), blink, glance around when idle, comment on the Roof Dial and the postcode through a speech bubble, and drop his sunglasses when you continue. Keyboard and touch users get the same: he looks at whichever field has focus. Reduced-motion users get the gaze only. A smaller Ray fronts the `/get-quotes` flow with a line per question. His lines live in `public/js/start.js` and `public/js/quote-flow.js`.
 
 ## Deploy to Netlify
 
@@ -107,6 +107,6 @@ These are not optional, and none of them can be done from inside the code.
 
 ## Design
 
-Bold and modern, in the spirit of the best UK comparison sites: a sun-yellow hero with a black pill headline, black buttons, wavy section dividers, big circular step icons on a light grey band, a yellow "without solar vs with solar" comparison card driven by the real model, rounded white cards, and a charcoal footer. Type is Barlow (headings and body) with Barlow Condensed for numerals. The standout is the Roof Dial, a draggable sun on a compass that shows the share of the best-possible sun live. Chart colours were checked for colour-blind separation on white. Colours and sizes are tokens at the top of `public/css/site.css`.
+Bold and modern, in the spirit of the best UK comparison sites: a sun-yellow hero with a black pill headline, black buttons, wavy section dividers, big circular step icons on a light grey band, a yellow "without solar vs with solar" comparison card driven by the real model, rounded white cards, and a charcoal footer. Type is Barlow (headings and body) with Barlow Condensed for numerals and the shouty italic hero headline. The standouts are Ray, the cat mascot who follows your cursor, and the Roof Dial, a draggable sun on a compass that shows the share of the best-possible sun live. Chart colours were checked for colour-blind separation on white. Colours and sizes are tokens at the top of `public/css/site.css`.
 
 There are no photos, logos, testimonials or visitor counters, deliberately: those need real, permitted, verified material. Add them when you have it (a testimonials strip and an "installers we work with" logo row are the obvious slots).

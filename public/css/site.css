@@ -824,25 +824,120 @@ input[type='range']::-moz-range-track { background: var(--line-strong); }
 .site-nav a:not(.btn), .site-nav .btn { white-space: nowrap; }
 @media (max-width: 70rem) and (min-width: 56.01rem) { .site-nav a:not(.btn) { padding: 0.5rem 0.55rem; } .site-nav { gap: 0.6rem; } }
 
-/* ---- Space hero: Earth at dusk behind the headline ---------------------- */
-.hero-space { background: #000; color: #fff; min-height: 46rem; }
-.hero-space::before, .hero-space::after { display: none; }
-.space-bg { position: absolute; inset: 0; z-index: 0; }
-.eb-canvas, .eb-fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.eb-fallback { background: radial-gradient(ellipse at 50% 112%, rgba(255, 190, 0, 0.55) 0%, rgba(120, 80, 0, 0.25) 28%, transparent 58%), radial-gradient(ellipse at 30% 30%, #2a2210 0%, #0c0a05 40%, #000 80%); }
-.space-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.08) 55%, transparent 100%); pointer-events: none; }
-.hero-space h1 { color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5); }
-.hero-space .grad { background: var(--sun); color: #111; box-shadow: 0 10px 40px -8px rgba(255, 208, 0, 0.55); }
-.hero-space .lede { color: rgba(255, 255, 255, 0.86); }
-.hero-space .checks li { color: #fff; }
-.hero-space .checks .icon-check { background: var(--sun); color: #111; }
-.hero-space .trust-row { color: rgba(255, 255, 255, 0.86); }
-.hero-space .trust-row .icon { color: var(--sun); }
-.hero-space .hero-badge { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); color: #fff; box-shadow: none; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.hero-space .hero-badge .icon-tile { background: var(--sun); color: #111; }
-.hero-space .hero-tool { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 40px 90px -20px rgba(0, 0, 0, 0.75), 0 0 80px -10px rgba(255, 208, 0, 0.25); }
-.hero-space .dial-sun { filter: drop-shadow(0 0 14px rgba(255, 208, 0, 0.9)); }
-.sun-hint { margin: 0.8rem 0 0; font-size: var(--step--1); color: rgba(255, 255, 255, 0.7); display: flex; gap: 0.5rem; align-items: center; }
-@media (prefers-reduced-motion: reduce) { .eb-canvas { opacity: 0.9; } }
+/* ---- Hero with Ray the cat ------------------------------------------------ */
+.hero-cat { padding-top: clamp(1.25rem, 3.5vw, 2.75rem); }
+.hero-cat::before { right: auto; left: 38%; top: -12rem; width: 38rem; height: 38rem; }
+.hero-cat .hero-grid { align-items: stretch; }
+.hero-cat .hero-copy { display: flex; flex-direction: column; min-width: 0; }
+.hero-shout { font-family: var(--font-num); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: clamp(3.6rem, 1.4rem + 8vw, 7.2rem); line-height: 0.88; letter-spacing: -0.005em; max-width: none; margin: 0 0 0.28em; padding-right: 0.08em; }
+.hero-shout em { font-style: inherit; color: #fff; -webkit-text-stroke: 0.028em #111; paint-order: stroke fill; }
+.hero-cat .lede { max-width: 34rem; margin-bottom: var(--space-s); }
+.hero-tags { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.hero-tags li { font: 700 0.86rem / 1 var(--font-num); letter-spacing: 0.1em; text-transform: uppercase; border: 2px solid #111; border-radius: 999px; padding: 0.5rem 0.8rem 0.42rem; color: #111; }
+.hero-tags li.is-dark { background: #111; color: var(--sun); }
 
-.hero-space .hero-tool { color: var(--ink); }
+.mascot { position: relative; display: flex; align-items: flex-start; gap: 0.6rem; margin-top: auto; min-width: 0; }
+.mascot .cat { display: block; flex: 0 1 clamp(13rem, 36vw, 29rem); width: clamp(13rem, 36vw, 29rem); height: auto; overflow: visible; }
+.mascot-say { flex: 1 1 9rem; min-width: 8rem; max-width: 15rem; position: relative; margin: 10% 0 0; background: #fff; border: 2.5px solid #111; border-radius: 18px; padding: 0.8rem 1rem; font: 700 clamp(1rem, 0.9rem + 0.4vw, 1.2rem) / 1.25 var(--font); color: #111; box-shadow: 4px 4px 0 #111; transform-origin: 0 50%; }
+.mascot-say::before { content: ''; position: absolute; left: -11px; top: 1.3rem; width: 16px; height: 16px; background: #fff; border-left: 2.5px solid #111; border-bottom: 2.5px solid #111; transform: rotate(45deg); }
+.mascot-say.is-pop { animation: say-pop 0.45s var(--ease); }
+@keyframes say-pop { from { transform: scale(0.6) translateX(-8px); opacity: 0; } to { transform: none; opacity: 1; } }
+.mascot.is-happy .cat { animation: cat-hop 0.6s var(--ease); }
+@keyframes cat-hop { 0% { transform: none; } 30% { transform: translateY(-14px) rotate(-2deg); } 60% { transform: translateY(0) rotate(1deg); } 100% { transform: none; } }
+
+/* the moving parts: mascot.js writes transforms, these set the pivots and the slow bits */
+.cat .cat-head, .cat .cat-body, .cat .cat-ear, .cat .cat-iris, .cat .cat-lid, .cat .cat-shades { transform-box: view-box; }
+.cat .cat-head { transform-origin: 300px 440px; }
+.cat .cat-body { transform-origin: 300px 640px; }
+.cat .cat-ear-l { transform-origin: 215px 230px; }
+.cat .cat-ear-r { transform-origin: 385px 230px; }
+.cat .cat-lid { transform: translateY(-84px); transition: transform 0.09s ease-in; }
+.mascot.is-blink .cat-lid { transform: translateY(0); }
+.cat .cat-shades { transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.mascot.has-shades .cat-shades { transform: translateY(144px); }
+@media (prefers-reduced-motion: reduce) { .mascot-say.is-pop, .mascot.is-happy .cat { animation: none; } .cat .cat-shades, .cat .cat-lid { transition: none; } }
+
+@media (min-width: 62rem) {
+  .hero-cat .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
+  .mascot { margin-bottom: calc(-1 * (var(--space-xl) + 2.6rem) + 0.5rem); }
+}
+@media (max-width: 61.99rem) {
+  /* stacked: Ray tucks behind the top of the form card */
+  .mascot { margin-top: 0.5rem; margin-bottom: -2.4rem; z-index: 0; }
+  .hero-cat .hero-tool { position: relative; z-index: 1; }
+  .mascot .cat { flex-basis: clamp(11rem, 46vw, 16rem); width: clamp(11rem, 46vw, 16rem); }
+  .mascot-say { margin-top: 6%; }
+}
+
+/* ---- Quick quote flow: header, timer, highlighted word ------------------- */
+.qf-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+.qf-brand { font: italic 800 1.45rem / 1 var(--font-num); text-transform: uppercase; letter-spacing: -0.01em; }
+.qf-head .qf-progress { flex: 1; }
+.qf-pct { font: 800 1.05rem / 1 var(--font-num); min-width: 3ch; text-align: right; font-variant-numeric: tabular-nums; }
+.qf-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.6rem 1rem; margin-bottom: 0.9rem; }
+.qf-eyebrow { margin: 0; font: 700 0.8rem var(--font); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.qf-time { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; background: var(--sun); color: #111; font: 700 0.78rem var(--font); letter-spacing: 0.08em; text-transform: uppercase; padding: 0.45rem 0.85rem; border-radius: 999px; }
+.qf-time .icon { width: 1rem; height: 1rem; }
+.qf-title { text-align: left; font-size: var(--step-3); line-height: 1.05; margin-bottom: 1.4rem; }
+.qf-title .mark { background: var(--sun); padding: 0 0.15em; margin: 0; border-radius: 0.14em; }
+.qf-ray { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.2rem; }
+.qf-ray .cat { width: 3.6rem; height: 3.6rem; border-radius: 50%; background: var(--sun); flex: none; overflow: hidden; }
+.qf-ray .cat .cat-lid { transform: translateY(-84px); }
+.qf-ray p { margin: 0; font-weight: 600; color: var(--ink-2); font-size: var(--step--1); }
+.qf-opts { justify-content: flex-start; }
+
+/* ---- How we vet every installer ----------------------------------------- */
+.vet { max-width: 46rem; margin-inline: auto; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem) clamp(1.1rem, 3vw, 1.75rem); box-shadow: var(--shadow-sm); }
+.vet-h { font-size: var(--step-2); margin: 0 0 0.3em; }
+.vet-intro { margin: 0 0 1.5rem; color: var(--ink-2); }
+.vet-sub { margin: 1.5rem 0 0.25rem; font-size: var(--step-0); display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.vet-note { margin: 0 0 0.8rem; font-size: var(--step--1); color: var(--muted); }
+.vet-tag { font: 700 0.66rem / 1 var(--font); letter-spacing: 0.05em; text-transform: uppercase; padding: 0.3rem 0.55rem; border-radius: 999px; }
+.vet-tag-req { background: var(--green-soft); color: var(--green-ink); }
+.vet-tag-bonus { background: var(--sun-soft); color: var(--sun-ink); }
+.vet-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.vet-list li { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.75rem 0.9rem; border: 1px solid var(--line); border-radius: 12px; }
+.vet-box { flex: none; width: 1.65rem; height: 1.65rem; border-radius: 7px; display: grid; place-items: center; margin-top: 1px; color: #fff; }
+.vet-box .icon { width: 1rem; height: 1rem; stroke-width: 3; }
+.vet-req .vet-box { background: var(--green); }
+.vet-bonus .vet-box { background: var(--sun-2); color: #111; }
+.vet-title { font-weight: 700; display: block; }
+.vet-desc { font-size: var(--step--1); color: var(--muted); display: block; margin-top: 2px; line-height: 1.45; }
+.vet-foot { margin: 1.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--line); font-size: var(--step--1); color: var(--muted); }
+
+/* ---- What to expect from here (the six steps after asking for quotes) ----- */
+.nx { background: var(--tint); padding: var(--space-xl) 0; }
+.page-calc .nx { margin-top: var(--space-l); }
+.nx-inner { width: min(100% - 2rem, 55rem); margin-inline: auto; }
+.nx-h { font-size: var(--step-3); margin: 0 0 0.4em; }
+.nx-lede { color: var(--ink-2); font-size: var(--step-0); line-height: 1.55; margin: 0 0 0.8rem; max-width: 60ch; }
+.nx-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2rem; padding: 0; list-style: none; }
+.nx-badges li { background: var(--green-soft); color: var(--green-ink); font-weight: 700; font-size: var(--step--1); padding: 0.35rem 0.8rem; border-radius: 999px; }
+.nx-badges li::before { content: '✓ '; }
+.nx-steps { list-style: none; margin: 0; padding: 0; }
+.nx-step { position: relative; display: grid; grid-template-columns: 3.25rem 1fr; gap: 1.1rem; padding-bottom: 1.1rem; }
+.nx-step::before { content: ''; position: absolute; left: calc(1.625rem - 1px); top: 3.25rem; bottom: 0; width: 2px; background: repeating-linear-gradient(to bottom, var(--line-strong) 0 6px, transparent 6px 12px); }
+.nx-step:last-child::before { display: none; }
+.nx-num { width: 3.25rem; height: 3.25rem; border-radius: 50%; background: var(--yellow); color: #111; font: 800 1.35rem var(--font-num); display: grid; place-items: center; box-shadow: 0 0 0 6px var(--sun-soft); position: relative; z-index: 1; }
+.nx-card { background: #fff; border-radius: var(--r-lg); padding: 1.25rem 1.4rem; box-shadow: var(--shadow-sm); min-width: 0; }
+.nx-when { display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.25rem; }
+.nx-card h3, .nx-card h4 { margin: 0 0 0.35rem; font-size: var(--step-1); line-height: 1.2; }
+.nx-card p { margin: 0; color: var(--ink-2); line-height: 1.55; }
+.nx-list { margin: 0.75rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; }
+.nx-list li { position: relative; padding-left: 1.65rem; color: var(--ink-2); line-height: 1.45; }
+.nx-list li::before { content: ''; position: absolute; left: 0; top: 0.2rem; width: 1.05rem; height: 1.05rem; border-radius: 5px; background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center / 11px no-repeat; }
+.nx-tip { margin-top: 0.9rem; background: var(--sun-soft); color: var(--sun-ink); border-radius: 14px; padding: 0.75rem 0.9rem; font-size: var(--step--1); line-height: 1.5; }
+.nx-tip strong { color: #3d2f00; }
+.nx-rec { display: inline-block; background: #111; color: var(--sun); font: 800 0.7rem / 1 var(--font); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.55rem; border-radius: 999px; margin-left: 0.5rem; vertical-align: 0.2em; }
+.nx-help { margin-top: 1.6rem; background: #fff; border: 2px solid var(--line); border-radius: var(--r-lg); padding: 1.25rem 1.4rem; display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; justify-content: space-between; }
+.nx-help p { margin: 0; line-height: 1.5; color: var(--ink-2); max-width: 52ch; }
+.nx-help strong { color: var(--ink); display: block; font-size: var(--step-0); }
+@media (max-width: 35rem) {
+  .nx-step { grid-template-columns: 2.5rem 1fr; gap: 0.75rem; }
+  .nx-num { width: 2.5rem; height: 2.5rem; font-size: 1.1rem; box-shadow: 0 0 0 4px var(--sun-soft); }
+  .nx-step::before { left: calc(1.25rem - 1px); top: 2.5rem; }
+  .nx-card { padding: 1rem; }
+  .nx-help .btn { width: 100%; justify-content: center; }
+}
+
+.qf-ray .mascot-say { flex: 1; max-width: none; margin: 0; padding: 0.6rem 0.85rem; font-size: var(--step--1); box-shadow: 3px 3px 0 #111; }

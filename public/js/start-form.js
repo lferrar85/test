@@ -26,7 +26,7 @@ async function lookupPlace(pc) {
   }
 }
 
-export function mountStart(host, { state, onDone, onAzimuth = () => {}, cta = 'Next: your roof', heading = true }) {
+export function mountStart(host, { state, onDone, onAzimuth = () => {}, onPlace = () => {}, cta = 'Next: your roof', heading = true }) {
   const cfg = siteConfig();
   const input = state.input;
   const id = `sf${Math.random().toString(36).slice(2, 6)}`;
@@ -59,6 +59,7 @@ export function mountStart(host, { state, onDone, onAzimuth = () => {}, cta = 'N
   const buttons = [...form.querySelectorAll('.compass-btn')];
 
   const regionName = (key) => cfg.regionNames?.[key] || '';
+  let lastPlace = '';
   const showError = (msg) => {
     errEl.textContent = msg || '';
     errEl.hidden = !msg;
@@ -110,6 +111,7 @@ export function mountStart(host, { state, onDone, onAzimuth = () => {}, cta = 'N
     input.region = pc.region;
     state.place = regionName(pc.region);
     placeEl.textContent = state.place ? `Looks like ${state.place}.` : '';
+    if (state.place !== lastPlace) onPlace((lastPlace = state.place));
     const look = await lookupPlace(pc);
     if (look.stale) return true;
     if (look.notFound) {
