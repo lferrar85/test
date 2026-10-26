@@ -4,7 +4,6 @@ import { loadState, siteConfig } from './state.js';
 import { bindForm, previewMatches, renderMatched } from './forms.js';
 import { esc } from './format.js';
 import { icon } from './icons.js';
-import { raySvg, HEAD_VIEW } from './mascot-art.js';
 import { mountRay } from './mascot.js';
 
 const root = document.getElementById('qf-root');
@@ -78,12 +77,8 @@ function startContact() {
 
 // The shell: progress on top, Ray with a line for each step, then the question. Only the
 // top and main parts re-render, so Ray keeps following the pointer between steps.
-root.innerHTML = `<div class="qf-top"></div><div class="qf-ray mascot" data-mascot>${raySvg({ id: 'qf', viewBox: HEAD_VIEW })}<p class="mascot-say" aria-hidden="true"></p></div><div class="qf-main"></div>`;
+root.innerHTML = `<div class="qf-top"></div><div class="qf-ray mascot" data-mascot><div class="cat-frame"><img class="cat-still" src="${esc(root.dataset.face)}" width="320" height="320" alt="Ray, the Roofworth cat"></div><p class="mascot-say" aria-hidden="true"></p></div><div class="qf-main"></div>`;
 const ray = mountRay(root.querySelector('[data-mascot]'));
-if (ray) {
-  root.addEventListener('pointermove', (e) => ray.aim(e.clientX, e.clientY));
-  root.addEventListener('pointerleave', () => ray.rest());
-}
 
 root.addEventListener('click', (e) => {
   const q = Q[i];

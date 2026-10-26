@@ -824,38 +824,31 @@ input[type='range']::-moz-range-track { background: var(--line-strong); }
 .site-nav a:not(.btn), .site-nav .btn { white-space: nowrap; }
 @media (max-width: 70rem) and (min-width: 56.01rem) { .site-nav a:not(.btn) { padding: 0.5rem 0.55rem; } .site-nav { gap: 0.6rem; } }
 
-/* ---- Hero with Ray the cat ------------------------------------------------ */
-.hero-cat { padding-top: clamp(1.25rem, 3.5vw, 2.75rem); }
-.hero-cat::before { right: auto; left: 38%; top: -12rem; width: 38rem; height: 38rem; }
+/* ---- Hero with Ray ---------------------------------------------------------- */
+.hero-cat { padding-top: clamp(1.25rem, 3.5vw, 2.75rem); background: radial-gradient(75% 70% at 62% 45%, #d9a53d 0%, #b8801e 55%, #a36c15 100%); }
+.hero-cat::before, .hero-cat::after { display: none; }
 .hero-cat .hero-grid { align-items: stretch; }
 .hero-cat .hero-copy { display: flex; flex-direction: column; min-width: 0; }
 .hero-shout { font-family: var(--font-num); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: clamp(3.6rem, 1.4rem + 8vw, 7.2rem); line-height: 0.88; letter-spacing: -0.005em; max-width: none; margin: 0 0 0.28em; padding-right: 0.08em; }
 .hero-shout em { font-style: inherit; color: #fff; -webkit-text-stroke: 0.028em #111; paint-order: stroke fill; }
-.hero-cat .lede { max-width: 34rem; margin-bottom: var(--space-s); }
+.hero-cat .lede { max-width: 34rem; margin-bottom: var(--space-s); color: #1d1300; }
 .hero-tags { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .hero-tags li { font: 700 0.86rem / 1 var(--font-num); letter-spacing: 0.1em; text-transform: uppercase; border: 2px solid #111; border-radius: 999px; padding: 0.5rem 0.8rem 0.42rem; color: #111; }
 .hero-tags li.is-dark { background: #111; color: var(--sun); }
 
 .mascot { position: relative; display: flex; align-items: flex-start; gap: 0.6rem; margin-top: auto; min-width: 0; }
-.mascot .cat { display: block; flex: 0 1 clamp(13rem, 36vw, 29rem); width: clamp(13rem, 36vw, 29rem); height: auto; overflow: visible; }
+.cat-frame { position: relative; flex: 0 1 clamp(14rem, 36vw, 30rem); width: clamp(14rem, 36vw, 30rem); aspect-ratio: 828 / 784; will-change: transform;
+  -webkit-mask: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 100%); -webkit-mask-composite: source-in;
+  mask: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 100%); mask-composite: intersect; }
+.cat-still, .cat-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.cat-still.is-behind { visibility: hidden; }
 .mascot-say { flex: 1 1 9rem; min-width: 8rem; max-width: 15rem; position: relative; margin: 10% 0 0; background: #fff; border: 2.5px solid #111; border-radius: 18px; padding: 0.8rem 1rem; font: 700 clamp(1rem, 0.9rem + 0.4vw, 1.2rem) / 1.25 var(--font); color: #111; box-shadow: 4px 4px 0 #111; transform-origin: 0 50%; }
 .mascot-say::before { content: ''; position: absolute; left: -11px; top: 1.3rem; width: 16px; height: 16px; background: #fff; border-left: 2.5px solid #111; border-bottom: 2.5px solid #111; transform: rotate(45deg); }
 .mascot-say.is-pop { animation: say-pop 0.45s var(--ease); }
 @keyframes say-pop { from { transform: scale(0.6) translateX(-8px); opacity: 0; } to { transform: none; opacity: 1; } }
-.mascot.is-happy .cat { animation: cat-hop 0.6s var(--ease); }
-@keyframes cat-hop { 0% { transform: none; } 30% { transform: translateY(-14px) rotate(-2deg); } 60% { transform: translateY(0) rotate(1deg); } 100% { transform: none; } }
-
-/* the moving parts: mascot.js writes transforms, these set the pivots and the slow bits */
-.cat .cat-head, .cat .cat-body, .cat .cat-ear, .cat .cat-iris, .cat .cat-lid, .cat .cat-shades { transform-box: view-box; }
-.cat .cat-head { transform-origin: 300px 440px; }
-.cat .cat-body { transform-origin: 300px 640px; }
-.cat .cat-ear-l { transform-origin: 215px 230px; }
-.cat .cat-ear-r { transform-origin: 385px 230px; }
-.cat .cat-lid { transform: translateY(-84px); transition: transform 0.09s ease-in; }
-.mascot.is-blink .cat-lid { transform: translateY(0); }
-.cat .cat-shades { transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.mascot.has-shades .cat-shades { transform: translateY(144px); }
-@media (prefers-reduced-motion: reduce) { .mascot-say.is-pop, .mascot.is-happy .cat { animation: none; } .cat .cat-shades, .cat .cat-lid { transition: none; } }
+.mascot.is-happy .cat-frame { animation: cat-hop 0.6s var(--ease); }
+@keyframes cat-hop { 0% { scale: 1; } 35% { scale: 1.03; translate: 0 -8px; } 100% { scale: 1; translate: 0; } }
+@media (prefers-reduced-motion: reduce) { .mascot-say.is-pop, .mascot.is-happy .cat-frame { animation: none; } }
 
 @media (min-width: 62rem) {
   .hero-cat .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
@@ -865,7 +858,7 @@ input[type='range']::-moz-range-track { background: var(--line-strong); }
   /* stacked: Ray tucks behind the top of the form card */
   .mascot { margin-top: 0.5rem; margin-bottom: -2.4rem; z-index: 0; }
   .hero-cat .hero-tool { position: relative; z-index: 1; }
-  .mascot .cat { flex-basis: clamp(11rem, 46vw, 16rem); width: clamp(11rem, 46vw, 16rem); }
+  .cat-frame { flex-basis: clamp(12rem, 50vw, 17rem); width: clamp(12rem, 50vw, 17rem); }
   .mascot-say { margin-top: 6%; }
 }
 
@@ -881,8 +874,7 @@ input[type='range']::-moz-range-track { background: var(--line-strong); }
 .qf-title { text-align: left; font-size: var(--step-3); line-height: 1.05; margin-bottom: 1.4rem; }
 .qf-title .mark { background: var(--sun); padding: 0 0.15em; margin: 0; border-radius: 0.14em; }
 .qf-ray { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.2rem; }
-.qf-ray .cat { width: 3.6rem; height: 3.6rem; border-radius: 50%; background: var(--sun); flex: none; overflow: hidden; }
-.qf-ray .cat .cat-lid { transform: translateY(-84px); }
+.qf-ray .cat-frame { width: 3.8rem; height: 3.8rem; flex: none; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 2px solid #111; mask: none; -webkit-mask: none; }
 .qf-ray p { margin: 0; font-weight: 600; color: var(--ink-2); font-size: var(--step--1); }
 .qf-opts { justify-content: flex-start; }
 

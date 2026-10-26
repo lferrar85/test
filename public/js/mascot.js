@@ -1,61 +1,103 @@
-// Brings Ray to life: eyes and head follow the pointer, blinks, idle glances, a speech bubble,
-// sunglasses that drop to celebrate. Works on any element containing raySvg() markup.
-// Respects prefers-reduced-motion (gaze only, no continuous animation).
+// Brings Ray to life. He is a photo; on hover-capable desktops a frame sprite cut from a short
+// head-turn video is scrubbed with the pointer, so he turns to look where the cursor is, with
+// cross-fades between frames and a little parallax. Elsewhere the photo just tilts. He talks
+// through the speech bubble. Respects prefers-reduced-motion and Save-Data.
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const rand = (lo, hi) => lo + Math.random() * (hi - lo);
 
 export function mountRay(root, { bubble = root.querySelector('.mascot-say') } = {}) {
-  const svg = root.querySelector('svg.cat');
-  if (!svg) return null;
-  const head = svg.querySelector('.cat-head');
-  const body = svg.querySelector('.cat-body');
-  const irises = [...svg.querySelectorAll('.cat-iris')];
-  const ears = [svg.querySelector('.cat-ear-l'), svg.querySelector('.cat-ear-r')];
+  const frame = root.querySelector('.cat-frame');
+  const still = root.querySelector('.cat-still');
+  const canvas = root.querySelector('.cat-canvas');
+  if (!frame || !still) return null;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const frames = Number(root.dataset.frames) || 0;
+  const cols = Number(root.dataset.cols) || 1;
+  const centre = Number(root.dataset.centre) || 0;
+  const canScrub = !!(canvas && root.dataset.sprite && frames && !reduced && matchMedia('(hover: hover) and (min-width: 62rem)').matches && !navigator.connection?.saveData);
 
-  const target = { x: 0, y: 0 };
-  const cur = { x: 0, y: 0 };
-  let lastAim = 0;
+  let sprite = null; // the loaded sprite image, once it has arrived
+  let fw = 0; let fh = 0; // one frame's size in the sprite
+  let ctx = null;
+  const pos = { f: centre, x: 0, y: 0, stillAlpha: 1 }; // current
+  const want = { f: centre, x: 0, y: 0 }; // target
   let raf = 0;
+  let lastAim = 0;
   let visible = true;
   let timers = [];
   let disposed = false;
   const later = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
 
-  function apply() {
-    const { x, y } = cur;
-    head.style.transform = `rotate(${(x * 6).toFixed(2)}deg) translate(${(x * 14).toFixed(1)}px, ${(y * 8).toFixed(1)}px)`;
-    body.style.transform = `rotate(${(x * 1.5).toFixed(2)}deg)`;
-    for (const ir of irises) ir.style.transform = `translate(${(x * 10).toFixed(1)}px, ${(y * 8).toFixed(1)}px)`;
-    ears[0].style.transform = `rotate(${(-x * 4 + y * 2).toFixed(2)}deg)`;
-    ears[1].style.transform = `rotate(${(-x * 4 - y * 2).toFixed(2)}deg)`;
+  function drawFrame(f, alpha) {
+    const i = clamp(Math.floor(f), 0, frames - 1);
+    const j = clamp(i + 1, 0, frames - 1);
+    const a = f - i;
+    const at = (n) => [(n % cols) * fw, Math.floor(n / cols) * fh];
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(sprite, ...at(i), fw, fh, 0, 0, fw, fh);
+    if (a > 0.01 && j !== i) {
+      ctx.globalAlpha = alpha * a;
+      ctx.drawImage(sprite, ...at(j), fw, fh, 0, 0, fw, fh);
+    }
+    ctx.globalAlpha = 1;
   }
-
-  function frame() {
+  function paint() {
+    if (!sprite) return;
+    ctx.clearRect(0, 0, fw, fh);
+    drawFrame(pos.f, 1);
+    if (pos.stillAlpha > 0.01) { ctx.globalAlpha = pos.stillAlpha; ctx.drawImage(still, 0, 0, fw, fh); ctx.globalAlpha = 1; }
+  }
+  function apply() {
+    frame.style.transform = `translate(${pos.x.toFixed(1)}px, ${pos.y.toFixed(1)}px) rotate(${(pos.x * 0.12).toFixed(2)}deg)`;
+    paint();
+  }
+  function step() {
     raf = 0;
-    const k = 0.11;
-    cur.x += (target.x - cur.x) * k;
-    cur.y += (target.y - cur.y) * k;
+    const k = 0.1;
+    pos.f += (want.f - pos.f) * k;
+    pos.x += (want.x - pos.x) * k;
+    pos.y += (want.y - pos.y) * k;
+    if (sprite && pos.stillAlpha > 0) pos.stillAlpha = Math.max(0, pos.stillAlpha - 0.06);
     apply();
-    if (Math.abs(target.x - cur.x) > 0.002 || Math.abs(target.y - cur.y) > 0.002) raf = requestAnimationFrame(frame);
+    const busy = Math.abs(want.f - pos.f) > 0.01 || Math.abs(want.x - pos.x) > 0.05 || Math.abs(want.y - pos.y) > 0.05 || pos.stillAlpha > 0;
+    if (busy) raf = requestAnimationFrame(step);
   }
   function kick() {
     if (disposed || !visible) return;
-    if (reduced) { cur.x = target.x; cur.y = target.y; apply(); return; }
-    if (!raf) raf = requestAnimationFrame(frame);
+    if (reduced) { Object.assign(pos, want); apply(); return; }
+    if (!raf) raf = requestAnimationFrame(step);
   }
 
-  // Where the eyes are on screen, so "look at the pointer" is relative to the face.
-  function eyes() {
-    const r = svg.getBoundingClientRect();
-    const vb = svg.viewBox.baseVal; // eye line is y=300 in drawing units
-    return { x: r.left + r.width * ((300 - vb.x) / vb.width), y: r.top + r.height * ((300 - vb.y) / vb.height) };
+  // Fetch the sprite only where it will be used. The photo stays until it has decoded.
+  if (canScrub) {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => {
+      if (disposed) return;
+      fw = Math.round(img.naturalWidth / cols);
+      fh = Math.round(img.naturalHeight / Math.ceil(frames / cols));
+      canvas.width = fw; canvas.height = fh;
+      ctx = canvas.getContext('2d');
+      sprite = img;
+      paint();
+      canvas.hidden = false;
+      still.classList.add('is-behind');
+    };
+    img.src = root.dataset.sprite;
+  }
+
+  // Where his face is on screen: the turn is horizontal, so only x picks the frame.
+  function face() {
+    const r = frame.getBoundingClientRect();
+    return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.35 };
   }
   function aim(clientX, clientY) {
-    const e = eyes();
-    target.x = clamp((clientX - e.x) / Math.max(260, innerWidth * 0.42), -1, 1);
-    target.y = clamp((clientY - e.y) / Math.max(220, innerHeight * 0.42), -1, 1);
+    const c = face();
+    const dx = clamp((clientX - c.x) / Math.max(260, innerWidth * 0.45), -1, 1);
+    const dy = clamp((clientY - c.y) / Math.max(220, innerHeight * 0.45), -1, 1);
+    want.f = dx < 0 ? centre + dx * centre : centre + dx * (frames - 1 - centre);
+    want.x = dx * 12; want.y = dy * 7;
     lastAim = performance.now();
     kick();
   }
@@ -64,28 +106,25 @@ export function mountRay(root, { bubble = root.querySelector('.mascot-say') } = 
     aim(r.left + r.width / 2, r.top + r.height / 2);
   }
   function rest() {
-    target.x = 0; target.y = 0; lastAim = 0; kick();
+    want.f = centre; want.x = 0; want.y = 0; lastAim = 0; kick();
   }
 
-  // Blink now and then; glance around when nobody has moved the pointer for a while.
-  function blink() {
-    root.classList.add('is-blink');
-    later(() => root.classList.remove('is-blink'), 130);
-    later(blink, rand(2600, 6500));
-  }
+  // Glance about when nobody has moved the pointer for a while.
   function wander() {
-    if (!lastAim || performance.now() - lastAim > 3500) {
-      if (Math.random() < 0.35) { target.x = 0; target.y = 0; } else { target.x = rand(-0.55, 0.55); target.y = rand(-0.35, 0.35); }
+    if (sprite && (!lastAim || performance.now() - lastAim > 4000)) {
+      const span = Math.min(centre, frames - 1 - centre);
+      want.f = Math.random() < 0.4 ? centre : centre + rand(-0.6, 0.6) * span;
+      want.x = rand(-4, 4); want.y = rand(-2, 2);
       lastAim = 0;
       kick();
     }
-    later(wander, rand(2200, 5200));
+    later(wander, rand(2600, 5600));
   }
-  if (!reduced) { later(blink, rand(1200, 3000)); later(wander, 2500); }
+  if (!reduced) later(wander, 3000);
 
   // Only animate while on screen and the tab is visible.
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) kick(); }) : null;
-  io?.observe(svg);
+  io?.observe(frame);
   const onVis = () => { visible = !document.hidden; if (visible) kick(); };
   document.addEventListener('visibilitychange', onVis);
 
@@ -100,9 +139,8 @@ export function mountRay(root, { bubble = root.querySelector('.mascot-say') } = 
     bubble.classList.add('is-pop');
     if (hold) sayTimer = later(() => { bubble.hidden = true; }, hold);
   }
-  const shades = (on) => root.classList.toggle('has-shades', on);
   function celebrate(line) {
-    shades(true);
+    rest(); // turns to face you
     root.classList.remove('is-happy');
     void root.offsetWidth;
     root.classList.add('is-happy');
@@ -117,5 +155,5 @@ export function mountRay(root, { bubble = root.querySelector('.mascot-say') } = 
     document.removeEventListener('visibilitychange', onVis);
   }
 
-  return { aim, lookAt, rest, say, shades, celebrate, dispose };
+  return { aim, lookAt, rest, say, celebrate, dispose };
 }
