@@ -49,11 +49,12 @@ This keeps every lead in SQLite, with the `/admin` page (list, status, delete, C
 - Set `WEBHOOK_URL` to also copy each lead to Zapier, Make, Slack or a CRM, which doubles as a second backup.
 - Lead emails and phone numbers are personal data: keep `ADMIN_PASSWORD` long and unique.
 
-## Ray, the mascot
+## The home page film
 
-The home hero is Ray, a lynx in a camo cap and aviators (`public/img/ray.jpg`). `public/js/mascot.js` makes him turn to follow the pointer: it scrubs `public/img/ray-turn.webp`, a 24-frame sprite cut from a short head-turn video, with cross-fades between frames, plus a little parallax. The sprite (about 550 KB) is only fetched on hover-capable screens 62rem and wider, never on phones or with Save-Data on; the photo shows until it lands. He talks through a speech bubble (lines in `public/js/start.js` and `public/js/quote-flow.js`): the Roof Dial direction, the postcode, and a send-off when you continue. Reduced-motion users get the still photo and the bubble. `public/img/ray-face.jpg` is the avatar in the `/get-quotes` flow.
+The home page is a scroll-driven film (`public/js/film.js`). Ray's head-turn video is cut into frame sprites (`public/img/film/d-*.webp`, 72 frames at 1040px for desktop; `m-*.webp`, 48 frames at 640px for phones) and scrubbed by scroll on a pinned canvas while three scenes play over him: the headline, the three promises, then step 1 of the calculator. The sprites load progressively (first ones first), and `first.jpg` is the poster until they arrive. Below the film: a manifesto that brightens word by word, four "paths" cards, and a pinned "watch the bill drop" counter with three step cards. No JavaScript or reduced motion shows the poster with the scenes stacked and everything visible.
 
-To re-cut the sprite from a new video: `ffmpeg -ss 2.5 -t 3.43 -i ray.mp4 -vf "fps=7,crop=828:784:340:0,scale=480:-1,tile=4x6" -frames:v 1 -quality 55 public/img/ray-turn.webp`, then set `data-frames`, `data-cols` and `data-centre` (the frame facing the camera) in `lib/ui.js`.
+To re-cut the frames from a new video (same mustard backdrop, Ray on the right):
+`ffmpeg -i ray.mp4 -vf "fps=7.2,scale=1040:-2,tile=1x12" -f image2 -c:v libwebp -quality 58 public/img/film/d-%02d.webp` and the same with `fps=4.8,scale=640:-2` for `m-%02d.webp`, then update the counts and frame sizes in the `data-desktop` / `data-mobile` JSON in `lib/pages-main.js`. The quote flow keeps a face crop, `public/img/ray-face.jpg`, as Ray's avatar.
 
 ## Deploy to Netlify
 
@@ -109,6 +110,6 @@ These are not optional, and none of them can be done from inside the code.
 
 ## Design
 
-Bold and modern, in the spirit of the best UK comparison sites: a sun-yellow hero with a black pill headline, black buttons, wavy section dividers, big circular step icons on a light grey band, a yellow "without solar vs with solar" comparison card driven by the real model, rounded white cards, and a charcoal footer. Type is Barlow (headings and body) with Barlow Condensed for numerals and the shouty italic hero headline. The standouts are Ray, the lynx mascot who turns to follow your cursor, and the Roof Dial, a draggable sun on a compass that shows the share of the best-possible sun live. Chart colours were checked for colour-blind separation on white. Colours and sizes are tokens at the top of `public/css/site.css`.
+Bold and modern, in the spirit of the best UK comparison sites: a sun-yellow hero with a black pill headline, black buttons, wavy section dividers, big circular step icons on a light grey band, a yellow "without solar vs with solar" comparison card driven by the real model, rounded white cards, and a charcoal footer. Type is Barlow (headings and body) with Barlow Condensed for numerals and the shouty italic hero headline. The standouts are the scroll-driven film with Ray the lynx, and the Roof Dial, a draggable sun on a compass that shows the share of the best-possible sun live. Chart colours were checked for colour-blind separation on white. Colours and sizes are tokens at the top of `public/css/site.css`.
 
 There are no photos, logos, testimonials or visitor counters, deliberately: those need real, permitted, verified material. Add them when you have it (a testimonials strip and an "installers we work with" logo row are the obvious slots).
