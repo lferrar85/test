@@ -135,7 +135,11 @@ if (film && !reduced) {
 }
 
 // Step 1 of the calculator lives in the last scene (or, without the film, just on the page).
+// On small screens the dial card leaves the film and sits right under it, so the pinned stage
+// only has to hold the headline and the thumbs-up.
 const host = document.querySelector('[data-mount="start"]');
+const mobileSlot = document.querySelector('[data-start-mobile]');
+if (host && mobileSlot && matchMedia('(max-width: 48rem)').matches) { mobileSlot.append(host); document.body.classList.add('start-below-film'); }
 if (host) {
   const state = loadState();
   mountStart(host, {
@@ -148,12 +152,15 @@ if (host) {
   });
 }
 // "Scroll" hint and skip link jump straight to the form.
+for (const a of document.querySelectorAll('[data-to-form]')) {
+  a.addEventListener('click', (e) => { e.preventDefault(); const t = mobileSlot.closest('section'); scrollTo({ top: scrollY + t.getBoundingClientRect().top - 60, behavior: 'smooth' }); host.querySelector('input')?.focus({ preventScroll: true }); });
+}
 for (const a of document.querySelectorAll('[data-skip-film]')) {
   a.addEventListener('click', (e) => {
     if (!film || reduced) return;
     e.preventDefault();
     const r = film.getBoundingClientRect();
-    scrollTo({ top: scrollY + r.top + (r.height - innerHeight) * 0.78, behavior: 'smooth' });
+    scrollTo({ top: scrollY + r.top, behavior: 'smooth' });
   });
 }
 

@@ -51,10 +51,10 @@ This keeps every lead in SQLite, with the `/admin` page (list, status, delete, C
 
 ## The home page film
 
-The home page is a scroll-driven film (`public/js/film.js`). Ray's head-turn video is cut into frame sprites (`public/img/film/d-*.webp`, 72 frames at 1040px for desktop; `m-*.webp`, 48 frames at 640px for phones) and scrubbed by scroll on a pinned canvas while three scenes play over him: the headline, the three promises, then step 1 of the calculator. The sprites load progressively (first ones first), and `first.jpg` is the poster until they arrive. Below the film: a manifesto that brightens word by word, four "paths" cards, and a pinned "watch the bill drop" counter with three step cards. No JavaScript or reduced motion shows the poster with the scenes stacked and everything visible.
+The home page opens on a pinned stage (`public/js/film.js`): the headline and the Roof Dial card on the left, Ray on the right. As you scroll, a short clip of Ray giving a thumbs-up is scrubbed frame by frame from a sprite (`public/img/film/d-*.webp`, 36 frames at 1280px for desktop; `m-*.webp` at 640px for phones) while the three promises slide in; then the page continues. On phones the dial card sits directly under the film instead, reached by the "Price up my roof" button. Sprites load progressively and `first.jpg` is the poster until they arrive. No JavaScript or reduced motion shows the poster with everything stacked. Below the film: four path cards, the pinned "watch the bill drop" counter, the Planet pledge, three installers and four FAQs.
 
-To re-cut the frames from a new video (same mustard backdrop, Ray on the right):
-`ffmpeg -i ray.mp4 -vf "fps=7.2,scale=1040:-2,tile=1x12" -f image2 -c:v libwebp -quality 58 public/img/film/d-%02d.webp` and the same with `fps=4.8,scale=640:-2` for `m-%02d.webp`, then update the counts and frame sizes in the `data-desktop` / `data-mobile` JSON in `lib/pages-main.js`. The quote flow keeps a face crop, `public/img/ray-face.jpg`, as Ray's avatar.
+To re-cut the frames from a new clip (same mustard backdrop, Ray on the right, the action between 2.4 s and 6.9 s):
+`ffmpeg -ss 2.4 -t 4.5 -i ray.mp4 -vf "fps=8,scale=1280:-2:flags=lanczos,unsharp=5:5:0.45:5:5:0.0,tile=1x12" -f image2 -c:v libwebp -quality 60 public/img/film/d-%02d.webp`, the same with `scale=640:-2` for `m-%02d.webp`, and `first.jpg` from the first frame of the range. Then update `count`, `w` and `h` in the `data-desktop` / `data-mobile` JSON in `lib/pages-main.js`. A 1080p or 4K source clip would make the hero properly sharp; the current one is 1168×784. The quote flow keeps a face crop, `public/img/ray-face.jpg`, as Ray's avatar.
 
 ## Deploy to Netlify
 
