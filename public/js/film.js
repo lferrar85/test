@@ -28,52 +28,75 @@ if (film && !reduced) {
   const small = matchMedia('(max-width: 48rem)').matches;
   const set = JSON.parse(film.dataset[small ? 'mobile' : 'desktop']); // { src, count, per, w, h }
   const total = set.count * set.per;
-  const sprites = new Array(set.count).fill(null);
+  const frames = new Array(total).fill(null); // one ImageBitmap per frame, sliced once a sprite lands
   const ctx = canvas.getContext('2d', { alpha: false });
-  ctx.imageSmoothingQuality = 'high';
+  ctx.imageSmoothingQuality = 'medium';
   film.classList.add('is-live');
 
-  // Sprites arrive in order, two at a time, so the start of the film is ready first.
+  // Sprites arrive in order, two at a time, so the start of the film is ready first. Each one is
+  // cut into per-frame bitmaps as soon as it lands: drawing a small bitmap is far cheaper than
+  // sampling a 10,000px-tall sprite every scroll tick, which is what made scrolling stutter.
   let next = 0;
+  async function slice(img, i) {
+    for (let k = 0; k < set.per; k++) {
+      const n = i * set.per + k;
+      if (n >= total) break;
+      try {
+        frames[n] = 'createImageBitmap' in window ? await createImageBitmap(img, 0, k * set.h, set.w, set.h) : { img, sy: k * set.h };
+      } catch {
+        frames[n] = { img, sy: k * set.h };
+      }
+    }
+    dirty = true; kick();
+  }
   function loadNext() {
     if (next >= set.count) return;
     const i = next++;
     const img = new Image();
     img.decoding = 'async';
-    img.onload = () => { sprites[i] = img; dirty = true; tick(); loadNext(); };
+    img.onload = () => { slice(img, i).then(loadNext); };
     img.onerror = loadNext;
     img.src = set.src.replace('%02d', String(i + 1).padStart(2, '0'));
   }
   loadNext(); loadNext();
 
-  // Draw frame f with object-fit: cover, keeping the right-hand side (where Ray is) on screen.
+  // Draw frame f (a float: adjacent frames are cross-faded) with object-fit: cover, keeping the
+  // right-hand side, where Ray is, on screen. The canvas backing store is capped so very large or
+  // high-density screens don't push millions of extra pixels through every tick.
   let W = 0; let H = 0; let dpr = 1;
   function size() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
     W = stage.clientWidth; H = stage.clientHeight;
+    dpr = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2.4e6 / Math.max(1, W * H)));
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
     dirty = true;
   }
-  function nearestLoaded(f) {
-    const want = Math.floor(f / set.per);
-    for (let d = 0; d < set.count; d++) {
-      if (sprites[want - d]) return (want - d) * set.per + (d === 0 ? f % set.per : set.per - 1);
-      if (sprites[want + d]) return (want + d) * set.per;
+  function nearestLoaded(n) {
+    for (let d = 0; d < total; d++) {
+      if (frames[n - d]) return n - d;
+      if (frames[n + d]) return n + d;
     }
     return -1;
   }
+  function blit(n, alpha, dx, dy, dw, dh) {
+    const fr = frames[n];
+    ctx.globalAlpha = alpha;
+    if (fr.img) ctx.drawImage(fr.img, 0, fr.sy, set.w, set.h, dx, dy, dw, dh);
+    else ctx.drawImage(fr, dx, dy, dw, dh);
+    ctx.globalAlpha = 1;
+  }
   function draw(f) {
-    const n = nearestLoaded(Math.round(f));
-    if (n < 0) return;
-    const sprite = sprites[Math.floor(n / set.per)];
-    const sy = (n % set.per) * set.h;
+    const i = nearestLoaded(Math.floor(f));
+    if (i < 0) return;
+    const j = frames[i + 1] && i + 1 <= Math.ceil(f) ? i + 1 : i;
+    const a = j === i ? 0 : f - Math.floor(f);
     const scale = Math.max(W / set.w, H / set.h);
     const dw = set.w * scale; const dh = set.h * scale;
     const focus = small ? 0.68 : 0.6; // keep Ray (right of centre) in frame when cropping
-    const dx = (W - dw) * focus; const dy = (H - dh) * 0.4;
+    const dx = (W - dw) * focus + par.x; const dy = (H - dh) * 0.4 + par.y;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.drawImage(sprite, 0, sy, set.w, set.h, dx + par.x, dy + par.y, dw, dh);
+    blit(i, 1, dx, dy, dw, dh);
+    if (a > 0.02) blit(j, a, dx, dy, dw, dh);
     if (poster && !poster.hidden) poster.hidden = true;
   }
 
@@ -108,12 +131,12 @@ if (film && !reduced) {
   }
   function tick() {
     raf = 0;
-    const k = 0.14;
+    const k = 0.16;
     const prevCur = cur;
     cur = cur < 0 ? target : cur + (target - cur) * k;
     par.x += (par.tx - par.x) * 0.08; par.y += (par.ty - par.y) * 0.08;
     const f = cur * (total - 1);
-    if (dirty || Math.abs(cur - prevCur) > 0.0004 || Math.abs(par.tx - par.x) > 0.2 || Math.abs(par.ty - par.y) > 0.2) {
+    if (dirty || Math.abs(cur - prevCur) > 0.0002 || Math.abs(par.tx - par.x) > 0.2 || Math.abs(par.ty - par.y) > 0.2) {
       draw(f);
       placeScenes(cur);
       dirty = false;
