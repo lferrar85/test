@@ -84,7 +84,7 @@ server.js             pages + JSON API + admin, no framework
 
 **Lead handling.** The visitor sees which installers will receive their details, and the consent checkbox names them. The server uses exactly those (re-checked against coverage and service). Consent wording and version are stored with each lead. Leads are shared fairly: installers with the fewest recent introductions are offered first. Forms have a honeypot, rate limiting (8 per hour per IP) and server-side validation; the admin CSV neutralises spreadsheet formulas.
 
-**Configuration** (environment variables): `PORT`, `SITE_NAME`, `SITE_URL`, `CONTACT_EMAIL`, `COMPANY_NAME`, `COMPANY_NUMBER`, `COMPANY_ADDRESS`, `ICO_NUMBER`, `ADMIN_PASSWORD`, `ADMIN_USER`, `DB_FILE`, `WEBHOOK_URL` (POSTs each submission as JSON to Zapier/Make/Slack/your CRM), `TRUST_PROXY=1` (behind a proxy), `RATE_LIMIT_PER_HOUR`, `POSTCODE_LOOKUP=1`, `LEGAL_REVIEWED=1`, `NODE_ENV=production`. To rename the brand, set `SITE_NAME` and search for "Roofworth" in `content/`.
+**Configuration** (environment variables): `TREE_PARTNER`, `TREE_PARTNER_URL`, `TREES_PLANTED` (the planet pledge: partner name, public impact page, and a starting count for static builds; the Node server counts quote requests live), `PORT`, `SITE_NAME`, `SITE_URL`, `CONTACT_EMAIL`, `COMPANY_NAME`, `COMPANY_NUMBER`, `COMPANY_ADDRESS`, `ICO_NUMBER`, `ADMIN_PASSWORD`, `ADMIN_USER`, `DB_FILE`, `WEBHOOK_URL` (POSTs each submission as JSON to Zapier/Make/Slack/your CRM), `TRUST_PROXY=1` (behind a proxy), `RATE_LIMIT_PER_HOUR`, `POSTCODE_LOOKUP=1`, `LEGAL_REVIEWED=1`, `NODE_ENV=production`. To rename the brand, set `SITE_NAME` and search for "Roofworth" in `content/`.
 
 ## Before real homeowners use it: the honest checklist
 
@@ -98,7 +98,8 @@ These are not optional, and none of them can be done from inside the code.
 6. **Retention.** The privacy notice promises deletion after 12 months. Schedule `node scripts/purge-old.mjs` daily (cron). Handle withdrawal and deletion requests promptly, and tell the installers who hold the data.
 7. **Hosting.** HTTPS (the CSP and security headers are set), a persistent disk for `DB_FILE` (SQLite) or swap `lib/db.js` for Postgres, backups, `ADMIN_PASSWORD`, `TRUST_PROXY=1` if behind a proxy.
 8. **Accessibility test** with real assistive technology. It's built with semantic HTML, a keyboard-operable dial, chart tables and reduced-motion support, but nobody has tested it with a screen reader yet.
-9. **Postcode place names** via postcodes.io are off by default because they send the postcode to a third party. If you turn on `POSTCODE_LOOKUP=1`, mention it in the privacy notice.
+9. **The tree pledge.** The home page promises a tree for every quote request. Open an account with a planting partner (Ecologi and Just One Tree both sell trees to businesses by the unit), fund one per quote request from `/admin` each month, set `TREE_PARTNER` and `TREE_PARTNER_URL` so the counter links to the public record, or remove the Planet section. A promise shown on the site has to be kept.
+10. **Postcode place names** via postcodes.io are off by default because they send the postcode to a third party. If you turn on `POSTCODE_LOOKUP=1`, mention it in the privacy notice.
 
 ## Ideas, in rough order of value
 

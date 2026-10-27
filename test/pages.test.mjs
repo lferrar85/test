@@ -15,9 +15,13 @@ test('no page leaks NaN, undefined or [object Object] into its markup', () => {
   }
 });
 
-test('home page comparison shows sensible, ordered numbers', () => {
+test('home page shows the example bill dropping and real savings in the path cards', () => {
   const { html } = renderPage('/');
-  const nets = [...html.matchAll(/<p class="compare-big">£([\d,]+)</g)].map((m) => Number(m[1].replace(/,/g, '')));
-  assert.equal(nets.length, 3);
-  assert.ok(nets[0] > nets[1] && nets[1] > nets[2] && nets[2] >= 0, `net costs should fall: ${nets}`);
+  const m = /data-drop data-from="(\d+)" data-to="(\d+)"/.exec(html);
+  assert.ok(m, 'drop section present');
+  assert.ok(Number(m[1]) > Number(m[2]) && Number(m[2]) >= 0, `bill should fall: ${m[1]} -> ${m[2]}`);
+  const savings = [...html.matchAll(/<strong>£([\d,]+) a year<\/strong>/g)].map((x) => Number(x[1].replace(/,/g, '')));
+  assert.equal(savings.length, 2);
+  assert.ok(savings[1] > savings[0], 'solar + battery should save more than solar alone');
+  assert.ok(/trees funded so far/.test(html), 'planet section present');
 });

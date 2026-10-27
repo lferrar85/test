@@ -257,7 +257,7 @@ export function createApp({ db = openDb() } = {}) {
 
       let page = PROD ? pageCache.get(pathname) : null;
       if (!page) {
-        page = renderPage(pathname);
+        page = renderPage(pathname, { requests: db.requestCount() });
         if (PROD && page.status === 200) pageCache.set(pathname, page);
       }
       send(res, page.status, req.method === 'HEAD' ? '' : page.html, { 'Content-Type': MIME['.html'], 'Cache-Control': PROD ? 'public, max-age=300' : 'no-cache' });

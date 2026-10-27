@@ -30,6 +30,7 @@ if (film && !reduced) {
   const total = set.count * set.per;
   const sprites = new Array(set.count).fill(null);
   const ctx = canvas.getContext('2d', { alpha: false });
+  ctx.imageSmoothingQuality = 'high';
   film.classList.add('is-live');
 
   // Sprites arrive in order, two at a time, so the start of the film is ready first.
@@ -48,7 +49,7 @@ if (film && !reduced) {
   // Draw frame f with object-fit: cover, keeping the right-hand side (where Ray is) on screen.
   let W = 0; let H = 0; let dpr = 1;
   function size() {
-    dpr = Math.min(devicePixelRatio || 1, 1.5);
+    dpr = Math.min(devicePixelRatio || 1, 2);
     W = stage.clientWidth; H = stage.clientHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;

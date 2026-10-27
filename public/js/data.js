@@ -37,7 +37,7 @@ export const ASSUMPTIONS = {
   marginalPaybackYears: 12,
 
   // Carbon
-  gridCo2KgPerKwh: 0.15,   // approximate average grid intensity
+  gridCo2KgPerKwh: 0.177,  // UK grid, DESNZ 2025 conversion factors (location-based); the 2026 set is lower again, update yearly
 
   // Uncertainty shown as a range around the central estimate
   rangeLow: 0.9,
