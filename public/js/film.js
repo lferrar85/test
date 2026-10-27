@@ -26,8 +26,11 @@ if (film && !reduced) {
     items: [...el.querySelectorAll('[data-stagger] > *')],
   }));
   const small = matchMedia('(max-width: 48rem)').matches;
-  const set = JSON.parse(film.dataset[small ? 'mobile' : 'desktop']); // { src, count, per, w, h }
-  const total = set.count * set.per;
+  const set = JSON.parse(film.dataset[small ? 'mobile' : 'desktop']); // { src, count, per, n, w, h, from, to }
+  const total = set.n || set.count * set.per;
+  // The clip only moves between these two points of the scroll; Ray holds still either side, so
+  // nudging the wheel at the top doesn't make him twitch.
+  const moveFrom = set.from ?? 0.3; const moveTo = set.to ?? 0.8;
   const frames = new Array(total).fill(null); // one ImageBitmap per frame, sliced once a sprite lands
   const ctx = canvas.getContext('2d', { alpha: false });
   ctx.imageSmoothingQuality = 'medium';
@@ -63,19 +66,22 @@ if (film && !reduced) {
   // Draw frame f (a float: adjacent frames are cross-faded) with object-fit: cover, keeping the
   // right-hand side, where Ray is, on screen. The canvas backing store is capped so very large or
   // high-density screens don't push millions of extra pixels through every tick.
-  let W = 0; let H = 0; let dpr = 1;
+  let W = 0; let H = 0; let dpr = 1; let textRight = 0;
+  const scenesEl = film.querySelector('.film-scenes');
   function size() {
     W = stage.clientWidth; H = stage.clientHeight;
+    const sc = scenesEl.getBoundingClientRect();
+    textRight = sc.left + Math.min(sc.width, 576); // the scenes are at most 36rem wide
     dpr = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2.4e6 / Math.max(1, W * H)));
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
     dirty = true;
   }
+  // While frames are still arriving, hold the last loaded frame before the wanted one rather than
+  // jumping ahead to whatever happens to have landed.
   function nearestLoaded(n) {
-    for (let d = 0; d < total; d++) {
-      if (frames[n - d]) return n - d;
-      if (frames[n + d]) return n + d;
-    }
+    for (let d = 0; d <= n; d++) if (frames[n - d]) return n - d;
+    for (let d = 1; n + d < total; d++) if (frames[n + d]) return n + d;
     return -1;
   }
   function blit(n, alpha, dx, dy, dw, dh) {
@@ -85,18 +91,47 @@ if (film && !reduced) {
     else ctx.drawImage(fr, dx, dy, dw, dh);
     ctx.globalAlpha = 1;
   }
+  // The frames' own backdrop, so the stage can extend it where the picture doesn't reach.
+  const BACKDROP = '#a26c17';
+  // Where the picture doesn't reach the stage's edge, melt its left and top edges into the backdrop
+  // so there is no hard rectangle.
+  function feather(dx, dy, dw, dh) {
+    const fx = Math.min(220, dw * 0.22); const fy = Math.min(160, dh * 0.2);
+    if (dx > -1) {
+      const g = ctx.createLinearGradient(dx, 0, dx + fx, 0);
+      g.addColorStop(0, BACKDROP); g.addColorStop(1, 'rgba(162, 108, 23, 0)');
+      ctx.fillStyle = g; ctx.fillRect(dx - 1, 0, fx + 1, H);
+    }
+    if (dy > -1) {
+      const g = ctx.createLinearGradient(0, dy, 0, dy + fy);
+      g.addColorStop(0, BACKDROP); g.addColorStop(1, 'rgba(162, 108, 23, 0)');
+      ctx.fillStyle = g; ctx.fillRect(0, dy - 1, W, fy + 1);
+    }
+  }
   function draw(f) {
     const i = nearestLoaded(Math.floor(f));
     if (i < 0) return;
     const j = frames[i + 1] && i + 1 <= Math.ceil(f) ? i + 1 : i;
     const a = j === i ? 0 : f - Math.floor(f);
-    const scale = Math.max(W / set.w, H / set.h);
+    // Tall screens: cover the width, cropping so Ray (right of centre in the frame) stays in view.
+    // Wide screens: fit Ray into the space to the right of the text column, bottom-aligned, so the
+    // copy and his thumb never overlap; the stage's own mustard fills the gap above him.
+    let scale; let dx; let dy;
+    if (W / H < set.w / set.h) {
+      scale = Math.max(W / set.w, H / set.h);
+      dx = (W - set.w * scale) * (small ? 0.68 : 0.6); dy = (H - set.h * scale) * 0.4;
+    } else {
+      const avail = W - textRight - 16;
+      scale = Math.max(0.72 * (H / set.h), Math.min(H / set.h, avail / (0.72 * set.w)));
+      dx = W - set.w * scale; dy = Math.min(0, H - set.h * scale) * 0.4 + Math.max(0, H - set.h * scale);
+    }
     const dw = set.w * scale; const dh = set.h * scale;
-    const focus = small ? 0.68 : 0.6; // keep Ray (right of centre) in frame when cropping
-    const dx = (W - dw) * focus + par.x; const dy = (H - dh) * 0.4 + par.y;
+    dx += par.x; dy += par.y;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = BACKDROP; ctx.fillRect(0, 0, W, H);
     blit(i, 1, dx, dy, dw, dh);
     if (a > 0.02) blit(j, a, dx, dy, dw, dh);
+    feather(dx, dy, dw, dh);
     if (poster && !poster.hidden) poster.hidden = true;
   }
 
@@ -131,11 +166,11 @@ if (film && !reduced) {
   }
   function tick() {
     raf = 0;
-    const k = 0.16;
+    const k = 0.24;
     const prevCur = cur;
     cur = cur < 0 ? target : cur + (target - cur) * k;
     par.x += (par.tx - par.x) * 0.08; par.y += (par.ty - par.y) * 0.08;
-    const f = cur * (total - 1);
+    const f = clamp((cur - moveFrom) / (moveTo - moveFrom), 0, 1) * (total - 1);
     if (dirty || Math.abs(cur - prevCur) > 0.0002 || Math.abs(par.tx - par.x) > 0.2 || Math.abs(par.ty - par.y) > 0.2) {
       draw(f);
       placeScenes(cur);
@@ -153,7 +188,7 @@ if (film && !reduced) {
   size();
   target = progress();
   cur = target;
-  draw(cur * (total - 1));
+  draw(clamp((cur - moveFrom) / (moveTo - moveFrom), 0, 1) * (total - 1));
   placeScenes(cur);
 }
 
