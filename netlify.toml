@@ -1,0 +1,18 @@
+# Netlify configuration for GoSolarCompare (Next.js 16, App Router)
+# Connect this repository in the Netlify dashboard; these settings are picked up automatically.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--include=dev"
+  # Demo data backend until Supabase is wired. See docs/STATUS.md.
+  DATA_BACKEND = "demo"
+  NEXT_PUBLIC_DEMO_MODE = "true"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Netlify's official Next.js runtime (server rendering, route handlers, caching).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
