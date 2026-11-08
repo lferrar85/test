@@ -15,13 +15,14 @@
     <button type="button" data-kind="quote" aria-pressed="false">Solar quotes</button>
     <button type="button" data-kind="battery" aria-pressed="false">Battery quotes</button>
     <button type="button" data-kind="contact" aria-pressed="false">Contact</button>
-    <button type="button" data-kind="installer" aria-pressed="false">Installers</button>
+    <button type="button" data-kind="installer" aria-pressed="false">Installer applications</button>
   </nav>
   <a class="btn btn-small" data-csv href="/api/admin/export.csv"><span>Export CSV</span></a>
 </header>
 <main class="admin-main">
+  <div class="admin-filters" data-filters hidden><label class="check"><input type="checkbox" data-pending checked> Pending only (new and under review)</label><p class="admin-hint">Approving marks the application; it never publishes an installer. To list an approved partner, copy the listing JSON into <code>data/installers.json</code>. Keep agreed terms in the private notes.</p></div>
   <p data-count class="admin-count" aria-live="polite">Loading…</p>
-  <div class="table-wrap"><table class="admin-table"><thead><tr><th scope="col">Ref</th><th scope="col">Type</th><th scope="col">When</th><th scope="col">Who</th><th scope="col">Where</th><th scope="col">Detail</th><th scope="col">Sent to</th><th scope="col">Status</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead><tbody data-rows></tbody></table></div>
+  <div class="table-wrap"><table class="admin-table"><thead><tr><th scope="col">Ref</th><th scope="col">Type</th><th scope="col">When</th><th scope="col">Who</th><th scope="col">Where</th><th scope="col">Detail</th><th scope="col">Sent to</th><th scope="col">Status</th><th scope="col">Private notes</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead><tbody data-rows></tbody></table></div>
 </main>
 <script type="module" src="/js/admin.js"></script>
 </body>

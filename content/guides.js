@@ -408,7 +408,7 @@ export const GUIDES = [
         ['SEG sign-up', 'Depends on the supplier; allow a few weeks']
       ] },
       { t: 'note', x: 'These times are indicative, not guarantees. A straightforward G98 job often runs from accepted quote to working system in roughly four to eight weeks, but busy periods and G99 applications can add to this. Ask your installer for a dated plan.' },
-      { t: 'p', x: 'To get started, see how [[/how-it-works|Roofworth works]] or browse [[/installers|installers]]. If you want to check the numbers first, try the [[/solar-calculator|solar calculator]].' }
+      { t: 'p', x: 'To get started, see how [[/how-it-works|GoSolarCompare works]] or browse [[/installers|installers]]. If you want to check the numbers first, try the [[/solar-calculator|solar calculator]].' }
     ]
   }
 ];

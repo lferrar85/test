@@ -105,7 +105,13 @@ export function bindForm(form, { kind = form.dataset.form, getExtra = () => ({})
     for (const el of form.elements) if (el.name) setError(el.name, '');
     setStatus('');
 
+    for (const group of form.querySelectorAll('[data-require-one]')) {
+      const name = group.querySelector('input[type=checkbox]')?.name;
+      if (name) values[name] = fd.getAll(name);
+      if (name && !values[name].length) values[`__missing_${name}`] = true;
+    }
     const errors = check(values);
+    for (const k of Object.keys(values)) if (k.startsWith('__missing_')) { errors[k.slice(10)] = 'Please choose at least one.'; delete values[k]; }
     if (Object.keys(errors).length) {
       for (const [k, msg] of Object.entries(errors)) setError(k, msg);
       const first = form.elements[Object.keys(errors)[0]];
@@ -130,6 +136,16 @@ export function bindForm(form, { kind = form.dataset.form, getExtra = () => ({})
 
     async function finish(ref, list, demo = false) {
       saveLast({ ref, kind, matched: list, demo, at: Date.now() });
+      // Forms marked data-confirm show their confirmation in place instead of going to the thank-you page.
+      const tpl = form.querySelector('[data-confirm-template]');
+      if (form.hasAttribute('data-confirm') && tpl) {
+        const card = tpl.content.firstElementChild.cloneNode(true);
+        const refEl = card.querySelector('[data-confirm-ref]');
+        if (refEl) refEl.textContent = ref;
+        form.replaceWith(card);
+        card.focus();
+        return;
+      }
       location.href = cfg.links.thankYou;
     }
 
@@ -144,6 +160,8 @@ export function bindForm(form, { kind = form.dataset.form, getExtra = () => ({})
       if (res.status === 422 && out.errors) {
         for (const [k, msg] of Object.entries(out.errors)) setError(k, msg);
         setStatus('Please check the highlighted fields.', 'is-error');
+      } else if (res.status === 409) {
+        setStatus(out.message || 'We already have a recent application from this company. Our team will be in touch.', 'is-note');
       } else if (res.status === 429) {
         setStatus('You’ve sent a few requests already. Please try again in a while.', 'is-error');
       } else {

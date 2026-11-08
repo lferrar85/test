@@ -99,8 +99,40 @@ test('battery and contact and installer application forms', async () => {
   const c = await post('/api/contact', { name: 'C', email: 'c@c.co', message: 'Hello', topic: 'other' });
   assert.equal(c.status, 201);
   assert.deepEqual((await c.json()).matched, []);
-  const i = await post('/api/installer-apply', { company: 'Acme Solar', name: 'D', email: 'd@d.co', phone: '07700900125', mcs_number: 'NAP12345', areas: 'LS, BD', consent: true });
-  assert.equal(i.status, 201);
+});
+
+const goodApplication = (over = {}) => ({
+  company: 'Acme Solar Ltd', name: 'Dana Fox', email: 'dana@acmesolar.co.uk', phone: '07700900125', postcode: 'LS1 4AP', website: 'www.acmesolar.co.uk',
+  areas: 'LS, BD, HG', services: ['solar', 'battery'], mcs_status: 'certified', mcs_number: 'NAP12345', trustmark: 'yes', years_trading: '8', capacity: '12',
+  consent: true, marketing: 'yes', ...over,
+});
+
+test('installer application: validated, stored as an application, duplicates refused', async () => {
+  // Required: at least one service, and the MCS number when certified.
+  assert.equal((await post('/api/installer-apply', goodApplication({ services: [] }))).status, 422);
+  assert.equal((await post('/api/installer-apply', goodApplication({ mcs_number: '' }))).status, 422);
+  assert.equal((await post('/api/installer-apply', goodApplication({ company: 'Northern Panels', email: 'hi@northernpanels.co.uk', mcs_status: 'in_progress', mcs_number: '' }))).status, 201, 'number only needed once certified');
+
+  const first = await post('/api/installer-apply', goodApplication());
+  assert.equal(first.status, 201);
+  const { ref } = await first.json();
+  // Same company (spelt differently) or same email within 30 days is a duplicate.
+  assert.equal((await post('/api/installer-apply', goodApplication({ email: 'other@acmesolar.co.uk', company: 'ACME SOLAR LIMITED' }))).status, 409);
+  assert.equal((await post('/api/installer-apply', goodApplication({ company: 'Different Co' }))).status, 409);
+
+  const list = await (await fetch(base + '/api/admin/submissions?kind=installer', { headers: admin })).json();
+  const row = list.submissions.find((r) => r.ref === ref);
+  assert.equal(row.status, 'new');
+  assert.deepEqual(row.data.services, ['solar', 'battery']);
+  assert.equal(row.data.marketing, true);
+  // The application workflow has its own statuses, and private notes.
+  const patch = (body) => fetch(`${base}/api/admin/submissions/${ref}`, { method: 'PATCH', headers: { ...admin, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  assert.equal((await patch({ status: 'contacted' })).status, 422, 'customer statuses do not apply to applications');
+  assert.equal((await patch({ status: 'review', notes: 'MCS number checked on the register.' })).status, 200);
+  const after = (await (await fetch(base + '/api/admin/submissions?kind=installer', { headers: admin })).json()).submissions.find((r) => r.ref === ref);
+  assert.equal(after.status, 'review');
+  assert.equal(after.notes, 'MCS number checked on the register.');
+  assert.equal((await patch({ status: 'approved' })).status, 200);
 });
 
 test('match endpoint shares leads fairly: installers with fewer leads come first', async () => {

@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { timingSafeEqual } from 'node:crypto';
 import { renderPage, sitemapXml, robotsTxt } from './lib/routes.js';
 import { openDb } from './lib/db.js';
-import { validate, KINDS } from './lib/validate.js';
+import { validate, KINDS, statusesFor } from './lib/validate.js';
 import { matchInstallers, installerBySlug } from './lib/installers.js';
 import { notify } from './lib/notify.js';
 import { SITE } from './lib/config.js';
@@ -148,6 +148,10 @@ export function createApp({ db = openDb() } = {}) {
     if (Object.keys(result.errors).length) return json(res, 422, { ok: false, errors: result.errors });
 
     const data = result.data;
+    if (kind === 'installer') {
+      const dup = db.findRecentApplication({ email: data.email, companyKey: data.company_key });
+      if (dup) return json(res, 409, { ok: false, error: 'duplicate', message: 'We already have a recent application from this company. Our team will be in touch; there is no need to apply again.' });
+    }
     let matched = [];
     if (kind === 'quote' || kind === 'battery') {
       const service = kind === 'battery' ? 'battery' : 'solar';
@@ -171,7 +175,10 @@ export function createApp({ db = openDb() } = {}) {
       consentVersion: ['quote', 'battery', 'installer'].includes(kind) ? SITE.consentVersion : null,
       consentText: result.consentText,
     });
-    notify({ event: 'submission', kind, ref, matched: matched.map((i) => i.slug), data }).catch(() => {});
+    notify({
+      event: kind === 'installer' ? 'installer-application' : 'submission', kind, ref, matched: matched.map((i) => i.slug), data,
+      ...(kind === 'installer' ? { summary: `New installer application: ${data.company} (${data.areas}). Review at ${SITE.url}/admin`, review: `${SITE.url}/admin` } : {}),
+    }).catch(() => {});
     json(res, 201, { ok: true, ref, matched: matched.map((i) => ({ slug: i.slug, name: i.name })) });
   }
 
@@ -222,15 +229,21 @@ export function createApp({ db = openDb() } = {}) {
           if (req.method === 'GET' && sub === 'export.csv') {
             const kind = url.searchParams.get('kind') || '';
             const rows = db.list(KINDS.includes(kind) ? kind : '', 10000);
-            const head = ['ref', 'kind', 'created_at', 'status', 'name', 'email', 'phone', 'postcode', 'region', 'matched', 'consent_version', 'consent_at', 'data'];
+            const head = ['ref', 'kind', 'created_at', 'status', 'notes', 'name', 'email', 'phone', 'postcode', 'region', 'matched', 'consent_version', 'consent_at', 'data'];
             const csv = [head.join(','), ...rows.map((r) => head.map((h) => csvCell(h === 'data' ? JSON.stringify(r.data) : h === 'matched' ? r.matched.join(' ') : r[h])).join(','))].join('\n');
-            return send(res, 200, csv, { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="roofworth-submissions.csv"', 'Cache-Control': 'no-store' });
+            return send(res, 200, csv, { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="submissions.csv"', 'Cache-Control': 'no-store' });
           }
           const m = /^submissions\/(RW-[0-9A-F]{8})$/.exec(sub);
           if (m && req.method === 'PATCH') {
             const body = await readJson(req);
-            if (!['new', 'contacted', 'closed'].includes(body.status)) return json(res, 422, { ok: false, error: 'Bad status' });
-            return json(res, db.setStatus(m[1], body.status) ? 200 : 404, { ok: true });
+            const row = db.get(m[1]);
+            if (!row) return json(res, 404, { ok: false, error: 'Not found' });
+            if (body.status !== undefined) {
+              if (!statusesFor(row.kind).includes(body.status)) return json(res, 422, { ok: false, error: 'Bad status' });
+              db.setStatus(m[1], body.status);
+            }
+            if (body.notes !== undefined) db.setNotes(m[1], String(body.notes).slice(0, 4000));
+            return json(res, 200, { ok: true });
           }
           if (m && req.method === 'DELETE') return json(res, db.remove(m[1]) ? 200 : 404, { ok: true });
         }

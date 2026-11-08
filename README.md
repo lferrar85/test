@@ -1,4 +1,4 @@
-# Roofworth (working name)
+# GoSolarCompare
 
 A UK solar savings calculator that turns into a quote-matching marketplace.
 
@@ -28,7 +28,8 @@ npm run export               # static copy of the whole site in ./dist
 | Installer profile with direct quote form (one per installer in `data/installers.json`) | `/installers/<slug>` |
 | Guides index and 8 guides | `/guides`, `/guides/<slug>` |
 | How it works · About (incl. how you're paid) · Methodology (generated from the model's own constants) | `/how-it-works` `/about` `/methodology` |
-| For installers: pitch and application form | `/for-installers` |
+| For installers: pitch | `/for-installers` |
+| Join the installer network: application form (shareable recruiting link) | `/installers/join` |
 | Contact | `/contact` |
 | Thank-you page after any form | `/thank-you` |
 | Privacy · Terms · Cookies | `/privacy` `/terms` `/cookies` |
@@ -82,9 +83,11 @@ server.js             pages + JSON API + admin, no framework
 
 **The model.** Annual generation = kWp × regional yield × roof direction/pitch factor × shading. That is spread over 12 months × a clear and a dull day × 24 hours, matched against the home's hourly demand (occupancy pattern, EV, heat pump), with an optional battery. Money follows energy: avoided purchases at the import rate, exports at the export rate. The 25-year view includes panel ageing, electricity price rises, an inverter replacement and a battery that stops counting after its life. Tests assert sanity and energy balance. `/methodology` is generated from the same constants, so it cannot drift from the maths.
 
+**Installer onboarding.** `/installers/join` is the recruiting page: send the link by email, WhatsApp or LinkedIn (it has a copy-link button). Applications are validated server-side (at least one service, MCS number when certified, UK phone and postcode), stored as `installer` submissions, and refused with a polite 409 when the same company or email has applied in the last 30 days. Each application fires the webhook with `event: "installer-application"` and a link to `/admin` (point `WEBHOOK_URL` at Zapier, Make or Slack to get an email or message). In `/admin` the "Installer applications" tab defaults to pending ones, with the workflow New → Under review → Approved / Rejected and a private-notes box for checks made and agreed terms. Approving never publishes anyone: "Copy listing JSON" gives a `data/installers.json` entry to check, complete (regions, tagline) and commit by hand. Contact details are never shown publicly. Commercial terms live only in the admin notes, never on the site.
+
 **Lead handling.** The visitor sees which installers will receive their details, and the consent checkbox names them. The server uses exactly those (re-checked against coverage and service). Consent wording and version are stored with each lead. Leads are shared fairly: installers with the fewest recent introductions are offered first. Forms have a honeypot, rate limiting (8 per hour per IP) and server-side validation; the admin CSV neutralises spreadsheet formulas.
 
-**Configuration** (environment variables): `TREE_PARTNER`, `TREE_PARTNER_URL`, `TREES_PLANTED` (the planet pledge: partner name, public impact page, and a starting count for static builds; the Node server counts quote requests live), `PORT`, `SITE_NAME`, `SITE_URL`, `CONTACT_EMAIL`, `COMPANY_NAME`, `COMPANY_NUMBER`, `COMPANY_ADDRESS`, `ICO_NUMBER`, `ADMIN_PASSWORD`, `ADMIN_USER`, `DB_FILE`, `WEBHOOK_URL` (POSTs each submission as JSON to Zapier/Make/Slack/your CRM), `TRUST_PROXY=1` (behind a proxy), `RATE_LIMIT_PER_HOUR`, `POSTCODE_LOOKUP=1`, `LEGAL_REVIEWED=1`, `NODE_ENV=production`. To rename the brand, set `SITE_NAME` and search for "Roofworth" in `content/`.
+**Configuration** (environment variables): `TREE_PARTNER`, `TREE_PARTNER_URL`, `TREES_PLANTED` (the planet pledge: partner name, public impact page, and a starting count for static builds; the Node server counts quote requests live), `PORT`, `SITE_NAME`, `SITE_URL`, `CONTACT_EMAIL`, `COMPANY_NAME`, `COMPANY_NUMBER`, `COMPANY_ADDRESS`, `ICO_NUMBER`, `ADMIN_PASSWORD`, `ADMIN_USER`, `DB_FILE`, `WEBHOOK_URL` (POSTs each submission as JSON to Zapier/Make/Slack/your CRM), `TRUST_PROXY=1` (behind a proxy), `RATE_LIMIT_PER_HOUR`, `POSTCODE_LOOKUP=1`, `LEGAL_REVIEWED=1`, `NODE_ENV=production`. The brand defaults to GoSolarCompare; set `SITE_NAME` to change it (the legal and FAQ copy in `content/` uses the name literally, so search there too).
 
 ## Before real homeowners use it: the honest checklist
 

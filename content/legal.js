@@ -1,4 +1,4 @@
-// Roofworth legal page templates.
+// GoSolarCompare legal page templates.
 // TEMPLATE DRAFTS: must be reviewed by a qualified UK solicitor before launch.
 // Block types: p, h2, h3, ul, ol, note, table.
 // Inline markup in any text: **bold** and [[/path|label]] links.
@@ -8,13 +8,13 @@ const DRAFT_NOTE = 'Template draft — must be reviewed by a qualified UK solici
 
 const privacy = {
   title: 'Privacy policy',
-  description: 'How Roofworth collects, uses, shares and protects your personal information, and the rights you have under UK data protection law.',
+  description: 'How GoSolarCompare collects, uses, shares and protects your personal information, and the rights you have under UK data protection law.',
   updated: '2026-10',
   body: [
     { t: 'note', x: DRAFT_NOTE },
     {
       t: 'p',
-      x: 'This policy explains what personal information Roofworth collects, why we collect it, who sees it and what rights you have. We have tried to write it in plain English. It applies to the Roofworth website and to the quote request, battery quote, contact and installer application forms on it.'
+      x: 'This policy explains what personal information GoSolarCompare collects, why we collect it, who sees it and what rights you have. We have tried to write it in plain English. It applies to the GoSolarCompare website and to the quote request, battery quote, contact and installer application forms on it.'
     },
 
     { t: 'h2', x: 'The short version' },
@@ -32,7 +32,7 @@ const privacy = {
     { t: 'h2', x: 'Who we are' },
     {
       t: 'p',
-      x: '**[COMPANY LEGAL NAME]** (company number [COMPANY NUMBER]), whose registered office is at [REGISTERED OFFICE ADDRESS], runs Roofworth. In this policy “Roofworth”, “we”, “us” and “our” mean that company.'
+      x: '**[COMPANY LEGAL NAME]** (company number [COMPANY NUMBER]), whose registered office is at [REGISTERED OFFICE ADDRESS], runs GoSolarCompare. In this policy “GoSolarCompare”, “we”, “us” and “our” mean that company.'
     },
     {
       t: 'p',
@@ -211,7 +211,7 @@ const privacy = {
     { t: 'h2', x: 'Children' },
     {
       t: 'p',
-      x: 'Roofworth is for adults who own or are responsible for a home. It is not aimed at children and we do not knowingly collect their information.'
+      x: 'GoSolarCompare is for adults who own or are responsible for a home. It is not aimed at children and we do not knowingly collect their information.'
     },
 
     { t: 'h2', x: 'Changes to this policy' },
@@ -230,20 +230,20 @@ const privacy = {
 
 const terms = {
   title: 'Terms of use',
-  description: 'The terms for using Roofworth, including how we are paid, what the estimates are and are not, and how we work with installers.',
+  description: 'The terms for using GoSolarCompare, including how we are paid, what the estimates are and are not, and how we work with installers.',
   updated: '2026-10',
   body: [
     { t: 'note', x: DRAFT_NOTE },
     {
       t: 'p',
-      x: 'These terms apply when you use the Roofworth website, the solar calculator, the battery tools and the quote request forms (together, the “service”). Please read them. By using the service you agree to them. If you do not agree, please do not use it.'
+      x: 'These terms apply when you use the GoSolarCompare website, the solar calculator, the battery tools and the quote request forms (together, the “service”). Please read them. By using the service you agree to them. If you do not agree, please do not use it.'
     },
 
     { t: 'h2', x: 'The short version' },
     {
       t: 'ul',
       items: [
-        '**Roofworth is free for homeowners. Installers pay us fees for introductions, and that may influence which installers we show you.**',
+        '**GoSolarCompare is free for homeowners. Installers pay us fees for introductions, and that may influence which installers we show you.**',
         '**Our estimates are indicative.** They are not quotes, guarantees or advice.',
         '**We are not an installer, a financial adviser or a credit broker, and we do not carry out surveys.**',
         '**Installers are independent businesses.** If you go ahead, your contract is with them, not with us.',
@@ -254,11 +254,11 @@ const terms = {
     { t: 'h2', x: 'Who we are' },
     {
       t: 'p',
-      x: 'Roofworth is run by **[COMPANY LEGAL NAME]**, a company registered under company number [COMPANY NUMBER], with its registered office at [REGISTERED OFFICE ADDRESS]. In these terms “Roofworth”, “we”, “us” and “our” mean that company, and “you” means the person using the service.'
+      x: 'GoSolarCompare is run by **[COMPANY LEGAL NAME]**, a company registered under company number [COMPANY NUMBER], with its registered office at [REGISTERED OFFICE ADDRESS]. In these terms “GoSolarCompare”, “we”, “us” and “our” mean that company, and “you” means the person using the service.'
     },
 
     { t: 'h2', x: 'What the service does' },
-    { t: 'p', x: 'Roofworth provides:' },
+    { t: 'p', x: 'GoSolarCompare provides:' },
     {
       t: 'ul',
       items: [
@@ -275,7 +275,7 @@ const terms = {
     { t: 'h2', x: 'How we are paid' },
     {
       t: 'note',
-      x: '**Roofworth is free for homeowners.** We never charge you for using the service or for being introduced to an installer. We are paid by installers, who pay us fees for introductions. **This commercial arrangement may influence which installers we show you.**'
+      x: '**GoSolarCompare is free for homeowners.** We never charge you for using the service or for being introduced to an installer. We are paid by installers, who pay us fees for introductions. **This commercial arrangement may influence which installers we show you.**'
     },
     {
       t: 'p',
@@ -300,7 +300,7 @@ const terms = {
       x: 'Real results depend on things we cannot see or control, including your roof, shading, the equipment fitted, how you use electricity, the weather, energy prices and tariffs, and changes to the law or to incentive schemes. Please do not rely on an estimate alone when deciding whether to buy. Always get a site survey and written quotes from installers.'
     },
 
-    { t: 'h2', x: 'What Roofworth is not' },
+    { t: 'h2', x: 'What GoSolarCompare is not' },
     {
       t: 'ul',
       items: [
@@ -452,13 +452,13 @@ const terms = {
 
 const cookies = {
   title: 'Cookies and session storage',
-  description: 'Roofworth sets no advertising or analytics cookies. This page explains the session storage the calculator uses and how to clear it.',
+  description: 'GoSolarCompare sets no advertising or analytics cookies. This page explains the session storage the calculator uses and how to clear it.',
   updated: '2026-10',
   body: [
     { t: 'note', x: DRAFT_NOTE },
     {
       t: 'p',
-      x: '**We do not use any non-essential cookies.** Roofworth has no advertising cookies, no analytics cookies and no third-party trackers. This page explains the one thing the calculator stores on your device, and how you can clear it.'
+      x: '**We do not use any non-essential cookies.** GoSolarCompare has no advertising cookies, no analytics cookies and no third-party trackers. This page explains the one thing the calculator stores on your device, and how you can clear it.'
     },
     {
       t: 'p',
@@ -515,9 +515,9 @@ const cookies = {
     {
       t: 'ol',
       items: [
-        'On the Roofworth page, open developer tools (press F12, or Ctrl+Shift+I on Windows, or Cmd+Option+I on a Mac).',
+        'On the GoSolarCompare page, open developer tools (press F12, or Ctrl+Shift+I on Windows, or Cmd+Option+I on a Mac).',
         'Open the “Application” tab.',
-        'Under “Storage”, expand “Session storage” and select the Roofworth site.',
+        'Under “Storage”, expand “Session storage” and select the GoSolarCompare site.',
         'Choose “Clear all” (or right-click and delete the entries), then refresh the page.'
       ]
     },
@@ -525,9 +525,9 @@ const cookies = {
     {
       t: 'ol',
       items: [
-        'On the Roofworth page, open developer tools (press F12, or Ctrl+Shift+I on Windows, or Cmd+Option+I on a Mac).',
+        'On the GoSolarCompare page, open developer tools (press F12, or Ctrl+Shift+I on Windows, or Cmd+Option+I on a Mac).',
         'Open the “Storage” tab and expand “Session Storage”.',
-        'Right-click the Roofworth site and choose “Delete All”, then refresh the page.'
+        'Right-click the GoSolarCompare site and choose “Delete All”, then refresh the page.'
       ]
     },
     { t: 'h3', x: 'Safari' },
@@ -535,19 +535,19 @@ const cookies = {
       t: 'ol',
       items: [
         'If you do not see a “Develop” menu, turn it on in Safari’s settings under Advanced.',
-        'On the Roofworth page, choose Develop, then “Show Web Inspector”, and open the “Storage” tab.',
+        'On the GoSolarCompare page, choose Develop, then “Show Web Inspector”, and open the “Storage” tab.',
         'Select “Session Storage”, select the entries, delete them, then refresh the page.'
       ]
     },
     {
       t: 'p',
-      x: 'In any browser you can also clear “cookies and other site data” for Roofworth in the browser’s privacy or site settings, or use a private or incognito window, which discards session storage when you close it. The exact wording and steps vary between browsers and versions.'
+      x: 'In any browser you can also clear “cookies and other site data” for GoSolarCompare in the browser’s privacy or site settings, or use a private or incognito window, which discards session storage when you close it. The exact wording and steps vary between browsers and versions.'
     },
 
     { t: 'h2', x: 'Admin area' },
     {
       t: 'p',
-      x: 'Roofworth has an administration area that our team uses to manage the service. It is not public, visitors do not use it, and any sign-in storage used there applies only to our own staff. [CONFIRM BEFORE LAUNCH: keep or delete this section depending on whether an admin area exists, and list any cookies or storage it uses.]'
+      x: 'GoSolarCompare has an administration area that our team uses to manage the service. It is not public, visitors do not use it, and any sign-in storage used there applies only to our own staff. [CONFIRM BEFORE LAUNCH: keep or delete this section depending on whether an admin area exists, and list any cookies or storage it uses.]'
     },
 
     { t: 'h2', x: 'Other websites' },

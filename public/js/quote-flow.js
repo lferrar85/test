@@ -12,15 +12,15 @@ const saved = loadState();
 
 // Titles mark the key words with *stars*; they're highlighted on screen.
 const Q = [
-  { key: 'interest', title: 'What are you *interested in*?', say: 'Quick one. About a minute, I promise.', opts: [['solar', 'Solar panels'], ['solar_battery', 'Solar panels and a battery'], ['battery', 'A battery for my existing solar']] },
-  { key: 'roofType', title: 'What is your property’s *roof type*?', say: 'Pitched is the most common. Flat works too, with a frame.', opts: [['pitched', 'Pitched'], ['mono', 'Mono pitched'], ['flat', 'Flat'], ['other', 'Other'], ['unsure', 'Unsure']] },
-  { key: 'roofMaterial', title: 'What is your *roof made of*?', say: 'Slate needs a gentler touch, and installers price for it.', opts: [['concrete', 'Concrete tiles'], ['clay', 'Clay tiles'], ['slate', 'Slate tiles'], ['felt', 'Felt'], ['other', 'Other'], ['unsure', 'Unsure']] },
-  { key: 'homeBuilt', title: 'When was your *home built*?', say: 'Older homes are fine. It’s the roof that matters.', opts: [['pre1900', 'Before 1900'], ['1900_1949', '1900 to 1949'], ['1950_1982', '1950 to 1982'], ['1983_1995', '1983 to 1995'], ['1996_2006', '1996 to 2006'], ['2007_2011', '2007 to 2011'], ['2012_on', '2012 onwards']] },
-  { key: 'bedrooms', title: 'How many *bedrooms* do you have?', say: 'A rough guide to how much electricity you use.', opts: [['1_2', '1 to 2'], ['3_4', '3 to 4'], ['5_6', '5 to 6'], ['7_plus', '7 or more']] },
-  { key: 'address', title: 'Where’s the *roof*?', say: 'So we only pick installers who actually cover you.', type: 'address' },
-  { key: 'ownership', title: 'Do you *own* this property?', say: 'Renting? You’ll need the landlord’s say-so first.', opts: [['own', 'Yes'], ['on_behalf', 'I’m looking on behalf of the homeowner'], ['buying', 'I’m in the process of buying'], ['renting', 'I’m renting this property']] },
-  { key: 'timing', title: '*When* are you thinking of installing?', say: 'No rush. “Just researching” is a perfectly good answer.', opts: [['asap', 'As soon as possible'], ['1_month', 'Within 1 month'], ['3_months', 'Within 3 months'], ['6_months', 'Within 6 months'], ['researching', 'Just researching']] },
-  { key: 'contact', title: 'Where should we *send your quotes*?', say: 'Nearly there. Only the installers named below will see this.', type: 'contact' },
+  { key: 'interest', title: 'What are you *interested in*?', say: 'Nine quick questions. About a minute.', opts: [['solar', 'Solar panels'], ['solar_battery', 'Solar panels and a battery'], ['battery', 'A battery for my existing solar']] },
+  { key: 'roofType', title: 'What is your property’s *roof type*?', say: 'Pitched roofs are the most common. Flat roofs use a mounting frame.', opts: [['pitched', 'Pitched'], ['mono', 'Mono pitched'], ['flat', 'Flat'], ['other', 'Other'], ['unsure', 'Unsure']] },
+  { key: 'roofMaterial', title: 'What is your *roof made of*?', say: 'Slate needs specialist fixings, which installers price for.', opts: [['concrete', 'Concrete tiles'], ['clay', 'Clay tiles'], ['slate', 'Slate tiles'], ['felt', 'Felt'], ['other', 'Other'], ['unsure', 'Unsure']] },
+  { key: 'homeBuilt', title: 'When was your *home built*?', say: 'Older homes are fine. The roof’s condition matters most.', opts: [['pre1900', 'Before 1900'], ['1900_1949', '1900 to 1949'], ['1950_1982', '1950 to 1982'], ['1983_1995', '1983 to 1995'], ['1996_2006', '1996 to 2006'], ['2007_2011', '2007 to 2011'], ['2012_on', '2012 onwards']] },
+  { key: 'bedrooms', title: 'How many *bedrooms* do you have?', say: 'A rough guide to your electricity use.', opts: [['1_2', '1 to 2'], ['3_4', '3 to 4'], ['5_6', '5 to 6'], ['7_plus', '7 or more']] },
+  { key: 'address', title: 'Where’s the *roof*?', say: 'We only match installers who cover your area.', type: 'address' },
+  { key: 'ownership', title: 'Do you *own* this property?', say: 'Tenants need the landlord’s permission before any work.', opts: [['own', 'Yes'], ['on_behalf', 'I’m looking on behalf of the homeowner'], ['buying', 'I’m in the process of buying'], ['renting', 'I’m renting this property']] },
+  { key: 'timing', title: '*When* are you thinking of installing?', say: '“Just researching” is a perfectly good answer.', opts: [['asap', 'As soon as possible'], ['1_month', 'Within 1 month'], ['3_months', 'Within 3 months'], ['6_months', 'Within 6 months'], ['researching', 'Just researching']] },
+  { key: 'contact', title: 'Where should we *send your quotes*?', say: 'Nearly there. Only the installers named below will see your details.', type: 'contact' },
 ];
 
 const answers = { addressLine: '' };

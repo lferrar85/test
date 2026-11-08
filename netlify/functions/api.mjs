@@ -53,7 +53,7 @@ export default async (req) => {
     matched = direct ? [direct] : shown.length ? shown : matchInstallers(data.region, { service, limit: 3 });
   }
   const ref = `RW-${randomBytes(4).toString('hex').toUpperCase()}`;
-  const event = { event: 'submission', ref, kind, at: new Date().toISOString(), matched: matched.map((i) => i.slug), consentVersion: SITE.consentVersion, consentText: result.consentText, data };
+  const event = { event: kind === 'installer' ? 'installer-application' : 'submission', ref, kind, at: new Date().toISOString(), matched: matched.map((i) => i.slug), consentVersion: SITE.consentVersion, consentText: result.consentText, data };
 
   try {
     const res = await fetch(hook, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(event), signal: AbortSignal.timeout(8000) });

@@ -11,7 +11,7 @@ export function siteConfig() {
   try {
     return JSON.parse(document.getElementById('site-config').textContent);
   } catch {
-    return { mode: 'server', api: '/api', links: {}, installers: [], regionNames: {}, brand: 'Roofworth' };
+    return { mode: 'server', api: '/api', links: {}, installers: [], regionNames: {}, brand: 'GoSolarCompare' };
   }
 }
 

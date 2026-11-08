@@ -1,4 +1,4 @@
-// Roofworth FAQ content. Plain text answers (no inline markup).
+// GoSolarCompare FAQ content. Plain text answers (no inline markup).
 // topic is one of: 'cost', 'savings', 'roof', 'quotes', 'battery', 'data'
 
 export const FAQ = [
@@ -8,12 +8,9 @@ export const FAQ = [
     a: 'It is a good guide, not a promise. The calculator uses the details you enter and standard assumptions about sunshine, panel performance and electricity prices, all set out on our methodology page. Real results vary with the weather, your roof, shading, the equipment fitted and how you use power, and energy prices change. The more accurate your inputs, especially your real electricity use, the better the estimate. Only a survey and written quote from an installer can give figures for your actual roof.'
   },
   {
-    q: 'Is Roofworth really free, and how do you make money?',
+    q: 'Is GoSolarCompare really free, and how do you make money?',
     topic: 'cost',
-    a: 'Yes, it is free for homeowners. You pay us nothing to use the calculator or to request quotes. Roofworth is paid by installers, who pay us a fee for introductions to homeowners who ask for quotes. That arrangement may influence which installers we show you, and we don’t show every installer in your area, so it is worth comparing quotes from elsewhere too. The price of any system comes from an installer’s quote, not from us.'
-  },
-  {
-    q: 'How many installers will get my details?',
+    a: 'Yes, it is free for homeowners. You pay nothing to use the calculator or to request quotes. GoSolarCompare may receive a fee from installers in our network when we introduce a homeowner who has asked for quotes. That never changes your estimate, and it never influences which installers you are shown: matching is by location, the services you asked for and a fair rotation. We only show installers who have joined our network, so we are not a whole-of-market service.',
     topic: 'quotes',
     a: 'Up to three. Your details go only to installers matched to your area, and only after you submit a quote request and give your consent. The installers are named on the form before you submit, so you can see exactly who will receive them. Using the calculator on its own sends nothing to us or to any installer. Once an installer has your details, it handles them under its own privacy notice for its own dealings with you.'
   },
@@ -70,6 +67,6 @@ export const FAQ = [
   {
     q: 'Does this replace a site survey?',
     topic: 'quotes',
-    a: 'No. Our estimate is based on what you tell us, not on anyone visiting your home. A proper survey checks your roof’s condition and structure, exact measurements, shading, your electrics and meter, and access, and a reliable final price should be based on it. Roofworth does not carry out surveys. Treat our figures as a starting point, and expect any installer worth hiring to survey before they confirm a price.'
+    a: 'No. Our estimate is based on what you tell us, not on anyone visiting your home. A proper survey checks your roof’s condition and structure, exact measurements, shading, your electrics and meter, and access, and a reliable final price should be based on it. GoSolarCompare does not carry out surveys. Treat our figures as a starting point, and expect any installer worth hiring to survey before they confirm a price.'
   }
 ];

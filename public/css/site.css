@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Roofworth: design system
+   GoSolarCompare: design system
    Bright, trustworthy, modern. White and cool-tint surfaces, deep navy text,
    one sun-amber action colour, green for savings. One geometric sans family.
    ========================================================================== */
@@ -1063,3 +1063,26 @@ input:not([type]), input[type='text'], input[type='email'], input[type='tel'], i
 @media (prefers-reduced-motion: reduce) { .planet-art .tree { opacity: 1; translate: 0 0; } }
 @media (min-width: 62rem) { .planet-grid { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; } }
 .thanks-tree { margin: 0 0 1.2rem; }
+
+/* ---- Installer network: join page ------------------------------------------ */
+.join-layout { display: grid; gap: var(--space-l); align-items: start; }
+@media (min-width: 62rem) { .join-layout { grid-template-columns: 20rem minmax(0, 1fr); gap: 3.5rem; } .join-side { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+.join-side { display: grid; gap: 1rem; }
+.join-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.4rem 1.5rem; box-shadow: var(--shadow-sm); }
+.join-card h2 { font-size: var(--step-1); margin-bottom: 0.5rem; }
+.join-card .plain-steps { margin: 0 0 0.8rem; }
+.join-card .fine { margin: 0.6rem 0 0; }
+.share-link { display: flex; gap: 0.5rem; }
+.share-link input { flex: 1; min-width: 0; font-size: var(--step--1); padding: 0.6rem 0.75rem; }
+.share-link .btn { white-space: nowrap; }
+.form-section { font-size: var(--step-0); margin: 1.6rem 0 0.8rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink); }
+.form-section:first-of-type { border-top: 0; padding-top: 0; margin-top: 0.4rem; }
+.field-group { border: 0; padding: 0; margin: 0 0 1.15rem; min-width: 0; }
+.field-group legend { font-weight: 650; font-size: var(--step--1); padding: 0; margin-bottom: 0.5rem; }
+.check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.5rem; }
+.check-tile { border: 1.5px solid var(--line-strong); border-radius: 12px; padding: 0.7rem 0.85rem; align-items: center; font-weight: 600; background: var(--tint-2); }
+.check-tile:has(input:checked) { border-color: var(--sun); background: var(--sun-soft); }
+.form-status.is-note { color: var(--sun-ink); }
+.confirm-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(1.5rem, 4vw, 2.5rem); box-shadow: var(--shadow-md); outline: none; }
+.confirm-icon { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--green); color: #fff; margin-bottom: 1rem; }
+.confirm-card h2 { font-size: var(--step-2); margin-bottom: 0.4rem; }
